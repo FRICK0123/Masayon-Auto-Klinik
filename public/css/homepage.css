@@ -1,0 +1,117 @@
+/*Navbar*/
+    header{
+        position: fixed;
+        width: 100%;
+        top: 0;
+    }
+
+    #nav{
+        border-bottom: 1px solid white;
+        transition: .5s;
+    }
+
+    #nav.scrolled{
+        background-color: rgb(24, 24, 24, 0.9);
+        border-radius: 20px;
+    }
+
+    #logo {
+        background-color: white;
+        border-radius: 50%;
+        transition: .5s;
+        margin-top: 10px;
+    }
+
+
+    #nav_links a{
+        margin-right: 30px;
+        text-decoration: none;
+        color: white;
+        transition: .5s
+    }
+
+    #nav_links.scrolled a {
+        color: blac;
+    }
+
+    .links a:hover{
+        padding-bottom: 3px;
+        border-bottom: 2px solid red;
+        transition: .2s;
+    }
+
+    #login{
+        color: white;
+        transition: .5s;
+    }
+
+    #login:hover{
+        padding-bottom: 3px;
+        border-bottom: 2px solid red;
+        transition: .2s;
+        cursor: pointer;
+    }
+
+    .car_register_btn{
+        box-shadow: 0px 10px 20px -4px rgba(0, 0, 0, 0.75);
+        -webkit-box-shadow: 0px 10px 20px -4px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 10px 20px -4px rgba(0, 0, 0, 0.75);
+    }
+
+    /*Homepage Sidebar*/
+        .homepage_sidebar a {
+            text-decoration: none;
+            color: black;
+            padding: 15px 0;
+            border-bottom: 1px solid black;
+        }
+    /*Homepage Sidebar End*/
+
+    /*Navbar links*/
+        #home_link{
+            border-bottom: 2px solid red;
+        }
+
+        #home_link.scrolled{
+            border: none;
+        }
+
+        #home_link.scrolled:hover{
+            border-bottom: 2px solid red;
+        }
+    /*End*/
+/*Navbar End*/
+
+/*Home Section*/
+    .home_section{
+        background-image: url('/Images/Carousel1.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh;
+    }
+    .home_section::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 20%;
+        background: linear-gradient(to bottom, transparent, white);
+        pointer-events: none;
+    }
+    .home_section h1{
+        -webkit-text-stroke: 2px black;
+    }
+/*Home Section End*/
+
+/*About Us Section*/
+    #about{
+        padding-top: 10%;
+    }
+
+    @media only screen and (max-width: 768px){
+        #about{
+            padding-top: 30%;
+        }
+    }
+/*About Us Section End*/
