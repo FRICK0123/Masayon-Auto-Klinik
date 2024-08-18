@@ -20,10 +20,6 @@ Route::get('/', function () {
     return view('pages.homepage');
 })->name('homepage');
 
-Route::get('/home',function(){
-    return redirect()->route('homepage');
-});
-
 //Routes for User Login
     Route::controller(LoginController::class)->group(function(){
         Route::get('/login','loginView')->name('login_view');

@@ -1,0 +1,96 @@
+/*Navbar*/
+    header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+    }
+
+    #nav {
+        background-color: black;
+    }
+
+    #logo {
+        background-color: white;
+        border-radius: 50%;
+        transition: .5s;
+        margin-top: 10px;
+    }
+
+    #homepage:hover{
+        cursor: pointer;
+        border-bottom: 1px solid red;
+        transition: .5s;
+    }
+
+/*Navbar End*/
+
+/*Main Content*/
+    .dashboard_sidebar{
+        position: fixed;
+        overflow: hidden;
+        width: 250px;
+        height: 100vh;
+        margin-top: 89px;
+    }
+    .form_links form{
+        border-bottom: 1px solid white;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        cursor: pointer;
+        transition: .5s;
+    }
+
+    .form_links form:hover{
+        border-bottom: 1px solid red;
+    }
+    .dashboard_content{
+        margin-left: 300px;
+    }
+
+        /*Dashboard Sidebar*/
+            .profile_img_wrapper {
+                max-width: 100px;
+                max-height: 100px;
+                border-radius: 50%;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        
+            .profile_image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                cursor: pointer;
+                background-color: beige;
+                border-radius: 50%;
+            }
+        
+            .username_heading {
+                font-size: clamp(15px, 1.5vw, 30px);
+            }
+        
+            .email_heading {
+                font-size: clamp(5px, 1vw, 15px);
+            }
+        /*End*/
+
+    /*Mobile Sidebar*/
+        #bars{
+            z-index: -1;
+            margin-top: 89px;
+            position: fixed;
+        }
+        .form_links_mobile form{
+            border-bottom: 1px solid white;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            cursor: pointer;
+        }
+
+        #mobile_sidebar{
+            margin-top: 89px;
+        }
+    /*End*/
+/*End*/
