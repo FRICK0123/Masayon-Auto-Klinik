@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
+use App\Http\Controllers\Dashboard\CustomerDashboard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,10 +20,15 @@ Route::get('/', function () {
     return view('pages.homepage');
 })->name('homepage');
 
+Route::get('/home',function(){
+    return redirect()->route('homepage');
+});
+
 //Routes for User Login
     Route::controller(LoginController::class)->group(function(){
         Route::get('/login','loginView')->name('login_view');
         Route::post('/login_auth', 'loginAuth')->name('login');
+        Route::post('/logout', 'logout')->name('logout');
     });
 //end
 
@@ -35,5 +41,7 @@ Route::get('/', function () {
 //end
 
 //Routes for Customers Dashboard
-    
+    Route::controller(CustomerDashboard::class)->group(function(){
+        Route::get('/Dashboard', 'customerDashboardView')->name('customer_dashboard');
+    });
 //end

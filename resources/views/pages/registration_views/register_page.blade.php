@@ -50,6 +50,9 @@
                     <input type="checkbox" id="showPassword" class="me-2" onclick="showP()">
                     <label for="showPassword">Show Password</label>
                 </div>
+                @error('register_password')
+                    <p class="text-danger">{{$message}}</p>
+                @enderror
 
                 <!--Confirm Password-->
                 <label for="confirm_password" class="fw-bold mt-4">Confirm Password:</label>
@@ -58,6 +61,10 @@
                     <input type="checkbox" id="showConfirmPassword" class="me-2" onclick="showConfirm()">
                     <label for="showConfirmPassword">Show Password</label>
                 </div>
+                @error('confirm_password')
+                    <p class="text-danger">{{$message}}</p>
+                @enderror
+
 
                 <div class="container-fluid d-flex justify-content-center mt-4">
                     <button class="btn btn-dark w-100">Next</button>

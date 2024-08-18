@@ -21,7 +21,17 @@ class RegisterController extends Controller
         $email = $request->input('register_email');
         $phone = $request->input('register_phone');
         $username = $request->input('register_username');
-        $password = $request->input('register_password');
+
+        $validate = $request->validate(
+            [
+                'register_password' => 'min:8',
+                'confirm_password' => 'same:register_password'
+            ],
+            [
+                'register_password.min' => 'The password must be at least 8 characters long',
+                'confirm_password.same' => 'Password does not match', 
+            ]
+        );
 
         Session::put([
             'fullname' => $fullname,
@@ -30,8 +40,7 @@ class RegisterController extends Controller
             'username' => $username,
         ]);
 
-        //Session::put('hashed_password', Hash::make($password));
-        Session::put('plain_password', $password);
+        Session::put('plain_password', $validate['register_password']);
 
         return view('pages.registration_views.user_summary');
     }

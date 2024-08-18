@@ -25,6 +25,9 @@
                 @csrf
                 <label for="login_username" class="fw-bold">Username:</label>
                 <input type="text" class="login_username form-control mt-1 border border-1 border-dark" name="username" id="login_username" placeholder="Enter Username" autocomplete="off">
+                @error('username')
+                    <p class="text-danger">{{$message}}</p>
+                @enderror
 
                 <label for="login_password" class="fw-bold mt-4">Password:</label>
                 <input type="password" class="login_password form-control mt-1 border border-1 border-dark" name="password" id="login_password" placeholder="********" autocomplete="off">
@@ -32,6 +35,9 @@
                     <input type="checkbox" id="showPassword" class="me-2" onclick="showP()">
                     <label for="showPassword">Show Password</label>
                 </div>
+                @error('password')
+                    <p class="text-danger">{{$message}}</p>
+                @enderror
 
                 <div class="container-fluid d-flex justify-content-center mt-4">
                     <button class="btn btn-dark w-100">Login</button>

@@ -15,9 +15,17 @@
 
 
     <!--Login link/button to be directed to Login page-->
+    @auth('customer')
+        <form action="{{route('customer_dashboard')}}" method="GET" class="d-none d-lg-block">
+            @csrf
+            <button class="btn" id="login">Dashboard</button>
+        </form>
+    @endauth
+    @guest('customer')
         <form action="{{route('login_view')}}" method="GET" class="d-none d-lg-block">
             <button class="btn" id="login">LOGIN</button>
         </form>
+    @endguest
     <!--Login link/button to be directed to Login page End-->
 
     <!--Sidebar/Offcanvas-->

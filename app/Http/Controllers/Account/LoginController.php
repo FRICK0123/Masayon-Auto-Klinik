@@ -14,14 +14,23 @@ class LoginController extends Controller
 
     public function loginAuth(Request $request){
         $validate = $request->validate([
-            'username' => 'required',
-            'password' => 'required',
+            'username' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        if(auth()->guard('customer')->attempt($validate)){
-            return view('pages.customer_pages.customer_dashboard');
+        if(Auth::guard('customer')->attempt($validate)){
+            return to_route('customer_dashboard');
         } else {
             echo "Not logged";
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('homepage');
     }
 }
