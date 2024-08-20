@@ -48,6 +48,7 @@ Route::get('/', function () {
 //Add, Edit, and Delete car routes
     Route::controller(CarController::class)->group(function() {
         Route::get('/car_view','addCarView')->name('car_view');
+        Route::post('/add_car', 'addCar')->name('add_car');
     });
 //end
 
