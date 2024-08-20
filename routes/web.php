@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
+use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
+use App\Http\Controllers\Dashboard\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,8 +38,22 @@ Route::get('/', function () {
     });
 //end
 
+//Profile Image and Profile Details Route
+    Route::controller(ProfileController::class)->group(function(){
+        Route::get('/profile_view', 'profileView')->name('profile_view');
+        Route::post('/profile_upload', 'profileUpload')->name('profile_upload');
+    });
+//End
+
+//Add, Edit, and Delete car routes
+    Route::controller(CarController::class)->group(function() {
+        Route::get('/car_view','addCarView')->name('car_view');
+    });
+//end
+
 //Routes for Customers Dashboard
     Route::controller(CustomerDashboard::class)->group(function(){
         Route::get('/Dashboard', 'customerDashboardView')->name('customer_dashboard');
+        Route::get('/profile', 'customerProfileView')->name('customer_profile');
     });
 //end

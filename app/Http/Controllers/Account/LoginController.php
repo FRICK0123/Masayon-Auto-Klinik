@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -19,6 +21,19 @@ class LoginController extends Controller
         ]);
 
         if(Auth::guard('customer')->attempt($validate)){
+            //Sessions
+                $customer = DB::table('customers')->where('customerID',Auth::guard('customer')->id())->first();
+                Session::put([
+                    'customerID' => $customer->{'customerID'},
+                    'fullname' => $customer->{'fullname'},
+                    'email' => $customer->{'email'},
+                    'phone_number' => $customer->{'phone_number'},
+                    'username' => $customer->{'username'},
+                    'profile_img' => $customer->{'profile_img'},
+
+                ]);
+            //End
+
             return to_route('customer_dashboard');
         } else {
             echo "Not logged";

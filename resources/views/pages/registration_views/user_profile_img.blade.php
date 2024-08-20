@@ -18,7 +18,8 @@
         <x-preloader/>
     <!--End-->
 
-    <form method="POST" action="#" enctype="multipart/form-data" class="container d-flex flex-column justify-content-center align-items-center mt-5">
+    <form action="{{ route('profile_upload') }}" method="POST" enctype="multipart/form-data" class="container d-flex flex-column justify-content-center align-items-center mt-5">
+        @csrf
         <label for="profile_image">
             <div class="profile_image_wrapper">
                 <img src="{{asset('Images/profile_images/default_user.png')}}" alt="User Profile Image" class="img-fluid user_image" id="user_image">
@@ -33,7 +34,8 @@
             <button class="btn btn-dark mt-3 w-100">Set as Profile Image</button>
         </div>
     </form>
-    <form action="#" method="GET" class="container d-flex flex-column justify-content-center align-items-center">
+
+    <form action="{{route('login_view')}}" method="GET" class="container d-flex flex-column justify-content-center align-items-center">
         <div class="btn_wrapper">
             <button class="btn btn-light border border-1 border-dark mt-3 w-100">Skip</button>
         </div>

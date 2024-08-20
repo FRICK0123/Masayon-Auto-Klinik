@@ -11,4 +11,10 @@ class CustomerDashboard extends Controller
     public function customerDashboardView(){
         return view('pages.customer_pages.customer_dashboard');
     }
+
+    //Profile View
+    public function customerProfileView()
+    {
+        return view('pages.customer_pages.customer_profile');
+    }
 }

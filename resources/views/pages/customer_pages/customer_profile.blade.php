@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Customer Dashboard</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="{{asset('css/customer_dashboard.css')}}">
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
 
@@ -23,12 +23,13 @@
             <x-customer-dashboard.navbar/>
         </header>
     <!--Header end-->
-    
+
     <!--Main Content-->
-        <main>            
+        <main>
             <x-customer-dashboard.mobile-canvas/>
+
             <x-customer-dashboard.main-content>
-                <x-customer-dashboard.dashboard-content/>
+                <x-customer-dashboard.profile-content/>
             </x-customer-dashboard.main-content>
         </main>
     <!--End-->

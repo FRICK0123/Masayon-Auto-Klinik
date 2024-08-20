@@ -1,19 +1,19 @@
 <div class="dashboard_sidebar bg-dark flex-column align-items-center d-none d-lg-flex">
     <div class="profile_img_wrapper mt-5">
-        <img src="{{asset('Images/profile_images/default_user.png')}}" alt="Profile Image" class="profile_image">
+        <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Profile Image" class="profile_image">
     </div>
-    <h5 class="text-light username_heading mt-3">Freak123</h5>
-    <p class="text-light email_heading">paculbafrick1@gmail.com</p>
+    <h5 class="text-light username_heading mt-3">{{Session::get('fullname')}}</h5>
+    <p class="text-light email_heading">{{Session::get('email')}}</p>
 
     <!--dashboard links-->
-        <div class="container-fluid mt-5 form_links">
+        <div class="container-fluid mt-4 form_links">
 
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
+            <form action="{{route('customer_profile')}}" method="GET" class="text-white d-flex justify-content-between align-items-center" id="customer_profile" onclick="profileForm()">
                 <p class="m-0">Profile</p>
                 <img src="{{asset('icons/user-circle.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
+            <form action="{{route('customer_dashboard')}}" class="text-white d-flex justify-content-between align-items-center" id="customer_dashboard" onclick="dashboardForm()">
                 <p class="m-0">Dashboard</p>
                 <img src="{{asset('icons/dashboard.svg')}}" alt="Dashboard Icon" class="">
             </form>
@@ -37,12 +37,23 @@
     <!--End-->
 </div>
 
-<div class="dashboard_content">
-
+<div class="content">
+    {{$slot}}
 </div>
 
 <!--Script-->
     <script>
+        //Profile Form Submittion
+        function profileForm(){
+            document.getElementById('customer_profile').submit();
+        }
+        
+        //Dashboard Form Submittion
+        function dashboardForm(){
+            document.getElementById('customer_dashboard').submit();
+        }
+
+        //Logout Form Submittion
         const customer_logout = document.getElementById('customer_logout');
         customer_logout.addEventListener('click',()=>{
             customer_logout.submit();

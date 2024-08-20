@@ -45,9 +45,18 @@
                         <a href="#" onclick="navigateAndClose('homepage_sidebar');">MAINTENANCE GUIDE</a>
                         <a href="#" onclick="navigateAndClose('homepage_sidebar');">CONTACT US</a>
 
-                        <form action="{{route('login_view')}}" method="get" class="mt-3">
-                            <button class="btn btn-secondary w-100">Login</button>
-                        </form>
+
+                        @guest('customer')
+                            <form action="{{route('login_view')}}" method="get" class="mt-3">
+                                <button class="btn btn-dark w-100">Login</button>
+                            </form>
+                        @endguest
+
+                        @auth('customer')
+                            <form action="{{route('customer_dashboard')}}" method="get" class="mt-3">
+                                <button class="btn btn-dark w-100">Dashboard</button>
+                            </form>
+                        @endauth
                     </div>
                 </div>
             </div>
