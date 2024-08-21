@@ -53,4 +53,10 @@ class CarController extends Controller
 
         return to_route('customer_dashboard');
     }
+
+    //View car details
+    public function viewCarDetails($vehicleID){
+        $vehicle = Vehicle::where('vehicleID',$vehicleID)->first();
+        return view('pages.customer_pages.view_car',['vehicle'=>$vehicle]);
+    }
 }

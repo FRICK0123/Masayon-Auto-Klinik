@@ -3,7 +3,7 @@
     <form action="{{ route('add_car') }}" method="post" class="container" enctype="multipart/form-data">
         @csrf
         <div class="car_img_wrapper mt-5">
-            <img src="{{ asset('Images/car_images/car.png') }}" alt="Car Image" class="car_image" id="car_image">
+            <img src="{{ asset('Images/car_images/sample_car.png') }}" alt="Car Image" class="car_image" id="car_image">
         </div>
 
         <div class="mt-3 container">
@@ -29,7 +29,7 @@
         <br>
 
         <label for="plate_number" class="fw-bold" required>Plate Number:</label>
-        <input type="text" placeholder="ABC 123" name="plate_number" class="form-control" id="plate_number"><br>
+        <input type="text" placeholder="ABC-123" name="plate_number" class="form-control" id="plate_number" pattern="[A-Z]{3}-[0-9]{3}" title="Please enter a valid plate number in the format ABC-123"><br>
 
         <button class="btn btn-dark">Submit</button>
     </form>

@@ -39,22 +39,23 @@ Route::get('/', function () {
 //end
 
 //Profile Image and Profile Details Route
-    Route::controller(ProfileController::class)->group(function(){
+    Route::middleware(['auth:customer'])->controller(ProfileController::class)->group(function(){
         Route::get('/profile_view', 'profileView')->name('profile_view');
         Route::post('/profile_upload', 'profileUpload')->name('profile_upload');
     });
 //End
 
 //Add, Edit, and Delete car routes
-    Route::controller(CarController::class)->group(function() {
+    Route::middleware(['auth:customer'])->controller(CarController::class)->group(function() {
         Route::get('/car_view','addCarView')->name('car_view');
         Route::post('/add_car', 'addCar')->name('add_car');
+        Route::post('/view_car/{vehicleID}', 'viewCarDetails')->name('view_car_details');
     });
 //end
 
 //Routes for Customers Dashboard
-    Route::controller(CustomerDashboard::class)->group(function(){
-        Route::get('/Dashboard', 'customerDashboardView')->name('customer_dashboard');
+    Route::middleware(['auth:customer'])->controller(CustomerDashboard::class)->group(function(){
+        Route::get('/dashboard', 'customerDashboardView')->name('customer_dashboard');
         Route::get('/profile', 'customerProfileView')->name('customer_profile');
     });
 //end
