@@ -18,7 +18,7 @@
                 <img src="{{asset('icons/dashboard.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
+            <form action="{{ route('customer_maintenance_schedule') }}" class="text-white d-flex justify-content-between align-items-center" id="customer_maintenance_schedule" onclick="scheduleForm()">
                 <p class="m-0">Maintenance Schedule</p>
                 <img src="{{asset('icons/calendar.svg')}}" alt="Dashboard Icon" class="">
             </form>
@@ -51,6 +51,11 @@
         //Dashboard Form Submittion
         function dashboardForm(){
             document.getElementById('customer_dashboard').submit();
+        }
+
+        //Maintenance Schedule Form Submittion
+        function scheduleForm(){
+            document.getElementById('customer_maintenance_schedule').submit();
         }
 
         //Logout Form Submittion

@@ -4,6 +4,7 @@ use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
+use App\Http\Controllers\Dashboard\MaintenanceController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +40,7 @@ Route::get('/', function () {
 //end
 
 //Profile Image and Profile Details Route
-    Route::middleware(['auth:customer'])->controller(ProfileController::class)->group(function(){
+    Route::controller(ProfileController::class)->group(function(){
         Route::get('/profile_view', 'profileView')->name('profile_view');
         Route::post('/profile_upload', 'profileUpload')->name('profile_upload');
     });
@@ -53,9 +54,17 @@ Route::get('/', function () {
     });
 //end
 
+//Routes for Maintenance Schedule and History
+    Route::middleware(['auth:customer'])->controller(MaintenanceController::class)->group(function(){
+        Route::post('/schedule_form/{vehicleID}', 'scheduleMaintenanceView')->name('schedule_maintenance_form');
+        Route::post('/schedule_maintenance_store', 'scheduleMaintenance')->name('schedule_maintenance_store');
+    });
+//end
+
 //Routes for Customers Dashboard
     Route::middleware(['auth:customer'])->controller(CustomerDashboard::class)->group(function(){
         Route::get('/dashboard', 'customerDashboardView')->name('customer_dashboard');
         Route::get('/profile', 'customerProfileView')->name('customer_profile');
+        Route::get('/maintenance_schedule', 'scheduleView')->name('customer_maintenance_schedule');
     });
 //end

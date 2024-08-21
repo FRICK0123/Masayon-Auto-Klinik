@@ -12,11 +12,13 @@
 
         <div class="container">
             <div class="row">
-                <form action="#" method="POST" class="col-md-6 mt-3">
+                <form action="{{ route('schedule_maintenance_form',$vehicle['vehicleID']) }}" method="POST" class="col-md-6 mt-3">
+                    @csrf
                     <button class="btn btn-dark w-100">Schedule Maintenance</button>
                 </form>
 
                 <form action="#" method="POST" class="col-md-6 mt-3">
+                    @csrf
                     <button class="btn btn-danger w-100">Delete Car</button>
                 </form>
             </div>
