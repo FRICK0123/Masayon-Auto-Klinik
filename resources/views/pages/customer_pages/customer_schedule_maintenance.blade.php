@@ -28,7 +28,30 @@
         <main>            
             <x-customer-dashboard.mobile-canvas/>
             <x-customer-dashboard.main-content>
-                <h1>This is Schedule Maintenance</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Make</th>
+                            <th>Vehicle Model</th>
+                            <th>Maintenance Type</th>
+                            <th>Scheduled Interval</th>
+                            <th>Next Maintenance</th>
+                            <th>Last Maintenance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($schedules as $schedule)
+                            <tr>
+                                <td>{{ $schedule['make'] }}</td> <!-- Access the make from the related vehicle -->
+                                <td>{{ $schedule['model'] }}</td> <!-- Access the model from the related vehicle -->
+                                <td>{{ $schedule['maintenance_type'] }}</td>
+                                <td>{{ $schedule['scheduled_interval'] }} months</td>
+                                <td>{{ \Carbon\Carbon::parse($schedule['scheduled_date'])->format('F j, Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($schedule['last_maintenance_date'])->format('F j, Y') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </x-customer-dashboard.main-content>
         </main>
     <!--End-->

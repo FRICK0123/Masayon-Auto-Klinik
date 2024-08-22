@@ -24,13 +24,17 @@ class CustomerDashboard extends Controller
     }
 
     //Maintenance Schedule View
-    //Maintenance Schedule View
     public function scheduleView()
     {
         $customerID = Auth::guard('customer')->id();
-        $vehicle = Vehicle::where('customerID', $customerID)->first();
 
-        $schedules = MaintenanceSchedule::where('vehicleID', $vehicle['vehicleID'])->get();
-        return view('pages.customer_pages.customer_schedule_maintenance', ['schedules' => $schedules]);
+        $schedules = MaintenanceSchedule::join('vehicles', 'maintenance_schedules.vehicleID', '=', 'vehicles.vehicleID')
+            ->where('vehicles.customerID', '=', $customerID) // Filter by the authenticated customer's ID
+            ->select('maintenance_schedules.*', 'vehicles.*')
+            ->get();
+
+        return view('pages.customer_pages.customer_schedule_maintenance', [
+            'schedules' => $schedules,
+        ]);
     }
 }
