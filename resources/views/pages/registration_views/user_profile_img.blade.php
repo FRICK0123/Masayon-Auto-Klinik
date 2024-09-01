@@ -35,7 +35,7 @@
         </div>
     </form>
 
-    <form action="{{route('login_view')}}" method="GET" class="container d-flex flex-column justify-content-center align-items-center">
+    <form action="{{ route('pending_view') }}" method="GET" class="container d-flex flex-column justify-content-center align-items-center">
         <div class="btn_wrapper">
             <button class="btn btn-light border border-1 border-dark mt-3 w-100">Skip</button>
         </div>

@@ -19,7 +19,7 @@
                 <img src="{{asset('icons/dashboard.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
+            <form action="{{route('customer_maintenance_schedule')}}" class="text-white d-flex justify-content-between align-items-center" id="customer_maintenance_schedule" onclick="maintenanceSchedule()">
                 <p class="m-0">Maintenance Schedule</p>
                 <img src="{{asset('icons/calendar.svg')}}" alt="Dashboard Icon" class="">
             </form>
@@ -52,6 +52,12 @@
         function dashBoard(){
             customer_dashboard_mobile.submit();
         }
+
+    //Customer Maintenance Dashboard
+    const customer_maintenance_schedule = document.getElementById('customer_maintenance_schedule');
+    function maintenanceSchedule(){
+        customer_maintenance_schedule.submit();
+    }
 
     //logout
         const customer_logout_mobile = document.getElementById('customer_logout_mobile');

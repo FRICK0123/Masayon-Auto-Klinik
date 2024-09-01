@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('profile_img');
+            $table->string('verification');
             $table->timestamps();
         });
     }

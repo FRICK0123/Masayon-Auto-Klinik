@@ -64,9 +64,15 @@ class RegisterController extends Controller
             'username' => $username,
             'password' => $password,
             'profile_img' => "default_user.png",
+            'verification' => "unverified",
         ]);
         
         return redirect()->route('profile_view');
+    }
+
+    //Pending page view
+    public function pendingView(){
+        return view('pages.registration_views.account_pending');
     }
 
 }

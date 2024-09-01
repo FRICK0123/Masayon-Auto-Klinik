@@ -41,6 +41,6 @@ class ProfileController extends Controller
         $profileUpdate->save();
 
         Session::flush();
-        return redirect()->route('login_view');
+        return redirect()->route('pending_view');
     }
 }

@@ -14,14 +14,8 @@ class MaintenanceController extends Controller
 
     //Maintenance Schedule Form View
     public function scheduleMaintenanceView($vehicleID){
-        $existingMaintenance = MaintenanceSchedule::where('vehicleID', $vehicleID)->first();
-
-        if(!$existingMaintenance){
-            $vehicle = Vehicle::where('vehicleID', $vehicleID)->first();
-            return view('pages.customer_pages.schedule_maintenance', ['vehicle' => $vehicle]);
-        } else {
-            return to_route('customer_maintenance_schedule');
-        }
+        $vehicle = Vehicle::where('vehicleID', $vehicleID)->first();
+        return view('pages.customer_pages.schedule_maintenance', ['vehicle' => $vehicle]);
     }
 
     //Maintenance Schedule Form Submittion

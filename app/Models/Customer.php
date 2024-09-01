@@ -19,5 +19,6 @@ class Customer extends Authenticatable
         'username',
         'password',
         'profile_img',
+        'verification',
     ];
 }

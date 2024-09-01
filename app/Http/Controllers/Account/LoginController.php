@@ -21,20 +21,23 @@ class LoginController extends Controller
         ]);
 
         if(Auth::guard('customer')->attempt($validate)){
-            //Sessions
                 $customer = DB::table('customers')->where('customerID',Auth::guard('customer')->id())->first();
-                Session::put([
-                    'customerID' => $customer->{'customerID'},
-                    'fullname' => $customer->{'fullname'},
-                    'email' => $customer->{'email'},
-                    'phone_number' => $customer->{'phone_number'},
-                    'username' => $customer->{'username'},
-                    'profile_img' => $customer->{'profile_img'},
-
-                ]);
-            //End
-
-            return to_route('customer_dashboard');
+                if($customer->{'verification'} === "verified"){
+                    //Sessions
+                        Session::put([
+                            'customerID' => $customer->{'customerID'},
+                            'fullname' => $customer->{'fullname'},
+                            'email' => $customer->{'email'},
+                            'phone_number' => $customer->{'phone_number'},
+                            'username' => $customer->{'username'},
+                            'profile_img' => $customer->{'profile_img'},
+                        ]);
+                    //end
+                    return to_route('customer_dashboard');
+                } else {
+                    Session::flush();
+                    return to_route('pending_view');
+                }
         } else {
             echo "Not logged";
         }

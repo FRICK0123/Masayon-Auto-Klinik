@@ -36,6 +36,7 @@ Route::get('/', function () {
         Route::get('/register','registerView')->name('register_view');
         Route::post('/registration_details', 'registrationViewSession')->name('register_details');
         Route::post('/registration_store', 'registrationStore')->name('register_store');
+        Route::get('/pending_view','pendingView')->name('pending_view');
     });
 //end
 
