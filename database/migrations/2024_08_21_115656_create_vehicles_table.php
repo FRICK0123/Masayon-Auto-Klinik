@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id('vehicleID')->startingValue(1000);
             $table->bigInteger('customerID');
+            $table->string('vehicle_image');
             $table->string('make');
             $table->string('model');
             $table->string('year_of_manufacture');
-            $table->string('vehicle_image');
+            $table->bigInteger('milage');
+            $table->string('engine_number');
+            $table->string('vehicle_identification_number');
+            $table->string('chassis_number');
             $table->string('plate_number');
             $table->timestamps();
         });

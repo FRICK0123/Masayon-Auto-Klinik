@@ -11,10 +11,14 @@ class Vehicle extends Model
 
     protected $fillable = [
         'customerID',
+        'vehicle_image',
         'make',
         'model',
         'year_of_manufacture',
-        'vehicle_image',
+        'milage',
+        'engine_number',
+        'vehicle_identification_number',
+        'chassis_number',
         'plate_number',
     ];
 }
