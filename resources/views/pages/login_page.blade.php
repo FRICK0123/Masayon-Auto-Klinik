@@ -18,6 +18,20 @@
     <!--Preloader-->
         <x-preloader/>
     <!--End-->
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    
     <div class="container-fluid d-flex justify-content-center mt-5">
         <div class="login_container d-flex flex-column align-items-center">
             <h1 class="login_heading text-center">Login</h1>

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Notifications\VerifyEmailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -57,15 +59,17 @@ class RegisterController extends Controller
         $username = $request->input('username');
         $password = Hash::make($request->input('password'));
         
-        Customer::create([
+        $customer = Customer::create([
             'fullname' => $fullname,
             'email' => $email,
             'phone_number' => $phone,
             'username' => $username,
             'password' => $password,
             'profile_img' => "default_user.png",
-            'verification' => "unverified",
+            'verification_token' => Str::random(60),
         ]);
+        // Send verification email
+        $customer->notify(new VerifyEmailNotification($customer));
         
         return redirect()->route('profile_view');
     }

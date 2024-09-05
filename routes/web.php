@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
 use App\Http\Controllers\Dashboard\MaintenanceController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\EmailVerificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.homepage');
 })->name('homepage');
+
+//Verify Email
+Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify'])->name('verify.email');
 
 //Routes for User Login
     Route::controller(LoginController::class)->group(function(){

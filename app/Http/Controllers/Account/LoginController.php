@@ -22,7 +22,10 @@ class LoginController extends Controller
 
         if(Auth::guard('customer')->attempt($validate)){
                 $customer = DB::table('customers')->where('customerID',Auth::guard('customer')->id())->first();
-                if($customer->{'verification'} === "verified"){
+                if($customer->{'email_verified_at'} === null){
+                    Session::flush();
+                    return to_route('pending_view');
+                } else {
                     //Sessions
                         Session::put([
                             'customerID' => $customer->{'customerID'},
@@ -34,9 +37,6 @@ class LoginController extends Controller
                         ]);
                     //end
                     return to_route('customer_dashboard');
-                } else {
-                    Session::flush();
-                    return to_route('pending_view');
                 }
         } else {
             echo "Not logged";

@@ -20,7 +20,7 @@
     <section class="container-fluid">
         <div class="container d-flex flex-column align-items-center">
             <img src="Images/pending_art.png" alt="Pending Image" class="img-fluid" width="500">
-            <h3 class="text-center">Your Request is Pending. Please wait until your account is verified</h3>
+            <h3 class="text-center">Your Request is Pending. Please check your gmail inbox or spam</h3>
 
             <form action="/" method="get">
                 @csrf
