@@ -28,7 +28,7 @@
         <main>            
             <x-customer-dashboard.mobile-canvas/>
             <x-customer-dashboard.main-content>
-                <x-customer-dashboard.new-car-form/>
+                <x-customer-dashboard.new-car-form :cars="$cars"/>
             </x-customer-dashboard.main-content>
         </main>
     <!--End-->

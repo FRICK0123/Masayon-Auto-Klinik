@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Car;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,8 @@ class CarController extends Controller
 {
     //New Car Page View
     public function addCarView(){
-        return view('pages.customer_pages.add_new_car');
+        $cars = Car::all();
+        return view('pages.customer_pages.add_new_car',['cars'=>$cars]);
     }
 
     //Add Car
@@ -22,6 +24,10 @@ class CarController extends Controller
         $car_make = $request->input('car_make');
         $car_model = $request->input('car_model');
         $year_of_manufacture = $request->input('year_of_manufacture');
+        $milage = $request->input('milage');
+        $engine_number = $request->input('engine_number');
+        $vehicle_identification_number = $request->input('vehicle_identification_number');
+        $chassis_number = $request->input('chassis_number');
         $plate_number = $request->input('plate_number');
 
         if($request->hasFile('car_image')){
@@ -39,7 +45,7 @@ class CarController extends Controller
 
             $car_image = $fileName;
         } else {
-            $car_image = "sample_car.png";
+            $car_image = $request->input('car_image_hidden');
         }
 
         Vehicle::create([
@@ -48,6 +54,10 @@ class CarController extends Controller
             'model' => $car_model,
             'year_of_manufacture' => $year_of_manufacture,
             'vehicle_image' => $car_image,
+            'milage' => $milage,
+            'engine_number' => $engine_number,
+            'vehicle_identification_number' => $vehicle_identification_number,
+            'chassis_number' => $chassis_number,
             'plate_number' => $plate_number,
         ]);
 
