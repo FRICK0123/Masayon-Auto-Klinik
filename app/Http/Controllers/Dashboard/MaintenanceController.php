@@ -47,7 +47,7 @@ class MaintenanceController extends Controller
                 'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
                 'last_maintenance_date' => $last_maintenance_date,
                 'scheduled_interval' => $scheduled_interval,
-                'oil_type' => $oil_type,
+                'oil_type' => null,
                 'current_milage' => null,
                 'next_milage_schedule' => null,
             ]);

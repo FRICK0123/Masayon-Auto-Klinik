@@ -32,23 +32,27 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Vehicle Make</th>
-                                <th>Vehicle Model</th>
+                                <th>Vehicle</th>
                                 <th>Maintenance Type</th>
                                 <th>Scheduled Interval</th>
                                 <th>Next Maintenance</th>
                                 <th>Last Maintenance</th>
+                                <th>Oil Type</th>
+                                <th>Current Mileage</th>
+                                <th>Next Mileage for Maintenance</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($schedules as $schedule)
                                 <tr>
-                                    <td>{{ $schedule['make'] }}</td> <!-- Access the make from the related vehicle -->
-                                    <td>{{ $schedule['model'] }}</td> <!-- Access the model from the related vehicle -->
+                                    <td>{{ $schedule['make'] }} {{ $schedule['model'] }} {{ $schedule['year_of_manufacture'] }}</td>
                                     <td>{{ $schedule['maintenance_type'] }}</td>
                                     <td>{{ $schedule['scheduled_interval'] }} months</td>
                                     <td>{{ \Carbon\Carbon::parse($schedule['scheduled_date'])->format('F j, Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($schedule['last_maintenance_date'])->format('F j, Y') }}</td>
+                                    <td>{{ $schedule['oil_type'] }}</td>
+                                    <td>{{ $schedule['current_milage'] }}</td>
+                                    <td>{{ $schedule['next_milage_schedule'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
