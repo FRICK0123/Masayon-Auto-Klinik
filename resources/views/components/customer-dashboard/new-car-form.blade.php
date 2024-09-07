@@ -9,6 +9,7 @@
         </div>
 
         <div class="mt-3 container">
+            <label class="fw-bold">You can also upload your own car image:</label>
             <input class="form-control" type="file" id="car_image_file" accept=".jpg,.jpeg,.png" name="car_image">
         </div><br><br>
         <!-- Hidden input field to store car image filename -->
@@ -22,9 +23,10 @@
                         data-make="{{ $car->car_make }}"
                         data-model="{{ $car->car_model }}"
                         data-year="{{ $car->year_of_manufacture }}"
+                        data-engine-type="{{ $car->engine_type }}"
                         data-image="{{ asset('Images/car_images/' .$car->car_image) }}"
                         data-image-file="{{ $car->car_image }}">
-                    {{ $car->car_make }} {{ $car->car_model }} ({{ $car->year_of_manufacture }})
+                    {{ $car->car_make }} {{ $car->car_model }} ({{ $car->year_of_manufacture }}) {{ $car->engine_type }}
                 </option>
             @endforeach
         </select><br>
@@ -38,6 +40,10 @@
 
         <label for="year_of_manufacture" class="fw-bold">Year of Manufacture:</label>
         <input type="text" id="year_of_manufacture" name="year_of_manufacture" class="form-control" readonly><br>
+        <br>
+
+        <label for="engine_type" class="fw-bold">Engine Type:</label>
+        <input type="text" id="engine_type" name="engine_type" class="form-control" readonly><br>
         <br>
 
         <label for="milage" class="fw-bold" required>Milage:</label>
@@ -68,6 +74,7 @@
             const make = selectedOption.getAttribute('data-make');
             const model = selectedOption.getAttribute('data-model');
             const year = selectedOption.getAttribute('data-year');
+            const engine_type = selectedOption.getAttribute('data-engine-type');
             const image = selectedOption.getAttribute('data-image');
             const imageFile = selectedOption.getAttribute('data-image-file');
 
@@ -75,6 +82,7 @@
             document.getElementById('car_make').value = make;
             document.getElementById('car_model').value = model;
             document.getElementById('year_of_manufacture').value = year;
+            document.getElementById('engine_type').value = engine_type;
 
             // Update the car image
             document.getElementById('car_image').src = image;

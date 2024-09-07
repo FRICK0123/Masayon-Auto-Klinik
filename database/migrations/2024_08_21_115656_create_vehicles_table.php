@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('vehicle_identification_number');
             $table->string('chassis_number');
             $table->string('plate_number');
+            $table->string('engine_type');
             $table->timestamps();
         });
     }

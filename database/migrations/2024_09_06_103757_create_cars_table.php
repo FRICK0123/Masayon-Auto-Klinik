@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('car_make');
             $table->string('car_model');
             $table->integer('year_of_manufacture');
+            $table->string('engine_type');
             $table->timestamps();
         });
     }

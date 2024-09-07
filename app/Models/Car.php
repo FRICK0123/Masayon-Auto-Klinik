@@ -13,6 +13,7 @@ class Car extends Model
         'car_image',
         'car_make',
         'car_model',
-        'year_of_manufacture'
+        'year_of_manufacture',
+        'engine_type'
     ]; 
 }

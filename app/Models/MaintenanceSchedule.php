@@ -14,5 +14,8 @@ class MaintenanceSchedule extends Model
         'scheduled_date',
         'last_maintenance_date',
         'scheduled_interval',
+        'oil_type',
+        'current_milage',
+        'next_milage_schedule',
     ];
 }

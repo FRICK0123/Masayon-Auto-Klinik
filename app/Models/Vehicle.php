@@ -20,5 +20,6 @@ class Vehicle extends Model
         'vehicle_identification_number',
         'chassis_number',
         'plate_number',
+        'engine_type'
     ];
 }

@@ -29,6 +29,7 @@ class CarController extends Controller
         $vehicle_identification_number = $request->input('vehicle_identification_number');
         $chassis_number = $request->input('chassis_number');
         $plate_number = $request->input('plate_number');
+        $engine_type = $request->input('engine_type');
 
         if($request->hasFile('car_image')){
             // Get the uploaded file
@@ -58,6 +59,7 @@ class CarController extends Controller
             'engine_number' => $engine_number,
             'vehicle_identification_number' => $vehicle_identification_number,
             'chassis_number' => $chassis_number,
+            'engine_type' => $engine_type,
             'plate_number' => $plate_number,
         ]);
 
