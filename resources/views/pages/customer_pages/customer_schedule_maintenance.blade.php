@@ -28,18 +28,18 @@
         <main>            
             <x-customer-dashboard.mobile-canvas/>
             <x-customer-dashboard.main-content>
-                <div class="container pt-3 p-md-0">
+                <div class="container pt-3 p-md-0 table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Vehicle</th>
-                                <th>Maintenance Type</th>
-                                <th>Scheduled Interval</th>
-                                <th>Next Maintenance</th>
-                                <th>Last Maintenance</th>
-                                <th>Oil Type</th>
-                                <th>Current Mileage</th>
-                                <th>Next Mileage for Maintenance</th>
+                                <th class="bg-dark text-white"><p>Vehicle</p></th>
+                                <th class="bg-dark text-white"><p>Maintenance Type</p></th>
+                                <th class="bg-dark text-white"><p>Scheduled Interval</p></th>
+                                <th class="bg-dark text-white"><p>Next Maintenance</p></th>
+                                <th class="bg-dark text-white"><p>Last Maintenance</p></th>
+                                <th class="bg-dark text-white"><p>Oil Type</p></th>
+                                <th class="bg-dark text-white"><p>Current Mileage</p></th>
+                                <th class="bg-dark text-white"><p>Next Mileage for Maintenance</p></th>
                             </tr>
                         </thead>
                         <tbody>

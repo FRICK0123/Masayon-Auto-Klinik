@@ -38,8 +38,10 @@ class LoginController extends Controller
                     //end
                     return to_route('customer_dashboard');
                 }
+        } else if(Auth::guard('admin')->attempt($validate)){
+            echo "This is Admin";
         } else {
-            echo "Not logged";
+            echo "not logged in";
         }
     }
 

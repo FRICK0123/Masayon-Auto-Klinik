@@ -21,6 +21,7 @@ class Customer extends Authenticatable
         'password',
         'profile_img',
         'verification_token',
+        'usertype'
     ];
 
     protected $dates = [

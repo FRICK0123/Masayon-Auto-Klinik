@@ -37,21 +37,34 @@
             <input type="number" name="mileage_interval" id="mileage_interval" readonly class="form-control"><br>
         </div>
 
-        <label for="scheduled_interval" class="fw-bold">Schedule Interval:</label>
-        <select name="scheduled_interval" id="scheduled_interval" class="form-select" required>
-            <option value="" disabled selected>Select Month Interval</option>
-            <option value="3">3 months</option>
-            <option value="4">4 months</option>
-            <option value="5">5 months</option>
-            <option value="6">6 months</option>
-            <option value="7">7 months</option>
-            <option value="8">8 months</option>
-            <option value="9">9 months</option>
-            <option value="10">10 months</option>
-            <option value="11">11 months</option>
-            <option value="12">12 months</option>
-        </select>
-        <br>
+        <div class="container_fluid" id="schedule_interval_container">
+            <label for="scheduled_interval" class="fw-bold">Schedule Interval:</label>
+            <select name="scheduled_interval" id="scheduled_interval" class="form-select">
+                <option value="" disabled selected>Select Month Interval</option>
+                <option value="3">3 months</option>
+                <option value="4">4 months</option>
+                <option value="5">5 months</option>
+                <option value="6">6 months</option>
+                <option value="7">7 months</option>
+                <option value="8">8 months</option>
+                <option value="9">9 months</option>
+                <option value="10">10 months</option>
+                <option value="11">11 months</option>
+                <option value="12">12 months</option>
+            </select>
+            <br>
+        </div>
+
+        <div class="container_fluid" id="schedule_interval_pms" style="display: none">
+            <label for="scheduled_interval" class="fw-bold">Schedule Interval:</label>
+            <select name="scheduled_interval" id="scheduled_interval" class="form-select">
+                <option value="" disabled selected>Select Month Interval</option>
+                <option value="12">1 year</option>
+                <option value="24">2 year</option>
+                <option value="36">3 year</option>
+            </select>
+            <br>
+        </div>
 
         <input type="hidden" value="{{$vehicle['vehicleID']}}" name="vehicleID">
         <input type="hidden" value="{{ $vehicle['milage'] }}" name="milage">
@@ -69,8 +82,16 @@
     maintenance_type.addEventListener('change', function() {
         if (maintenance_type.value === "Oil Change") {
             document.getElementById('oil_type_container').style.display = "block";
-        } else {
+            document.getElementById('schedule_interval_pms').style.display = "none";
+            document.getElementById('schedule_interval_container').style.display = "block";
+        } else if(maintenance_type.value === "Full PMS"){
+            document.getElementById('schedule_interval_pms').style.display = "block";
+            document.getElementById('schedule_interval_container').style.display = "none";
             document.getElementById('oil_type_container').style.display = "none";
+        } else{
+            document.getElementById('oil_type_container').style.display = "none";
+            document.getElementById('schedule_interval_pms').style.display = "none";
+            document.getElementById('schedule_interval_container').style.display = "block";
             mileage_interval_input.value = ""; // Clear the mileage interval when hidden
         }
     });
