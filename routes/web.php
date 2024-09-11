@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
+use App\Http\Controllers\AdminDashboard\AdminController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
 use App\Http\Controllers\Dashboard\MaintenanceController;
@@ -71,5 +72,11 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/dashboard', 'customerDashboardView')->name('customer_dashboard');
         Route::get('/profile', 'customerProfileView')->name('customer_profile');
         Route::get('/maintenance_schedule', 'scheduleView')->name('customer_maintenance_schedule');
+    });
+//end
+
+//Routes for Admin Dashboard
+    Route::middleware(['auth:admin'])->controller(AdminController::class)->group(function(){
+        Route::get('/admin_dashboard', 'adminDashboardView')->name('admin_dashboard');
     });
 //end
