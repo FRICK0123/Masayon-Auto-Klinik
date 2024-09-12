@@ -7,9 +7,34 @@
 
         <!--dashboard links-->
             <div class="container-fluid mt-4 form_links">
-                <form action="#" method="GET" class="text-white d-flex align-items-center" id="customer_profile">
-                    <img src="{{asset('icons/user-circle.svg')}}" alt="Dashboard Icon" class="">
-                    <p class="m-0">Profile</p>
+                <form action="{{ route('admin_dashboard') }}" method="GET" class="d-flex align-items-center" id="admin_dashboard" onclick="adminDashboard()">
+                    <img src="{{asset('icons/dashboard_black.svg')}}" alt="Dashboard Icon" class="me-2">
+                    <p class="m-0">Dashboard</p>
+                </form>
+
+                <form action="{{ route('admin_cars') }}" method="GET" class="d-flex align-items-center" id="admin_cars" onclick="adminCars()">
+                    <img src="{{asset('icons/car-profile.svg')}}" alt="Cars Icon" class="me-2">
+                    <p class="m-0">Cars</p>
+                </form>
+
+                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                    <img src="{{asset('icons/users.svg')}}" alt="Users Icon" class="me-2">
+                    <p class="m-0">User Management</p>
+                </form>
+
+                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                    <img src="{{asset('icons/gear-fine.svg')}}" alt="Maintenance Overview" class="me-2">
+                    <p class="m-0">Maintenance Overview</p>
+                </form>
+
+                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                    <img src="{{asset('icons/newspaper.svg')}}" alt="Reports" class="me-2">
+                    <p class="m-0">Reports</p>
+                </form>
+
+                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                    <img src="{{asset('icons/bell-ringing.svg')}}" alt="Notifications" class="me-2">
+                    <p class="m-0">Notifications</p>
                 </form>
             </div>
         <!--End-->
@@ -18,6 +43,18 @@
 
 <!--Content-->
     <div class="admin_content">
-        <h1>sdfdfg</h1>
+        {{$slot}}
     </div>
 <!--End-->
+
+<!--script-->
+    <script>
+        function adminDashboard(){
+            document.getElementById('admin_dashboard').submit();
+        }
+
+        function adminCars(){
+            document.getElementById('admin_cars').submit();
+        }
+    </script>
+<!--end-->

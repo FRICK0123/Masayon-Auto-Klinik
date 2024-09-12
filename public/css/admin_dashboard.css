@@ -20,8 +20,8 @@
 }
 
 .form_links form {
-    border-bottom: 1px solid white;
-    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+    padding-bottom: 7px;
     padding-top: 10px;
     cursor: pointer;
     transition: .5s;

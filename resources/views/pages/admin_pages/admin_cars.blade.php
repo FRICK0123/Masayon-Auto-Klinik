@@ -48,7 +48,7 @@
     <!--Main Content-->
     <main>
         <x-admin-dashboard.admin-content>
-            <x-admin-dashboard.dashboard-content/>
+            <x-admin-dashboard.cars-content/>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->

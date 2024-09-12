@@ -3,6 +3,7 @@
 use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\AdminDashboard\AdminController;
+use App\Http\Controllers\AdminDashboard\CarsController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
 use App\Http\Controllers\Dashboard\MaintenanceController;
@@ -75,8 +76,16 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     });
 //end
 
+/*----------ADMIN----------*/
+
 //Routes for Admin Dashboard
     Route::middleware(['auth:admin'])->controller(AdminController::class)->group(function(){
         Route::get('/admin_dashboard', 'adminDashboardView')->name('admin_dashboard');
+    });
+//end
+
+//Routes for Admin Car page
+    Route::middleware(['auth:admin'])->controller(CarsController::class)->group(function(){
+        Route::get('/cars','adminCarsView')->name('admin_cars');
     });
 //end
