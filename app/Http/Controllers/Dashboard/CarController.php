@@ -12,7 +12,7 @@ class CarController extends Controller
 {
     //New Car Page View
     public function addCarView(){
-        $cars = Car::all();
+        $cars = Car::orderBy('car_make','asc')->get();
         return view('pages.customer_pages.add_new_car',['cars'=>$cars]);
     }
 

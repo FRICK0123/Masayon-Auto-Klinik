@@ -48,7 +48,7 @@
     <!--Main Content-->
     <main>
         <x-admin-dashboard.admin-content>
-            <x-admin-dashboard.cars-content :cars="$cars"/>
+            <x-admin-dashboard.admin_car_addform/>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->

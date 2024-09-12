@@ -1,9 +1,11 @@
+@props(['cars'])
+
 <div class="container">
     <h2 class="pb-2 border-bottom">CARS</h2>
 
     <!--Functionalities-->
         <div class="d-flex justify-content-between">
-            <form action="#" method="get">
+            <form action="{{ route('car_form') }}" method="get">
                 <button class="btn btn-dark"><small>+ ADD CAR </small></button>
             </form>
 
@@ -28,6 +30,15 @@
                 <th>YEAR</th>
                 <th>ENGINE TYPE</th>
             </tr>
+            @foreach ($cars as $car)
+                <tr>
+                    <td>{{ $car['car_image'] }}</td>
+                    <td>{{ $car['car_make'] }}</td>
+                    <td>{{ $car['car_model'] }}</td>
+                    <td>{{ $car['year_of_manufacture'] }}</td>
+                    <td>{{ $car['engine_type'] }}</td>
+                </tr>
+            @endforeach
         </table>
     <!--End-->
 </div>

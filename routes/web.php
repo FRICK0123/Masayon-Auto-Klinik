@@ -87,5 +87,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //Routes for Admin Car page
     Route::middleware(['auth:admin'])->controller(CarsController::class)->group(function(){
         Route::get('/cars','adminCarsView')->name('admin_cars');
+        Route::get('/add_car_form','carFormView')->name('car_form');
+        Route::post('/car_store','storeCar')->name('store_car');
     });
 //end

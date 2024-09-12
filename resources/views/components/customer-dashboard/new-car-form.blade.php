@@ -1,7 +1,7 @@
 @props(['cars'])
 
 <div class="container w-75 border border-2 shadow pt-3 pb-3">
-    <h2 class="text-center">Add New Car</h2>
+    <h2 class="text-center">Add Your Car</h2>
     <form action="{{ route('add_car') }}" method="post" class="container" enctype="multipart/form-data">
         @csrf
         <div class="car_img_wrapper mt-5">
