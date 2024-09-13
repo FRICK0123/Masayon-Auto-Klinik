@@ -57,7 +57,7 @@ class CarsController extends Controller
         $query = Car::query();
 
         if ($filter_value == "by_make") {
-            return to_route('admin_cars');
+            $query->orderBy('car_make', 'asc');
         } elseif ($filter_value == "by_model") {
             $query->orderBy('car_model', 'asc');
         } elseif ($filter_value == "by_year") {
@@ -65,7 +65,12 @@ class CarsController extends Controller
         }
 
         $cars = $query->get();
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('partials.car_table', compact('cars'))->render();
+        }
 
         return view('pages.admin_pages.admin_cars', ['cars' => $cars]);
+
     }
 }

@@ -13,12 +13,15 @@
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
                 </button>
-                <form action="{{ route('car_filter') }}" method="GET" class="dropdown-menu p-2">
-                    <input type="radio" id="by_make" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_make"><label for="by_make" class="ms-2">By Make</label><br><br>
+                <form id="carFilterForm" action="{{ route('car_filter') }}" method="GET" class="dropdown-menu p-2">
+                    <input type="radio" id="by_make" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_make">
+                    <label for="by_make" class="ms-2">By Make</label><br><br>
 
-                    <input type="radio" id="by_model" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_model"><label for="by_model" class="ms-2">By Model</label><br><br>
+                    <input type="radio" id="by_model" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_model">
+                    <label for="by_model" class="ms-2">By Model</label><br><br>
 
-                    <input type="radio" id="by_year" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_year"><label for="by_year" class="ms-2">By Year</label><br><br>
+                    <input type="radio" id="by_year" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_year">
+                    <label for="by_year" class="ms-2">By Year</label><br><br>
 
                     <button type="submit" class="btn btn-dark">Filter</button>
                 </form>
@@ -27,6 +30,7 @@
     <!--end-->
 
     <!--Cars table-->
+    <div id="carTableContainer">
         <table class="table table-striped table-responsive">
             <tr>
                 <th>CAR IMAGE</th>
@@ -43,9 +47,18 @@
                     <td>{{ $car['car_model'] }}</td>
                     <td>{{ $car['year_of_manufacture'] }}</td>
                     <td>{{ $car['engine_type'] }}</td>
-                    <td>...</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                <li><a class="dropdown-item bg-danger text-light" href="#">Delete</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
             @endforeach
         </table>
+    </div>
     <!--End-->
 </div>

@@ -40,7 +40,7 @@
     <!--end-->
 
     <!--Header-->
-        <header style="position: fixed; width: 100%;">
+        <header style="position: fixed; width: 100%; z-index: 100;">
             <x-admin-dashboard.header/>
         </header>
     <!--Header end-->
@@ -52,6 +52,32 @@
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->
+
+    <script>
+        document.getElementById('carFilterForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            // Get the form data
+            let formData = new FormData(this);
+            let queryString = new URLSearchParams(formData).toString(); // Convert form data to query string
+
+            // Send an AJAX request with query parameters
+            fetch("{{ route('car_filter') }}?" + queryString, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+            .then(response => response.text()) // Get the response as text (since Blade returns HTML)
+            .then(html => {
+                // Replace the car table with the updated data
+                document.getElementById('carTableContainer').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -40,7 +40,7 @@
     <!--end-->
 
     <!--Header-->
-        <header style="position: fixed; width: 100%;">
+        <header style="position: fixed; width: 100%; z-index: 100;">
             <x-admin-dashboard.header/>
         </header>
     <!--Header end-->
