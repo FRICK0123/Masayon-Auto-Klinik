@@ -89,5 +89,6 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/cars','adminCarsView')->name('admin_cars');
         Route::get('/add_car_form','carFormView')->name('car_form');
         Route::post('/car_store','storeCar')->name('store_car');
+        Route::get('/car_filter', 'carFilter')->name('car_filter');
     });
 //end

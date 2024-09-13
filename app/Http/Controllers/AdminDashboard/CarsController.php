@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class CarsController extends Controller
 {
@@ -49,5 +50,22 @@ class CarsController extends Controller
         ]);
 
         return to_route('admin_cars');
+    }
+
+    public function carFilter(Request $request){
+        $filter_value = $request->input('filter_cars');
+        $query = Car::query();
+
+        if ($filter_value == "by_make") {
+            return to_route('admin_cars');
+        } elseif ($filter_value == "by_model") {
+            $query->orderBy('car_model', 'asc');
+        } elseif ($filter_value == "by_year") {
+            $query->orderBy('year_of_manufacture', 'asc');
+        }
+
+        $cars = $query->get();
+
+        return view('pages.admin_pages.admin_cars', ['cars' => $cars]);
     }
 }
