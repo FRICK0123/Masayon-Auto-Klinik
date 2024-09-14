@@ -17,7 +17,7 @@
                     <p class="m-0">Cars</p>
                 </form>
 
-                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                <form action="{{ route('users_view') }}" method="GET" class="d-flex align-items-center" id="admin_user_management" onclick="adminUserManagement()">
                     <img src="{{asset('icons/users.svg')}}" alt="Users Icon" class="me-2">
                     <p class="m-0">User Management</p>
                 </form>
@@ -55,6 +55,10 @@
 
         function adminCars(){
             document.getElementById('admin_cars').submit();
+        }
+
+        function adminUserManagement(){
+            document.getElementById('admin_user_management').submit();
         }
     </script>
 <!--end-->

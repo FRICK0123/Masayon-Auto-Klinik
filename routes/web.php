@@ -4,11 +4,13 @@ use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\AdminDashboard\AdminController;
 use App\Http\Controllers\AdminDashboard\CarsController;
+use App\Http\Controllers\AdminDashboard\UserManagementController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
 use App\Http\Controllers\Dashboard\MaintenanceController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\EmailVerificationController;
+use App\View\Components\AdminDashboard\UserManagementContent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,5 +92,11 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/add_car_form','carFormView')->name('car_form');
         Route::post('/car_store','storeCar')->name('store_car');
         Route::get('/car_filter', 'carFilter')->name('car_filter');
+    });
+//end
+
+//Routes for Admin User Management
+    Route::middleware(['auth:admin'])->controller(UserManagementController::class)->group(function(){
+        Route::get('/user_management','usersView')->name('users_view');
     });
 //end

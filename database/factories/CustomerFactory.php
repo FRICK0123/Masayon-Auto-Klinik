@@ -27,6 +27,7 @@ class CustomerFactory extends Factory
             'profile_img' => 'default_user.png', // You can change this according to your logic
             'email_verified_at' => now(), // Set this to `now()` for verified users
             'verification_token' => Str::random(40), // Generate a random verification token
+            'isVerified' => true,
             'usertype' => "customer",
             'created_at' => now(),
             'updated_at' => now(),

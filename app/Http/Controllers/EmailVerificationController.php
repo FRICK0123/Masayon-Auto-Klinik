@@ -17,6 +17,7 @@ class EmailVerificationController extends Controller
 
         $user->email_verified_at = now();
         $user->verification_token = null; // Invalidate the token
+        $user->isVerified = true;
         $user->save();
 
         return redirect('/login')->with('success', 'Your email has been verified!');

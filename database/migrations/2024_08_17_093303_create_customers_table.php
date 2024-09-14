@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('profile_img');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_token')->nullable();
+            $table->boolean('isVerified');
             $table->string('usertype');
             $table->timestamps();
         });

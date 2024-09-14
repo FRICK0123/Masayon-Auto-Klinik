@@ -67,6 +67,7 @@ class RegisterController extends Controller
             'password' => $password,
             'profile_img' => "default_user.png",
             'verification_token' => Str::random(60),
+            'isVerified' => false,
             'usertype' => "customer",
         ]);
         // Send verification email
