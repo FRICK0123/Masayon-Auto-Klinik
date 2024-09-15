@@ -51,8 +51,28 @@
                         <div class="dropdown">
                             <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                <li><a class="dropdown-item bg-danger text-light" href="#">Delete</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#editBackdrop"
+                                       data-car-id="{{ $car['id'] }}"
+                                       data-car-image="{{ asset('Images/car_images/'.$car['car_image']) }}"
+                                       data-car-make="{{ $car['car_make'] }}"
+                                       data-car-model="{{ $car['car_model'] }}"
+                                       data-car-year="{{ $car['year_of_manufacture'] }}"
+                                       data-car-engine="{{ $car['engine_type'] }}"
+                                       onclick="populateModal(this)">
+                                        Edit
+                                    </a>
+                                </li>
+                                <li><a class="dropdown-item bg-danger text-light" href="#"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteBackdrop"
+                                    data-car-id-delete="{{ $car['id'] }}"
+                                    onclick="deleteCar(this)">
+                                        Delete
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </td>
@@ -62,3 +82,108 @@
     </div>
     <!--End-->
 </div>
+
+<!--Edit Modal-->
+    <div class="modal fade" id="editBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Car Information</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="editCarForm" action="#" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" id="car_id" name="car_id">
+
+                <!-- Car Image -->
+                <div class="mb-3">
+                    <label for="car_image" class="form-label">Car Image</label>
+                    <div>
+                        <img id="car_image_preview" src="" alt="Car Image" width="150" height="150">
+                    </div>
+                    <input type="file" class="form-control mt-2" id="car_image" name="car_image">
+                </div>
+
+                <!-- Car Make -->
+                <div class="mb-3">
+                    <label for="car_make" class="form-label">Car Make</label>
+                    <input type="text" class="form-control" id="car_make" name="car_make" required>
+                </div>
+
+                <!-- Car Model -->
+                <div class="mb-3">
+                    <label for="car_model" class="form-label">Car Model</label>
+                    <input type="text" class="form-control" id="car_model" name="car_model" required>
+                </div>
+
+                <!-- Year of Manufacture -->
+                <div class="mb-3">
+                    <label for="car_year" class="form-label">Year of Manufacture</label>
+                    <input type="number" class="form-control" id="car_year" name="car_year" required>
+                </div>
+
+                <!-- Engine Type -->
+                <div class="mb-3">
+                    <label for="engine_type" class="form-label">Engine Type</label>
+                    <input type="text" class="form-control" id="engine_type" name="engine_type" required>
+                </div>
+                
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+<!--end-->
+
+<!--Delete Modal-->
+    <div class="modal fade" id="deleteBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Car</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="deleteCarForm" action="#" method="POST">
+                @csrf
+                @method('delete')
+                <h3>Do you want to delete this car</h3><br><br>                
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+<!--end-->
+
+<script>
+    //Edit Option
+    function populateModal(element) {
+        // Get data from clicked edit button
+        const carId = element.getAttribute('data-car-id');
+        const carImage = element.getAttribute('data-car-image');
+        const carMake = element.getAttribute('data-car-make');
+        const carModel = element.getAttribute('data-car-model');
+        const carYear = element.getAttribute('data-car-year');
+        const carEngine = element.getAttribute('data-car-engine');
+
+        // Populate modal fields
+        document.getElementById('car_id').value = carId;
+        document.getElementById('car_image_preview').src = carImage;
+        document.getElementById('car_make').value = carMake;
+        document.getElementById('car_model').value = carModel;
+        document.getElementById('car_year').value = carYear;
+        document.getElementById('engine_type').value = carEngine;
+        document.getElementById('editCarForm').action = `/edit_car/${carId}`;
+    }
+
+    //Delete option
+    function deleteCar(element){
+        const carId = element.getAttribute('data-car-id-delete');
+        document.getElementById('deleteCarForm').action = `/delete_car/${carId}`;
+    }
+</script>

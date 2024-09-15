@@ -48,7 +48,15 @@
                     @else
                         <td>{{ $schedule->next_milage_schedule }} miles</td>
                     @endif
-                    <td>...</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">View</a></li>
+                                <li><a class="dropdown-item" href="#">Notify</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
             @endforeach
         </table>

@@ -15,10 +15,12 @@ class CarsController extends Controller
         return view('pages.admin_pages.admin_cars',['cars'=>$cars]);
     }
 
+    //Cars Form
     public function carFormView(){
         return view('pages.admin_pages.admin_add_new_car');
     }
 
+    //Store Cars to the database
     public function storeCar(Request $request){
         if ($request->hasFile('car_image')) {
             // Get the uploaded file
@@ -52,6 +54,7 @@ class CarsController extends Controller
         return to_route('admin_cars');
     }
 
+    //Cars Filter
     public function carFilter(Request $request){
         $filter_value = $request->input('filter_cars');
         $query = Car::query();
@@ -71,6 +74,24 @@ class CarsController extends Controller
         }
 
         return view('pages.admin_pages.admin_cars', ['cars' => $cars]);
+    }
 
+    //Edit Cars Information
+    public function carEdit(Request $request, $id){
+        Car::where('id', $id)->update([
+            'car_make' => $request->input('car_make'),
+            'car_model' => $request->input('car_model'),
+            'year_of_manufacture' => $request->input('car_year'),
+            'engine_type' => $request->input('engine_type')
+        ]);
+
+        return redirect()->route('admin_cars')->with('success', 'Car updated successfully.');
+    }
+
+    //Delete car
+    public function carDelete($id){
+        $car = Car::where('id',$id)->first();
+        $car->delete();
+        return to_route('admin_cars');
     }
 }
