@@ -4,13 +4,16 @@ use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\AdminDashboard\AdminController;
 use App\Http\Controllers\AdminDashboard\CarsController;
+use App\Http\Controllers\AdminDashboard\MaintenanceOverviewController;
 use App\Http\Controllers\AdminDashboard\UserManagementController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
 use App\Http\Controllers\Dashboard\MaintenanceController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\EmailVerificationController;
+use App\View\Components\AdminDashboard\MaintenanceOverviewContent;
 use App\View\Components\AdminDashboard\UserManagementContent;
+use Illuminate\Contracts\Foundation\MaintenanceMode;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -98,5 +101,11 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //Routes for Admin User Management
     Route::middleware(['auth:admin'])->controller(UserManagementController::class)->group(function(){
         Route::get('/user_management','usersView')->name('users_view');
+    });
+//end
+
+//Routes for Admin Maintenance Overview
+    Route::middleware(['auth:admin'])->controller(MaintenanceOverviewController::class)->group(function (){
+        Route::get('/maintenance_overview', 'maintenanceOverview')->name('maintenance_overview');
     });
 //end

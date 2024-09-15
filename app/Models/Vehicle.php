@@ -22,4 +22,16 @@ class Vehicle extends Model
         'plate_number',
         'engine_type'
     ];
+
+    protected $table = 'vehicles';
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customerID', 'customerID');
+    }
+
+    public function maintenanceSchedule()
+    {
+        return $this->hasOne(MaintenanceSchedule::class, 'vehicleID', 'vehicleID');
+    }
 }

@@ -18,4 +18,11 @@ class MaintenanceSchedule extends Model
         'current_milage',
         'next_milage_schedule',
     ];
+
+    protected $table = 'maintenance_schedules';
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicleID', 'vehicleID');
+    }
 }

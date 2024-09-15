@@ -22,7 +22,7 @@
                     <p class="m-0">User Management</p>
                 </form>
 
-                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                <form action="{{ route('maintenance_overview') }}" method="GET" class="d-flex align-items-center" id="maintenance_overview" onclick="adminMaintenanceOverview()">
                     <img src="{{asset('icons/gear-fine.svg')}}" alt="Maintenance Overview" class="me-2">
                     <p class="m-0">Maintenance Overview</p>
                 </form>
@@ -59,6 +59,10 @@
 
         function adminUserManagement(){
             document.getElementById('admin_user_management').submit();
+        }
+
+        function adminMaintenanceOverview(){
+            document.getElementById('maintenance_overview').submit();
         }
     </script>
 <!--end-->

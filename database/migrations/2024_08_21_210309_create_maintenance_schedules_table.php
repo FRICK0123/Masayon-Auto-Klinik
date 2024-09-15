@@ -18,9 +18,9 @@ return new class extends Migration
             $table->date('scheduled_date');
             $table->date('last_maintenance_date');
             $table->integer('scheduled_interval');
-            $table->string('oil_type');
-            $table->integer('current_milage');
-            $table->integer('next_milage_schedule');
+            $table->string('oil_type')->nullable();
+            $table->integer('current_milage')->nullable();
+            $table->integer('next_milage_schedule')->nullable();
             $table->timestamps();
         });
     }

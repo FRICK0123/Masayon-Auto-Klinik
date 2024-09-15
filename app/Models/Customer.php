@@ -28,4 +28,9 @@ class Customer extends Authenticatable
     protected $dates = [
         'email_verified_at',
     ];
+
+    protected $table = 'customers';
+    public function vehicles(){
+        return $this->hasMany(Vehicle::class, 'customerID', 'customerID');
+    }
 }
