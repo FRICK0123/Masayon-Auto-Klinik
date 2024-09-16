@@ -4,8 +4,10 @@ namespace App\Http\Controllers\AdminDashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserManagementController extends Controller
 {
@@ -65,5 +67,18 @@ class UserManagementController extends Controller
         }
 
         return view('pages.admin_pages.admin_user_management', ["users" => $user]);
+    }
+
+    //View Users page
+    public function viewUserInfo($customerID){
+        $customer = Customer::where('customerID',$customerID)->first();
+        return view('pages.admin_pages.admin_users.admin_view_user',['customer' => $customer]);
+    }
+
+    //View User's vehicle
+    public function viewUserVehicleInfo($customerID){
+        $vehicles = Vehicle::where('customerID',$customerID)->get();
+        $customer = Customer::where('customerID', $customerID)->first();
+        return view('pages.admin_pages.admin_users.admin_view_user_vehicles',['vehicles' => $vehicles, 'customer' => $customer]);
     }
 }

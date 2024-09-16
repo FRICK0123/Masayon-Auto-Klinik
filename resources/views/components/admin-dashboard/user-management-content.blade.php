@@ -53,7 +53,7 @@
                     <td>0{{ $user['phone_number'] }}</td>
                     <td>{{ $user['username'] }}</td>
                     @if ($user['isVerified'] == 1)
-                        <td>verified</td>
+                        <td class="bg-success text-light">verified</td>
                     @else
                         <td>not verified</td>
                     @endif
@@ -61,7 +61,7 @@
                         <div class="dropdown">
                             <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">View</a></li>
+                                <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
                                 <li><a class="dropdown-item" href="#">Edit</a></li>
                                 <li><a class="dropdown-item bg-danger text-light" href="#">Deactivate</a></li>
                             </ul>

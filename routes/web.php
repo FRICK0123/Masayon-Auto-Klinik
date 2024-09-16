@@ -105,6 +105,8 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/user_management','usersView')->name('users_view');
         Route::post('/register_user','storeUser')->name('store_user');
         Route::get('/user_filter','userFilter')->name('user_filter');
+        Route::get('/view_user/{customerID}', 'viewUserInfo')->name('view_user_info');
+        Route::get('/view_user_vehicles/{customerID}', 'viewUserVehicleInfo')->name('view_user_vehicle_info');
     });
 //end
 
