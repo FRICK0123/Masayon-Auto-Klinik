@@ -103,6 +103,8 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //Routes for Admin User Management
     Route::middleware(['auth:admin'])->controller(UserManagementController::class)->group(function(){
         Route::get('/user_management','usersView')->name('users_view');
+        Route::post('/register_user','storeUser')->name('store_user');
+        Route::get('/user_filter','userFilter')->name('user_filter');
     });
 //end
 

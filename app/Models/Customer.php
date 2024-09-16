@@ -20,6 +20,7 @@ class Customer extends Authenticatable
         'username',
         'password',
         'profile_img',
+        'email_verified_at',
         'verification_token',
         'isVerified',
         'usertype'
