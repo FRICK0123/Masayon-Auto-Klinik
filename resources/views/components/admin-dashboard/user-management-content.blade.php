@@ -54,6 +54,8 @@
                     <td>{{ $user['username'] }}</td>
                     @if ($user['isVerified'] == 1)
                         <td class="bg-success text-light">verified</td>
+                    @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
+                        <td class="bg-danger text-light">deactivated</td>
                     @else
                         <td>not verified</td>
                     @endif

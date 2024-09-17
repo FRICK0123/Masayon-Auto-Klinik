@@ -37,17 +37,53 @@
                 <th></th>
             </tr>
 
+            @php
+                $now = \Carbon\Carbon::now();
+            @endphp
+
             @foreach ($schedules as $schedule)
-                <tr>
+                @php
+                    // Time-based logic
+                    $scheduledDate = \Carbon\Carbon::parse($schedule->scheduled_date);
+                    $isNearingDate = $scheduledDate->diffInMonths($now) <= 3 && $scheduledDate >= $now;
+
+                    // Mileage-based logic (for oil type maintenance)
+                    $isNearingMileage = false;
+                    if ($schedule->maintenance_type == 'Oil Change') {
+                        $currentMileage = $schedule->current_milage;
+                        $nextMileage = $schedule->next_milage_schedule;
+
+                        // Check if the mileage has been reached or exceeded
+                        if ($currentMileage >= $nextMileage) {
+                            $isNearingMileage = true;
+                        }
+                    }
+                @endphp
+                <!-- Highlight if either the time is nearing or mileage is reached -->
+                <tr @if($isNearingDate || $isNearingMileage) class="table-danger" @endif>
                     <td>{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</td>
                     <td>{{ $schedule->vehicle->customer->fullname }}</td>
                     <td>{{ $schedule->maintenance_type }}</td>
                     <td>{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}</td>
-                    @if ($schedule->next_milage_schedule == null)
-                        <td></td>
+                    
+                    <!-- Show mileage if it's an oil type maintenance -->
+                    @if ($schedule->maintenance_type == 'Oil Change')
+                        <td>{{ $schedule->next_milage_schedule }} miles
+                            @if($isNearingMileage)
+                                <span class="badge bg-danger">Mileage Reached!</span>
+                            @elseif($isNearingDate)
+                                <span class="badge bg-danger">Schedule for Maintenance!</span>
+                            @endif
+                        </td>
                     @else
-                        <td>{{ $schedule->next_milage_schedule }} miles</td>
+                        <td>
+                            N/A
+                            @if($isNearingDate)
+                                <span class="badge bg-danger">Schedule for Maintenance!</span>
+                            @endif
+                        </td>
                     @endif
+                    
                     <td>
                         <div class="dropdown">
                             <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
