@@ -3,12 +3,42 @@
 namespace App\Http\Controllers\AdminDashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use App\Models\MaintenanceSchedule;
+use App\Models\Vehicle;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     //admin dashboard view
     public function adminDashboardView(){
-        return view('pages.admin_pages.admin_dashboard');
+        $schedules = MaintenanceSchedule::with(['vehicle.customer'])
+            ->where(function ($query) {
+                // Condition for 'Oil Change' maintenance type
+                $query->where('maintenance_type', 'Oil Change')
+                    ->where(function ($subQuery) {
+                        $subQuery->whereBetween('scheduled_date', [now(), Carbon::now()->addMonths(3)])
+                            ->orWhereColumn('current_milage', '>=', 'next_milage_schedule');
+                    })
+                    ->whereNotNull('oil_type')
+                    ->whereNotNull('current_milage')
+                    ->whereNotNull('next_milage_schedule');
+            })
+            ->orWhere(function ($query) {
+                // Condition for non-'Oil Change' maintenance type
+                $query->where('maintenance_type', '!=', 'Oil Change')
+                    ->whereBetween('scheduled_date', [now(), Carbon::now()->addMonths(3)]);
+            })
+            ->get();
+        $scheduleCount = $schedules->count();
+        $customerCount = Customer::all()->count();
+        $vehicleCount = Vehicle::all()->count();
+        return view('pages.admin_pages.admin_dashboard',[
+            'schedules' => $schedules,
+            'scheduleCount' => $scheduleCount,
+            'customerCount' => $customerCount,
+            'vehicleCount' => $vehicleCount,
+        ]);
     }
 }
