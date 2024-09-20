@@ -9,7 +9,7 @@
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
                 </button>
-                <form id="carFilterForm" action="{{ route('car_filter') }}" method="GET" class="dropdown-menu p-2">
+                {{-- <form id="carFilterForm" action="{{ route('car_filter') }}" method="GET" class="dropdown-menu p-2">
                     <input type="radio" id="by_make" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_make">
                     <label for="by_make" class="ms-2">By Make</label><br><br>
 
@@ -20,7 +20,7 @@
                     <label for="by_year" class="ms-2">By Year</label><br><br>
 
                     <button type="submit" class="btn btn-dark">Filter</button>
-                </form>
+                </form> --}}
             </div>
         </div>
     <!--end-->

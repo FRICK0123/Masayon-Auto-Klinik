@@ -64,6 +64,8 @@
                             <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
+                                <li><a class="dropdown-item" href="{{ route('add_vehicle_view',$user['customerID']) }}">Add Vehicle</a></li>
+                                <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
                                 <li><a class="dropdown-item" href="#">Edit</a></li>
                                 <li><a class="dropdown-item bg-danger text-light" href="#">Deactivate</a></li>
                             </ul>

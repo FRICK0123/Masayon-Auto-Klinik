@@ -28,6 +28,11 @@
                 </form>
 
                 <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                    <img src="{{asset('icons/history_black.svg')}}" alt="Reports" class="me-2">
+                    <p class="m-0">Maintenance History</p>
+                </form>
+
+                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
                     <img src="{{asset('icons/newspaper.svg')}}" alt="Reports" class="me-2">
                     <p class="m-0">Reports</p>
                 </form>

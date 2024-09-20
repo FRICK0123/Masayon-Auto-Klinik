@@ -19,7 +19,16 @@
                 <td>{{ $vehicle['model'] }}</td>
                 <td>{{ $vehicle['year_of_manufacture'] }}</td>
                 <td>{{ $vehicle['engine_type'] }}</td>
-                <td>...</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">View</a></li>
+                            <li><a class="dropdown-item" href="{{ route('add_user_vehicle_maintenance_schedule_view',$vehicle['vehicleID']) }}">Add Maintenance Schedule</a></li>
+                            <li><a class="dropdown-item bg-danger text-light" href="#">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
             </tr>
         @endforeach
     </table>
