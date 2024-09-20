@@ -12,6 +12,7 @@
             <option value="Tire Change">Tire Change</option>
             <option value="Basic PMS">Basic PMS</option>
             <option value="Full PMS">Full PMS</option>
+            <option value="Car Checkup & Repair">Car Checkup & Repair</option>
         </select><br>
 
         <label for="maintenance_date" class="fw-bold">

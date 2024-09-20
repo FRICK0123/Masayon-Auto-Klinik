@@ -26,6 +26,11 @@
                     <img src="{{asset('icons/gear-fine.svg')}}" alt="Maintenance Overview" class="me-2">
                     <p class="m-0">Maintenance Overview</p>
                 </form>
+                
+                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                    <img src="{{asset('icons/pulse.svg')}}" alt="Maintenance Status" class="me-2">
+                    <p class="m-0">Maintenance Status</p>
+                </form>
 
                 <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
                     <img src="{{asset('icons/history_black.svg')}}" alt="Reports" class="me-2">

@@ -45,7 +45,7 @@
                 @php
                     // Time-based logic
                     $scheduledDate = \Carbon\Carbon::parse($schedule->scheduled_date);
-                    $isNearingDate = $scheduledDate->diffInMonths($now) <= 3 && $scheduledDate >= $now;
+                    $isNearingDate = $scheduledDate->diffInDays($now) <= 7 && $scheduledDate >= $now;
 
                     // Mileage-based logic (for oil type maintenance)
                     $isNearingMileage = false;

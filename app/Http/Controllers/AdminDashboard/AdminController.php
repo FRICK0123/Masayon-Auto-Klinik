@@ -18,7 +18,7 @@ class AdminController extends Controller
                 // Condition for 'Oil Change' maintenance type
                 $query->where('maintenance_type', 'Oil Change')
                     ->where(function ($subQuery) {
-                        $subQuery->whereBetween('scheduled_date', [now(), Carbon::now()->addMonths(3)])
+                        $subQuery->whereBetween('scheduled_date', [now(), Carbon::now()->addDays(7)])
                             ->orWhereColumn('current_milage', '>=', 'next_milage_schedule');
                     })
                     ->whereNotNull('oil_type')
@@ -28,7 +28,7 @@ class AdminController extends Controller
             ->orWhere(function ($query) {
                 // Condition for non-'Oil Change' maintenance type
                 $query->where('maintenance_type', '!=', 'Oil Change')
-                    ->whereBetween('scheduled_date', [now(), Carbon::now()->addMonths(3)]);
+                    ->whereBetween('scheduled_date', [now(), Carbon::now()->addDays(7)]);
             })
             ->get();
         $scheduleCount = $schedules->count();
