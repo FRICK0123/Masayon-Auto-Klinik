@@ -39,6 +39,7 @@
                                     data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
                                     data-previous-milage="{{ $schedule->vehicle->milage }}"
                                     data-maintenance-type="{{ $schedule->maintenance_type }}"
+                                    data-oil-type="{{ $schedule->oil_type }}"
                                     data-scheduled-interval="{{ $schedule->scheduled_interval }}"
                                     onclick="fillData(this)">
                                         Update
@@ -85,6 +86,7 @@
             <input type="hidden" id="previous_milage" name="previous_milage">
             <input type="hidden" id="maintenance_type" name="maintenance_type">
             <input type="hidden" id="scheduled_interval" name="scheduled_interval">
+            <input type="hidden" id="oil_type" name="oil_type">
 
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Mark as Completed</button>
@@ -106,6 +108,7 @@
             const previous_milage = element.getAttribute('data-previous-milage');
             const maintenance_type = element.getAttribute('data-maintenance-type');
             const scheduled_interval = element.getAttribute('data-scheduled-interval');
+            const oil_type = element.getAttribute('data-oil-type');
 
             //fill input values
             document.getElementById('maintenance_id').value = maintenance_id;
@@ -116,7 +119,7 @@
             document.getElementById('previous_milage').value = previous_milage;
             document.getElementById('maintenance_type').value = maintenance_type;
             document.getElementById('scheduled_interval').value = scheduled_interval;
-
+            document.getElementById('oil_type').value = oil_type;
         }
     </script>
 <!--end-->

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\AdminDashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\MaintenanceHistory;
 use App\Models\MaintenanceSchedule;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MaintenanceStatusController extends Controller
 {
@@ -62,7 +64,137 @@ class MaintenanceStatusController extends Controller
         $maintenance_description = $request->input('maintenance_description');
         $maintenance_status = "completed";
         $date_performed = Carbon::now();
+        $oil_type = $request->input('oil_type');
         
-        //Brainstorm for ways in code to handle updating the data in database when the admin marks the status completed
+        if(($maintenance_type == "Oil Change" && $oil_type == "Conventional Motor Oil") || ($maintenance_type == "Oil Change" && $oil_type == "High-Mileage Motor Oil")){
+            Vehicle::where('vehicleID',$vehicleID)->update(['milage'=>$current_milage]);
+            $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
+            MaintenanceSchedule::where('maintenanceID',$maintenanceID)->update([
+                'scheduled_date' => Carbon::today()->addMonths($maintenance->scheduled_interval),
+                'last_maintenance_date' => Carbon::today(),
+                'current_milage' => $current_milage,
+                'next_milage_schedule' => $current_milage + 5000,
+            ]);
+            
+            MaintenanceHistory::create([
+                'maintenanceID' => $maintenanceID,
+                'vehicleID' => $vehicleID,
+                'customerID' => $customerID,
+                'owner' => $owner,
+                'vehicle' => $vehicle,
+                'previous_milage' => $previous_milage,
+                'current_milage' => $current_milage,
+                'maintenance_type' => $maintenance_type,
+                'cost' => $cost,
+                'maintenance_description' => $maintenance_description,
+                'maintenance_status' => $maintenance_status,
+                'date_performed' => $date_performed
+            ]);
+
+            echo "Database Updated!";
+        } else if(($maintenance_type == "Oil Change" && $oil_type == "Synthetic Blend Motor Oil") || ($maintenance_type == "Oil Change" && $oil_type == "Turbo Charged Engine Oil")){
+            Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
+            $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
+            MaintenanceSchedule::where('maintenanceID', $maintenanceID)->update([
+                'scheduled_date' => Carbon::today()->addMonths($maintenance->scheduled_interval),
+                'last_maintenance_date' => Carbon::today(),
+                'current_milage' => $current_milage,
+                'next_milage_schedule' => $current_milage + 7500,
+            ]);
+
+            MaintenanceHistory::create([
+                'maintenanceID' => $maintenanceID,
+                'vehicleID' => $vehicleID,
+                'customerID' => $customerID,
+                'owner' => $owner,
+                'vehicle' => $vehicle,
+                'previous_milage' => $previous_milage,
+                'current_milage' => $current_milage,
+                'maintenance_type' => $maintenance_type,
+                'cost' => $cost,
+                'maintenance_description' => $maintenance_description,
+                'maintenance_status' => $maintenance_status,
+                'date_performed' => $date_performed
+            ]);
+
+            echo "Database Updated!";
+        } else if($maintenance_type == "Oil Change" && $oil_type == "Full Synthetic Motor Oil"){
+            Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
+            $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
+            MaintenanceSchedule::where('maintenanceID', $maintenanceID)->update([
+                'scheduled_date' => Carbon::today()->addMonths($maintenance->scheduled_interval),
+                'last_maintenance_date' => Carbon::today(),
+                'current_milage' => $current_milage,
+                'next_milage_schedule' => $current_milage + 10000,
+            ]);
+
+            MaintenanceHistory::create([
+                'maintenanceID' => $maintenanceID,
+                'vehicleID' => $vehicleID,
+                'customerID' => $customerID,
+                'owner' => $owner,
+                'vehicle' => $vehicle,
+                'previous_milage' => $previous_milage,
+                'current_milage' => $current_milage,
+                'maintenance_type' => $maintenance_type,
+                'cost' => $cost,
+                'maintenance_description' => $maintenance_description,
+                'maintenance_status' => $maintenance_status,
+                'date_performed' => $date_performed
+            ]);
+
+            echo "Database Updated!";
+        } else if($maintenance_type == "Oil Change" && $oil_type == "Diesel Engine Oil"){
+            Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
+            $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
+            MaintenanceSchedule::where('maintenanceID', $maintenanceID)->update([
+                'scheduled_date' => Carbon::today()->addMonths($maintenance->scheduled_interval),
+                'last_maintenance_date' => Carbon::today(),
+                'current_milage' => $current_milage,
+                'next_milage_schedule' => $current_milage + 7000,
+            ]);
+
+            MaintenanceHistory::create([
+                'maintenanceID' => $maintenanceID,
+                'vehicleID' => $vehicleID,
+                'customerID' => $customerID,
+                'owner' => $owner,
+                'vehicle' => $vehicle,
+                'previous_milage' => $previous_milage,
+                'current_milage' => $current_milage,
+                'maintenance_type' => $maintenance_type,
+                'cost' => $cost,
+                'maintenance_description' => $maintenance_description,
+                'maintenance_status' => $maintenance_status,
+                'date_performed' => $date_performed
+            ]);
+
+            echo "Database Updated!";
+        } else {
+            Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
+            $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
+            MaintenanceSchedule::where('maintenanceID', $maintenanceID)->update([
+                'scheduled_date' => Carbon::today()->addMonths($maintenance->scheduled_interval),
+                'last_maintenance_date' => Carbon::today(),
+                'current_milage' => $current_milage,
+            ]);
+
+            MaintenanceHistory::create([
+                'maintenanceID' => $maintenanceID,
+                'vehicleID' => $vehicleID,
+                'customerID' => $customerID,
+                'owner' => $owner,
+                'vehicle' => $vehicle,
+                'previous_milage' => $previous_milage,
+                'current_milage' => $current_milage,
+                'maintenance_type' => $maintenance_type,
+                'cost' => $cost,
+                'maintenance_description' => $maintenance_description,
+                'maintenance_status' => $maintenance_status,
+                'date_performed' => $date_performed
+            ]);
+
+            echo "Database Updated!";
+        }
     }
 }
