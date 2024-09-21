@@ -5,6 +5,7 @@ use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\AdminDashboard\AdminController;
 use App\Http\Controllers\AdminDashboard\CarsController;
 use App\Http\Controllers\AdminDashboard\MaintenanceOverviewController;
+use App\Http\Controllers\AdminDashboard\MaintenanceStatusController;
 use App\Http\Controllers\AdminDashboard\UserManagementController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
@@ -117,5 +118,11 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //Routes for Admin Maintenance Overview
     Route::middleware(['auth:admin'])->controller(MaintenanceOverviewController::class)->group(function (){
         Route::get('/maintenance_overview', 'maintenanceOverview')->name('maintenance_overview');
+    });
+//end
+
+//Routes for Admin Maintenance Status
+    Route::middleware(['auth:admin'])->controller(MaintenanceStatusController::class)->group(function () {
+        Route::get('/maintenance_status', 'maintenanceStatusView')->name('maintenance_status_view');
     });
 //end
