@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminDashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\MaintenanceSchedule;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -45,5 +46,23 @@ class MaintenanceStatusController extends Controller
             END, scheduled_date ASC")
             ->get();
         return view('pages.admin_pages.admin_maintenance_status',['schedules' => $schedules]);
+    }
+
+    //Maintenance Status Update
+    public function MaintenanceStatusUpdate(Request $request){
+        $maintenanceID = $request->input('maintenance_id');
+        $vehicleID = $request->input('vehicle_id');
+        $customerID = $request->input('customer_id');
+        $owner = $request->input('owner');
+        $vehicle = $request->input('vehicle');
+        $previous_milage = $request->input('previous_milage');
+        $current_milage = $request->input('current_milage');
+        $maintenance_type = $request->input('maintenance_type');
+        $cost = $request->input('cost');
+        $maintenance_description = $request->input('maintenance_description');
+        $maintenance_status = "completed";
+        $date_performed = Carbon::now();
+        
+        //Brainstorm for ways in code to handle updating the data in database when the admin marks the status completed
     }
 }

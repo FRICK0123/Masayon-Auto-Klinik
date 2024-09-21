@@ -32,7 +32,7 @@
                     <p class="m-0">Maintenance Status</p>
                 </form>
 
-                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                <form action="{{ route('maintenance_history') }}" method="GET" class="d-flex align-items-center" id="maintenance_history" onclick="adminMaintenanceHistory()">
                     <img src="{{asset('icons/history_black.svg')}}" alt="Reports" class="me-2">
                     <p class="m-0">Maintenance History</p>
                 </form>
@@ -77,6 +77,10 @@
 
         function adminMaintenanceStatus(){
             document.getElementById('maintenance_status').submit();
+        }
+
+        function adminMaintenanceHistory(){
+            document.getElementById('maintenance_history').submit();
         }
     </script>
 <!--end-->
