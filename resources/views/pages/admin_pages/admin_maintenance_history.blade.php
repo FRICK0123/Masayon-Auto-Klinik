@@ -48,7 +48,7 @@
     <!--Main Content-->
     <main>
         <x-admin-dashboard.admin-content>
-            <x-admin-dashboard.maintenance-history-content/>
+            <x-admin-dashboard.maintenance-history-content :histories="$histories"/>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->

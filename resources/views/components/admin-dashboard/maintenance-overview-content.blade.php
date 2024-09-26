@@ -29,8 +29,8 @@
     <div id="carTableContainer">
         <table class="table table-striped table-responsive">
             <tr>
-                <th>VEHICLE</th>
                 <th>OWNER</th>
+                <th>VEHICLE</th>
                 <th>MAINTENANCE TYPE</th>
                 <th>SCHEDULED DATE</th>
                 <th>SCHEDULED MILAGE</th>
@@ -49,7 +49,7 @@
 
                     // Mileage-based logic (for oil type maintenance)
                     $isNearingMileage = false;
-                    if ($schedule->maintenance_type == 'Oil Change') {
+                    if ($schedule->maintenance_type == 'Oil Change' || $schedule->maintenance_type == 'EGR Cleaning' || $schedule->maintenance_type == 'Basic PMS' || $schedule->maintenance_type == 'Full PMS') {
                         $currentMileage = $schedule->current_milage;
                         $nextMileage = $schedule->next_milage_schedule;
 
@@ -61,13 +61,13 @@
                 @endphp
                 <!-- Highlight if either the time is nearing or mileage is reached -->
                 <tr @if($isNearingDate || $isNearingMileage) class="table-danger" @endif>
-                    <td>{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</td>
                     <td>{{ $schedule->vehicle->customer->fullname }}</td>
+                    <td>{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</td>
                     <td>{{ $schedule->maintenance_type }}</td>
                     <td>{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}</td>
                     
                     <!-- Show mileage if it's an oil type maintenance -->
-                    @if ($schedule->maintenance_type == 'Oil Change')
+                    @if ($schedule->maintenance_type == 'Oil Change' || $schedule->maintenance_type == 'EGR Cleaning' || $schedule->maintenance_type == 'Basic PMS' || $schedule->maintenance_type == 'Full PMS')
                         <td>{{ $schedule->next_milage_schedule }} miles
                             @if($isNearingMileage)
                                 <span class="badge bg-danger">Mileage Reached!</span>

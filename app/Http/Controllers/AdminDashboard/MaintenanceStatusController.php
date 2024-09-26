@@ -28,6 +28,39 @@ class MaintenanceStatusController extends Controller
                     ->whereNotNull('next_milage_schedule');
             })
             ->orWhere(function ($query) {
+                // Condition for 'Oil Change' maintenance type
+                $query->where('maintenance_type', 'EGR Cleaning')
+                    ->where(function ($subQuery) {
+                        $subQuery->where('scheduled_date', '<=', Carbon::now()) // Updated to start from today
+                            ->orWhereBetween('scheduled_date', [Carbon::today(), Carbon::now()->addDay(1)])
+                            ->orWhereColumn('current_milage', '>=', 'next_milage_schedule');
+                    })
+                    ->whereNotNull('current_milage')
+                    ->whereNotNull('next_milage_schedule');
+            })
+            ->orWhere(function ($query) {
+                // Condition for 'Oil Change' maintenance type
+                $query->where('maintenance_type', 'Basic PMS')
+                    ->where(function ($subQuery) {
+                        $subQuery->where('scheduled_date', '<=', Carbon::now()) // Updated to start from today
+                            ->orWhereBetween('scheduled_date', [Carbon::today(), Carbon::now()->addDay(1)])
+                            ->orWhereColumn('current_milage', '>=', 'next_milage_schedule');
+                    })
+                    ->whereNotNull('current_milage')
+                    ->whereNotNull('next_milage_schedule');
+            })
+            ->orWhere(function ($query) {
+                // Condition for 'Oil Change' maintenance type
+                $query->where('maintenance_type', 'Full PMS')
+                    ->where(function ($subQuery) {
+                        $subQuery->where('scheduled_date', '<=', Carbon::now()) // Updated to start from today
+                            ->orWhereBetween('scheduled_date', [Carbon::today(), Carbon::now()->addDay(1)])
+                            ->orWhereColumn('current_milage', '>=', 'next_milage_schedule');
+                    })
+                    ->whereNotNull('current_milage')
+                    ->whereNotNull('next_milage_schedule');
+            })
+            ->orWhere(function ($query) {
                 // Condition for non-'Oil Change' maintenance type
                 $query->where('maintenance_type', '!=', 'Oil Change')
                 ->where('scheduled_date', '<=', Carbon::now())

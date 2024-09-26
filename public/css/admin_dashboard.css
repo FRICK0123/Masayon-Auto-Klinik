@@ -21,13 +21,27 @@
 
 .form_links form {
     border-bottom: 1px solid black;
-    padding-bottom: 7px;
+    padding-bottom: 3px;
     padding-top: 10px;
     cursor: pointer;
     transition: .5s;
 }
 
 .form_links form:hover {
+    border-bottom: 1px solid red;
+}
+
+.maintenance_container{
+    border-bottom: 1px solid black;
+    padding-bottom: 3px;
+    padding-top: 10px;
+    cursor: pointer;
+    transition: .5s;
+    text-decoration: none;
+    color: black;
+}
+
+.maintenance_container:hover{
     border-bottom: 1px solid red;
 }
 

@@ -22,7 +22,13 @@ class MaintenanceOverviewController extends Controller
                     WHEN scheduled_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) THEN 1
                     ELSE 2
                 END
-
+            WHEN maintenance_type = 'EGR Cleaning' THEN
+                CASE
+                    WHEN current_milage >= next_milage_schedule THEN 0
+                    WHEN scheduled_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) THEN 1
+                    ELSE 2
+                END
+                
             ELSE 
                 CASE
                     WHEN scheduled_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) THEN 1 

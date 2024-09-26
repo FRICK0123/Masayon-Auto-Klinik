@@ -6,13 +6,17 @@
         <label for="maintenance_type" class="fw-bold">Maintenance Type:</label>
         <select name="maintenance_type" id="maintenance_type" class="form-select">
             <option value="" disabled selected>Select Maintenance Type</option>
-            <option value="Oil Change">Oil Change</option>
-            <option value="Check Brakes">Check Brakes</option>
-            <option value="Car Diagnosing">Car Diagnosing</option>
-            <option value="Tire Change">Tire Change</option>
-            <option value="Basic PMS">Basic PMS</option>
-            <option value="Full PMS">Full PMS</option>
+            <option value="EGR Cleaning">EGR Cleaning</option>
+            <option value="Throttle Body & Intake Manifold Cleaning">Throttle Body & Intake Manifold Cleaning</option>
+            <option value="Wheel Balance">Wheel Balance</option>
+            <option value="Wheel Alignment">Wheel Alignment</option>
+            <option value="Check Brake">Check Brake</option>
+            <option value="Oil Change">Change Oil/Oil Filter</option>
             <option value="Car Checkup & Repair">Car Checkup & Repair</option>
+            <option value="Check Concerns">Check Concerns</option>
+            <option value="Check up">Check up</option>
+            <option value="Basic PMS">Basic PMS</option>
+            <option value="Full PMS">Heavy PMS</option>
         </select><br>
 
         <label for="maintenance_date" class="fw-bold">
@@ -25,12 +29,10 @@
             <label for="oil_type" class="fw-bold">Oil Type:</label>
             <select name="oil_type" id="oil_type" class="form-select">
                 <option value="" disabled selected>Select Oil Type</option>
-                <option value="Conventional Motor Oil" data-mileage="5000">Conventional Motor Oil</option>
-                <option value="Synthetic Blend Motor Oil" data-mileage="7500">Synthetic Blend Motor Oil</option>
-                <option value="Full Synthetic Motor Oil" data-mileage="10000">Full Synthetic Motor Oil</option>
-                <option value="High-Mileage Motor Oil" data-mileage="5000">High-Mileage Motor Oil</option>
-                <option value="Diesel Engine Oil" data-mileage="7000">Diesel Engine Oil</option>
-                <option value="Turbo Charged Engine Oil" data-mileage="7500">Turbo Charged Engine Oil</option>
+                <option value="Mobil Delvac I 5W-40 Fully Synthetic Diesel Oil" data-mileage="8000">Mobil Delvac I 5W-40 Fully Synthetic Diesel Oil</option>
+                <option value="Mobil Delvac 15W-40 Semi Synthetic Diesel Oil" data-mileage="5000">Mobil Delvac 15W-40 Semi Synthetic Diesel Oil</option>
+                <option value="Mobil Super 5W-30 Fully Synthetic Gasoline Oil" data-mileage="8000">Mobil Delvac 15W-40 Semi Synthetic Diesel Oil</option>
+                <option value="Mobil Special 20w-50 Ordinary Gasoline Oil" data-mileage="5000">Mobil Special 20w-50 Ordinary Gasoline Oil</option>
             </select><br>
 
             <label for="mileage_interval" class="fw-bold">Mileage Interval (mi)</label>
@@ -62,6 +64,8 @@
                 <option value="12">1 year</option>
                 <option value="24">2 year</option>
                 <option value="36">3 year</option>
+                <option value="48">4 years</option>
+                <option value="60">5 years</option>
             </select>
             <br>
         </div>
@@ -88,7 +92,12 @@
             document.getElementById('schedule_interval_pms').style.display = "block";
             document.getElementById('schedule_interval_container').style.display = "none";
             document.getElementById('oil_type_container').style.display = "none";
-        } else{
+        } else if(maintenance_type.value === "EGR Cleaning"){
+            document.getElementById('oil_type_container').style.display = "none";
+            document.getElementById('schedule_interval_pms').style.display = "none";
+            document.getElementById('schedule_interval_container').style.display = "none";
+        }
+        else{
             document.getElementById('oil_type_container').style.display = "none";
             document.getElementById('schedule_interval_pms').style.display = "none";
             document.getElementById('schedule_interval_container').style.display = "block";
