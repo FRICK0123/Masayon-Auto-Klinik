@@ -1,14 +1,14 @@
 @props(['users'])
 <div class="container">
-    <h2 class="pb-2 border-bottom">USER MANAGEMENT(customer)</h2>
+    <h2 class="pb-2 border-bottom">USER MANAGEMENT(manager)</h2>
 
     <!--Functionalities-->
         <div class="d-flex justify-content-between">
-            <button class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#addUserBackdrop"><small>+ New Customer Account</small></button>
+            <button class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#addUserBackdrop"><small>+ New Manager Account</small></button>
 
             <form action="#" method="GET" class="d-flex">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search Customers">
+                    <input type="text" class="form-control" placeholder="Search Manager">
                     <button class="btn btn-dark" id="basic-addon2">Search</button>
                 </div>
             </form>
@@ -86,7 +86,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('store_user') }}" method="POST">
+                <form action="{{ route('store_manager') }}" method="POST">
                     @csrf
                     <!--Profile Image-->
                     <div class="car_img_wrapper mt-5">

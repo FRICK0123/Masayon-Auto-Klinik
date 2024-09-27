@@ -16,7 +16,7 @@ class UserManagementController extends Controller
 {
     //User Management Page View
     public function usersView(){
-        $customer = Customer::orderBy('fullname','asc')->get();
+        $customer = Customer::where('usertype','customer')->orderBy('fullname','asc')->get();
         return view('pages.admin_pages.admin_user_management',["users"=>$customer]);
     }
 
@@ -185,7 +185,7 @@ class UserManagementController extends Controller
                 'scheduled_interval' => 48,
                 'oil_type' => null,
                 'current_milage' => $milage,
-                'next_milage_schedule' => $milage + 31069,
+                'next_milage_schedule' => $milage + 50000,
             ]);
         } else if ($maintenance_type == "Basic PMS") {
             MaintenanceSchedule::create([

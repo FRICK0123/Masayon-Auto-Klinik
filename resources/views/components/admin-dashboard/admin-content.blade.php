@@ -21,13 +21,18 @@
                     <p class="m-0 fs-5">></p>
                 </a>
                 <!--User Management collapsible items-->
-                    <div class="collapse ms-2" id="user_management">            
+                    <div class="collapse ms-2" id="user_management">  
+                        <form action="#" method="GET" class="d-flex align-items-center" id="#">
+                            <img src="{{asset('icons/all-users.svg')}}" alt="Users Icon" class="me-2" width="30" height="30">
+                            <p class="m-0">All Users</p>
+                        </form>
+                        
                         <form action="{{ route('users_view') }}" method="GET" class="d-flex align-items-center" id="admin_user_management" onclick="adminUserManagement()">
                             <img src="{{asset('icons/users.svg')}}" alt="Users Icon" class="me-2">
                             <p class="m-0">Customers</p>
                         </form>
 
-                        <form action="#" method="GET" class="d-flex align-items-center" id="admin_user_management">
+                        <form action="{{ route('managers_view') }}" method="GET" class="d-flex align-items-center" id="admin_manager_management" onclick="adminManagerManagement()">
                             <img src="{{asset('icons/user-gear.svg')}}" alt="Users Icon" class="me-2">
                             <p class="m-0">Managers</p>
                         </form>
@@ -99,6 +104,10 @@
 
         function adminUserManagement(){
             document.getElementById('admin_user_management').submit();
+        }
+
+        function adminManagerManagement(){
+            document.getElementById('admin_manager_management').submit();
         }
 
         function adminMaintenanceOverview(){

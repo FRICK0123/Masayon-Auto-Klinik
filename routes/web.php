@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminDashboard\CarsController;
 use App\Http\Controllers\AdminDashboard\MaintenanceHistoryController;
 use App\Http\Controllers\AdminDashboard\MaintenanceOverviewController;
 use App\Http\Controllers\AdminDashboard\MaintenanceStatusController;
+use App\Http\Controllers\AdminDashboard\ManagerManagementController;
 use App\Http\Controllers\AdminDashboard\UserManagementController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
@@ -113,6 +114,13 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::post('/store_user_vehicle{customerID}','addUserVehicle')->name('store_user_vehicle');
         Route::get('/add_user_vehicle_maintenance_schedule/{vehicleID}', 'addUserVehicleMaintenanceScheduleView')->name('add_user_vehicle_maintenance_schedule_view');
         Route::post('/store_vehicle_maintenance', 'storeMaintenanceSchedule')->name('store_maintenance_schedule');
+    });
+//end
+
+//Routes for Admin Manager User Management
+    Route::middleware(['auth:admin'])->controller(ManagerManagementController::class)->group(function(){
+        Route::get('/manager_management', 'managersView')->name('managers_view');
+        Route::post('/register_manager','storeManager')->name('store_manager');
     });
 //end
 

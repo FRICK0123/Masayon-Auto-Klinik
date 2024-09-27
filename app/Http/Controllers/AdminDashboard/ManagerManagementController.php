@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Http\Controllers\AdminDashboard;
+
+use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+class ManagerManagementController extends Controller
+{
+    //User Management Page View
+    public function managersView()
+    {
+        $customer = Customer::where('usertype','manager')->orderBy('fullname', 'asc')->get();
+        return view('pages.admin_pages.admin_manager_management', ["users" => $customer]);
+    }
+
+    //Add User to the database
+    public function storeManager(Request $request)
+    {
+        if ($request->hasFile('profile_image')) {
+            // Get the uploaded file
+            $file = $request->file('profile_image');
+
+            // Define the upload path
+            $uploadPath = 'Images/profile_images/';
+
+            // Generate a unique name for the image
+            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            // Move the file to the specified folder
+            $file->move(public_path($uploadPath), $fileName);
+
+            $profile_image = $fileName;
+        } else {
+            $profile_image = 'default_user.png';
+        }
+
+        Customer::create([
+            'fullname' => $request->input('register_fullname'),
+            'email' => $request->input('register_email'),
+            'phone_number' => $request->input('register_phone'),
+            'username' => $request->input('register_username'),
+            'password' => Hash::make($request->input('register_password')),
+            'profile_img' => $profile_image,
+            'email_verified_at' => now(),
+            'verification_token' => null,
+            'isVerified' => true,
+            'usertype' => 'manager',
+        ]);
+
+        return to_route('managers_view');
+    }
+}
