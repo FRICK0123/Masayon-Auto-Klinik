@@ -26,13 +26,23 @@ class AdminController extends Controller
                     ->whereNotNull('next_milage_schedule');
             })
             ->orWhere(function ($query) {
+                // Condition for 'Oil Change' maintenance type
+                $query->where('maintenance_type', 'EGR Cleaning')
+                    ->where(function ($subQuery) {
+                        $subQuery->whereBetween('scheduled_date', [now(), Carbon::now()->addDays(7)])
+                            ->orWhereColumn('current_milage', '>=', 'next_milage_schedule');
+                    })
+                    ->whereNotNull('current_milage')
+                    ->whereNotNull('next_milage_schedule');
+            })
+            ->orWhere(function ($query) {
                 // Condition for non-'Oil Change' maintenance type
                 $query->where('maintenance_type', '!=', 'Oil Change')
                     ->whereBetween('scheduled_date', [now(), Carbon::now()->addDays(7)]);
             })
             ->get();
         $scheduleCount = $schedules->count();
-        $customerCount = Customer::all()->count();
+        $customerCount = Customer::where('usertype','customer')->count();
         $vehicleCount = Vehicle::all()->count();
         return view('pages.admin_pages.admin_dashboard',[
             'schedules' => $schedules,

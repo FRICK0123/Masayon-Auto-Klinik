@@ -99,7 +99,7 @@ class MaintenanceStatusController extends Controller
         $date_performed = Carbon::now();
         $oil_type = $request->input('oil_type');
         
-        if(($maintenance_type == "Oil Change" && $oil_type == "Mobil Delvac I 5W-40 Fully Synthetic Diesel Oil ") || ($maintenance_type == "Oil Change" && $oil_type == "Mobil Super 5W-30 Fully Synthetic Gasoline Oil ")){
+        if(($maintenance_type == "Oil Change" && $oil_type == "Mobil Delvac I 5W-40 Fully Synthetic Diesel Oil") || ($maintenance_type == "Oil Change" && $oil_type == "Mobil Super 5W-30 Fully Synthetic Gasoline Oil")){
             Vehicle::where('vehicleID',$vehicleID)->update(['milage'=>$current_milage]);
             $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
             MaintenanceSchedule::where('maintenanceID',$maintenanceID)->update([

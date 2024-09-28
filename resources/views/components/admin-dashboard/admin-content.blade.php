@@ -65,14 +65,14 @@
                             <p class="m-0">Maintenance Status</p>
                         </form>
 
-                        <form action="{{ route('maintenance_history') }}" method="GET" class="d-flex align-items-center" id="maintenance_history" onclick="adminMaintenanceHistory()">
+                        {{-- <form action="{{ route('maintenance_history') }}" method="GET" class="d-flex align-items-center" id="maintenance_history" onclick="adminMaintenanceHistory()">
                             <img src="{{asset('icons/history_black.svg')}}" alt="Reports" class="me-2">
                             <p class="m-0">Maintenance History</p>
-                        </form>
+                        </form> --}}
                     </div>
                 <!--end-->
 
-                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                <form action="{{ route('reports_view') }}" method="GET" class="d-flex align-items-center" id="reports" onclick="adminReports()">
                     <img src="{{asset('icons/newspaper.svg')}}" alt="Reports" class="me-2">
                     <p class="m-0">Reports</p>
                 </form>
@@ -118,8 +118,12 @@
             document.getElementById('maintenance_status').submit();
         }
 
-        function adminMaintenanceHistory(){
-            document.getElementById('maintenance_history').submit();
+        // function adminMaintenanceHistory(){
+        //     document.getElementById('maintenance_history').submit();
+        // }
+
+        function adminReports(){
+            document.getElementById('reports').submit();
         }
     </script>
 <!--end-->

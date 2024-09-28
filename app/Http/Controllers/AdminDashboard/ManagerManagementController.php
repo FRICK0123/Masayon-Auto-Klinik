@@ -52,4 +52,27 @@ class ManagerManagementController extends Controller
 
         return to_route('managers_view');
     }
+
+    //Users Filter
+    public function managerFilter(Request $request)
+    {
+        $filter_value = $request->input('filter_managers');
+
+        if ($filter_value == "by_fullname") {
+            $user = Customer::where('usertype', 'manager')->orderBy('fullname', 'asc')->get();
+        } elseif ($filter_value == "by_username") {
+            $user = Customer::where('usertype', 'manager')->orderBy('username', 'asc')->get();
+        } elseif ($filter_value == "by_creation") {
+            $user = Customer::where('usertype', 'manager')->orderBy('created_at', 'desc')->get();
+        }
+
+        return view('pages.admin_pages.admin_manager_management', ["users" => $user]);
+    }
+
+    //View manager page
+    public function viewManagerInfo($customerID)
+    {
+        $customer = Customer::where('customerID', $customerID)->where('usertype','manager')->first();
+        return view('pages.admin_pages.admin_users.admin_view_manager', ['customer' => $customer]);
+    }
 }

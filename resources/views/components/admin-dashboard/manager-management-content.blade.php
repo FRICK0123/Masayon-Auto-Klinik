@@ -19,14 +19,14 @@
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
                     </button>
-                    <form id="userFilterForm" action="{{ route('user_filter') }}" method="GET" class="dropdown-menu p-2">
-                        <input type="radio" id="by_fullname" name="filter_users" class="form-check-input border border-1 border-dark" value="by_fullname">
+                    <form id="userFilterForm" action="{{ route('manager_filter') }}" method="GET" class="dropdown-menu p-2">
+                        <input type="radio" id="by_fullname" name="filter_managers" class="form-check-input border border-1 border-dark" value="by_fullname">
                         <label for="by_fullname" class="ms-2">By Fullname</label><br><br>
 
-                        <input type="radio" id="by_username" name="filter_users" class="form-check-input border border-1 border-dark" value="by_username">
+                        <input type="radio" id="by_username" name="filter_managers" class="form-check-input border border-1 border-dark" value="by_username">
                         <label for="by_username" class="ms-2">By Username</label><br><br>
 
-                        <input type="radio" id="by_creation" name="filter_users" class="form-check-input border border-1 border-dark" value="by_creation">
+                        <input type="radio" id="by_creation" name="filter_managers" class="form-check-input border border-1 border-dark" value="by_creation">
                         <label for="by_creation" class="ms-2">By Latest</label><br><br>
 
                         <button type="submit" class="btn btn-dark">Filter</button>
@@ -63,9 +63,7 @@
                         <div class="dropdown">
                             <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
-                                <li><a class="dropdown-item" href="{{ route('add_vehicle_view',$user['customerID']) }}">Add Vehicle</a></li>
-                                <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
+                                <li><a class="dropdown-item" href="{{ route('view_manager_info',$user['customerID']) }}">View</a></li>
                                 <li><a class="dropdown-item" href="#">Edit</a></li>
                                 <li><a class="dropdown-item bg-danger text-light" href="#">Deactivate</a></li>
                             </ul>

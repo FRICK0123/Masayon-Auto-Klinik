@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminDashboard\MaintenanceHistoryController;
 use App\Http\Controllers\AdminDashboard\MaintenanceOverviewController;
 use App\Http\Controllers\AdminDashboard\MaintenanceStatusController;
 use App\Http\Controllers\AdminDashboard\ManagerManagementController;
+use App\Http\Controllers\AdminDashboard\ReportController;
 use App\Http\Controllers\AdminDashboard\UserManagementController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
@@ -121,6 +122,8 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(ManagerManagementController::class)->group(function(){
         Route::get('/manager_management', 'managersView')->name('managers_view');
         Route::post('/register_manager','storeManager')->name('store_manager');
+        Route::get('/manager_filter','managerFilter')->name('manager_filter');
+        Route::get('/view_manager/{customerID}', 'viewManagerInfo')->name('view_manager_info');
     });
 //end
 
@@ -140,5 +143,11 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(MaintenanceStatusController::class)->group(function () {
         Route::get('/maintenance_status', 'maintenanceStatusView')->name('maintenance_status_view');
         Route::post('/maintenance_status/update', 'MaintenanceStatusUpdate')->name('maintenance_status_update');
+    });
+//end
+
+//Routes for Admin Reports
+    Route::middleware(['auth:admin'])->controller(ReportController::class)->group(function () {
+        Route::get('/reports', 'reportsView')->name('reports_view');
     });
 //end

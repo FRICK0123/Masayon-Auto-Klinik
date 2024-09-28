@@ -62,11 +62,11 @@ class UserManagementController extends Controller
         $filter_value = $request->input('filter_users');
 
         if ($filter_value == "by_fullname") {
-            $user=Customer::orderBy('fullname', 'asc')->get();
+            $user=Customer::where('usertype','customer')->orderBy('fullname', 'asc')->get();
         } elseif ($filter_value == "by_username") {
-            $user = Customer::orderBy('username', 'asc')->get();
+            $user = Customer::where('usertype','customer')->orderBy('username', 'asc')->get();
         } elseif ($filter_value == "by_creation") {
-            $user = Customer::orderBy('created_at', 'desc')->get();
+            $user = Customer::where('usertype','customer')->orderBy('created_at', 'desc')->get();
         }
 
         return view('pages.admin_pages.admin_user_management', ["users" => $user]);
