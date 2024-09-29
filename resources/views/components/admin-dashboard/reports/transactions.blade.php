@@ -8,13 +8,13 @@
 
     <h4>Transactions: {{ $transaction_count }}</h4>
 
-    <form method="GET" action="#">
+    <form method="GET" action="{{route('reports_transaction_filter')}}">
         <label for="interval">Select Interval:</label>
         <select name="interval" id="interval" onchange="this.form.submit()">
-                <option value="daily" {{ $interval == 'daily' ? 'selected' : '' }}>Daily</option>
-                <option value="weekly" {{ $interval == 'weekly' ? 'selected' : '' }}>Weekly</option>
-                <option value="monthly" {{ $interval == 'monthly' ? 'selected' : '' }}>Monthly</option>
-                <option value="yearly" {{ $interval == 'yearly' ? 'selected' : '' }}>Yearly</option>
+                <option value="daily" {{ $interval == 'daily' ? 'selected' : '' }}>This Day</option>
+                <option value="weekly" {{ $interval == 'weekly' ? 'selected' : '' }}>This Week</option>
+                <option value="monthly" {{ $interval == 'monthly' ? 'selected' : '' }}>This Month</option>
+                <option value="yearly" {{ $interval == 'yearly' ? 'selected' : '' }}>This Year</option>
         </select>
     </form><br>
 

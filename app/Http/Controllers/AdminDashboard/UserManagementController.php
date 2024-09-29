@@ -14,10 +14,28 @@ use Illuminate\Support\Facades\Session;
 
 class UserManagementController extends Controller
 {
-    //User Management Page View
-    public function usersView(){
-        $customer = Customer::where('usertype','customer')->orderBy('fullname','asc')->get();
-        return view('pages.admin_pages.admin_user_management',["users"=>$customer]);
+    public function usersView(Request $request)
+    {
+        // Get the filter from the request
+        $filter = $request->input('filter_users');
+
+        // Base query
+        $query = Customer::where('usertype', 'customer');
+
+        // Apply filter
+        if ($filter == 'by_fullname') {
+            $query->orderBy('fullname', 'asc');
+        } elseif ($filter == 'by_username') {
+            $query->orderBy('username', 'asc');
+        } elseif ($filter == 'by_creation') {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        // Paginate with filter parameters
+        $customer = $query->paginate(10)->appends($request->except('page'));
+
+        // Pass the filtered/ordered customers to the view
+        return view('pages.admin_pages.admin_user_management', ['users' => $customer]);
     }
 
     //Add User to the database
@@ -51,26 +69,27 @@ class UserManagementController extends Controller
             'verification_token' => null,
             'isVerified' => true,
             'usertype' => 'customer',
+            'last_seen' => Carbon::now(),
         ]);
 
         return to_route('users_view');
     }
 
     //Users Filter
-    public function userFilter(Request $request)
-    {
-        $filter_value = $request->input('filter_users');
+    // public function userFilter(Request $request)
+    // {
+    //     $filter_value = $request->input('filter_users');
 
-        if ($filter_value == "by_fullname") {
-            $user=Customer::where('usertype','customer')->orderBy('fullname', 'asc')->get();
-        } elseif ($filter_value == "by_username") {
-            $user = Customer::where('usertype','customer')->orderBy('username', 'asc')->get();
-        } elseif ($filter_value == "by_creation") {
-            $user = Customer::where('usertype','customer')->orderBy('created_at', 'desc')->get();
-        }
+    //     if ($filter_value == "by_fullname") {
+    //         $customer=Customer::where('usertype','customer')->orderBy('fullname', 'asc')->paginate(10);
+    //     } elseif ($filter_value == "by_username") {
+    //         $customer = Customer::where('usertype','customer')->orderBy('username', 'asc')->paginate(10);
+    //     } elseif ($filter_value == "by_creation") {
+    //         $customer = Customer::where('usertype','customer')->orderBy('created_at', 'desc')->paginate(10);
+    //     }
 
-        return view('pages.admin_pages.admin_user_management', ["users" => $user]);
-    }
+    //     return view('pages.admin_pages.admin_user_management', ["users" => $customer]);
+    // }
 
     //View Users page
     public function viewUserInfo($customerID){

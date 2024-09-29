@@ -10,7 +10,20 @@ use Illuminate\Http\Request;
 class ReportController extends Controller
 {
     //reports view and filter
-    public function reportsView(Request $request)
+    public function reportsView()
+    {
+
+        $transaction = MaintenanceHistory::where('date_performed', Carbon::today())->get();
+        $interval = 'daily';
+        return view('pages.admin_pages.admin_reports',
+        [
+            'transaction'=>$transaction,
+            'interval'=>$interval,
+        ]);
+    }
+
+    //Filter for transaction interval
+    public function reportsTransactionFilter(Request $request)
     {
         // Default to daily if no filter is applied
         $interval = $request->input('interval', 'daily');
@@ -35,10 +48,12 @@ class ReportController extends Controller
                 $transaction = MaintenanceHistory::where('date_performed', Carbon::today())->get();
         }
 
-        return view('pages.admin_pages.admin_reports',
-        [
-            'transaction'=>$transaction,
-            'interval'=>$interval,
-        ]);
+        return view(
+            'pages.admin_pages.admin_reports',
+            [
+                'transaction' => $transaction,
+                'interval' => $interval,
+            ]
+        );
     }
 }

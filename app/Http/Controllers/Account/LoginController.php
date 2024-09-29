@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -36,6 +38,8 @@ class LoginController extends Controller
                             'profile_img' => $customer->{'profile_img'},
                         ]);
                     //end
+
+                    Customer::where('customerID',$customer->{'customerID'})->update(['last_seen'=>Carbon::now()]);
                     return to_route('customer_dashboard');
                 }
         } else if(Auth::guard('admin')->attempt($validate)){

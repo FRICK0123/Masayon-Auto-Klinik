@@ -23,7 +23,8 @@ class Customer extends Authenticatable
         'email_verified_at',
         'verification_token',
         'isVerified',
-        'usertype'
+        'usertype',
+        'last_seen',
     ];
 
     protected $dates = [

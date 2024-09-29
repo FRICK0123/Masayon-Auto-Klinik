@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Notifications\VerifyEmailNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -69,6 +70,7 @@ class RegisterController extends Controller
             'verification_token' => Str::random(60),
             'isVerified' => false,
             'usertype' => "customer",
+            'last_seen' => Carbon::now(),
         ]);
         // Send verification email
         $customer->notify(new VerifyEmailNotification($customer));

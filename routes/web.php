@@ -63,7 +63,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //End
 
 //Add, Edit, and Delete car routes
-    Route::middleware(['auth:customer'])->controller(CarController::class)->group(function() {
+    Route::middleware(['auth:customer','update.last_seen'])->controller(CarController::class)->group(function() {
         Route::get('/car_view','addCarView')->name('car_view');
         Route::post('/add_car', 'addCar')->name('add_car');
         Route::post('/view_car/{vehicleID}', 'viewCarDetails')->name('view_car_details');
@@ -71,14 +71,14 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //end
 
 //Routes for Maintenance Schedule and History
-    Route::middleware(['auth:customer'])->controller(MaintenanceController::class)->group(function(){
+    Route::middleware(['auth:customer','update.last_seen'])->controller(MaintenanceController::class)->group(function(){
         Route::post('/schedule_form/{vehicleID}', 'scheduleMaintenanceView')->name('schedule_maintenance_form');
         Route::post('/schedule_maintenance_store', 'scheduleMaintenance')->name('schedule_maintenance_store');
     });
 //end
 
 //Routes for Customers Dashboard
-    Route::middleware(['auth:customer'])->controller(CustomerDashboard::class)->group(function(){
+    Route::middleware(['auth:customer','update.last_seen'])->controller(CustomerDashboard::class)->group(function(){
         Route::get('/dashboard', 'customerDashboardView')->name('customer_dashboard');
         Route::get('/profile', 'customerProfileView')->name('customer_profile');
         Route::get('/maintenance_schedule', 'scheduleView')->name('customer_maintenance_schedule');
@@ -149,5 +149,6 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //Routes for Admin Reports
     Route::middleware(['auth:admin'])->controller(ReportController::class)->group(function () {
         Route::get('/reports', 'reportsView')->name('reports_view');
+        Route::get('/reports/transaction_filter', 'reportsTransactionFilter')->name('reports_transaction_filter');
     });
 //end
