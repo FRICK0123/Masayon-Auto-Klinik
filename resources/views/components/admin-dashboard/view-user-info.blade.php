@@ -30,16 +30,24 @@
 
         <div class="d-flex align-items-baseline">
             <p class="fw-bold me-2">Account Status:</p>
-            @if ($customer['isVerified'] == true)
+            @if ($customer['isVerified'] == true && $customer['email_verified_at'] !== null)
                 <p class="border-bottom border-success text-success">Verified</p>
+            @elseif($customer['isVerified'] == false && $customer['email_verified_at'] == null)
+                <p class="border-bottom border-danger text-danger">Deactivated</p>
             @else
-                <p class="border-bottom border-danger text-danger">Not Verified</p>
+                <p class="border-bottom border-secondary text-secondary">Not Verified</p>
             @endif
         </div><br>
 
         <form action="{{ route('view_user_vehicle_info',$customer['customerID']) }}" method="GET">
             <button class="btn btn-primary" type="submit">View Vehicles</button>
-            <button class="btn btn-dark" type="button">Return</button>
+            <button class="btn btn-dark" type="button" id="returnBtn">Return</button>
         </form>
     </div>
 </div>
+
+<script>
+    document.getElementById('returnBtn').addEventListener('click',function(){
+        window.history.back();
+    });
+</script>

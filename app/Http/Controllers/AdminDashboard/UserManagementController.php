@@ -22,6 +22,14 @@ class UserManagementController extends Controller
         // Base query
         $query = Customer::where('usertype', 'customer');
 
+        // Count users online within the last 3 minutes
+        $onlineCount = Customer::where('usertype', 'customer')
+        ->where('last_seen', '>=', Carbon::now()->subMinutes(3))  // Active in the last 3 minutes
+        ->where('last_seen', '<=', Carbon::now())  // Ensuring it's not a future time
+        ->count();
+
+        $customerCount = $query->count();
+
         // Apply filter
         if ($filter == 'by_fullname') {
             $query->orderBy('fullname', 'asc');
@@ -35,7 +43,12 @@ class UserManagementController extends Controller
         $customer = $query->paginate(10)->appends($request->except('page'));
 
         // Pass the filtered/ordered customers to the view
-        return view('pages.admin_pages.admin_user_management', ['users' => $customer]);
+        return view('pages.admin_pages.admin_user_management',
+         [
+            'users' => $customer,
+            'customerCount'=>$customerCount,
+            'onlineCount'=>$onlineCount,
+        ]);
     }
 
     //Add User to the database

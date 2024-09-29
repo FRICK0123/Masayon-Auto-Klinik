@@ -13,9 +13,38 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <style>
+        /* Add rounded corners to the whole table */
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px; /* Adjust the radius as needed */
+            overflow: hidden;
+            border: 1px solid #dee2e6; /* Optional: if you want a border */
+        }
+
+        /* Add rounded borders to the first and last cells in the header */
+        th:first-child {
+            border-top-left-radius: 12px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 12px;
+        }
+
+        /* Add rounded borders to the first and last cells in the last row */
+        tr:last-child td:first-child {
+            border-bottom-left-radius: 12px;
+        }
+
+        tr:last-child td:last-child {
+            border-bottom-right-radius: 12px;
+        }
+    </style>
 </head>
 
-<body>
+<body style="background-color: rgb(245, 245, 245)">
     <!--Preloader-->
         <x-preloader/>
     <!--End-->
@@ -42,45 +71,58 @@
     <!--Header-->
         <header style="position: fixed; width: 100%; z-index: 100;">
             <x-admin-dashboard.header/>
-        </header>
+        </header>   
     <!--Header end-->
 
     <!--Main Content-->
     <main>
         <x-admin-dashboard.admin-content>
             <div class="container">
-                <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
-                    <h3 class="pt-2">USER MANAGEMENT(customer)</h3>
+                <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
+                    <h5 class="pt-2">USER MANAGEMENT(customer)</h5>
 
-                    <div class="d-flex">
-                        <button class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#addUserBackdrop" data-bs-toggle="tooltip" title="Add New Customer"><small>+ <img src="{{ asset('icons/user-circle.svg') }}" alt="Customer"></small></button>
-                        
-                        <form action="#" method="GET" class="d-flex">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search Customers">
-                                <button class="btn btn-dark" id="basic-addon2">Search</button>
-                            </div>
-                        </form>
-                    </div>
-                </div><br>
+                    <button class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#addUserBackdrop" data-bs-toggle="tooltip" title="Add New Customer"><small>+ <img src="{{ asset('icons/user-circle.svg') }}" alt="Customer"></small></button>
+                </div>
+                <br>
                 <!--Functionalities-->
                     <!--Filter-->
-                        <div>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
-                                </button>
-                                <form id="userFilterForm" action="{{ route('users_view') }}" method="GET" class="dropdown-menu p-2">
-                                    <input type="radio" id="by_fullname" name="filter_users" class="form-check-input border border-1 border-dark" value="by_fullname">
-                                    <label for="by_fullname" class="ms-2">By Fullname</label><br><br>
+                        <div class="d-flex justify-content-between">
+                            <div class="container d-flex mt-2">
+                                <div class="d-flex align-items-baseline">
+                                    <h6>Customers:</h6>
+                                    <p>{{ $customerCount }}</p>
+                                </div>
 
-                                    <input type="radio" id="by_username" name="filter_users" class="form-check-input border border-1 border-dark" value="by_username">
-                                    <label for="by_username" class="ms-2">By Username</label><br><br>
+                                <div class="d-flex align-items-baseline ms-3">
+                                    <h6>Active Customers:</h6>
+                                    <p>{{ $onlineCount }}</p>
+                                </div>
+                            </div>
 
-                                    <input type="radio" id="by_creation" name="filter_users" class="form-check-input border border-1 border-dark" value="by_creation">
-                                    <label for="by_creation" class="ms-2">By Latest</label><br><br>
+                            <div class="d-flex w-50">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
+                                    </button>
+                                    <form id="userFilterForm" action="{{ route('users_view') }}" method="GET" class="dropdown-menu p-2">
+                                        <input type="radio" id="by_fullname" name="filter_users" class="form-check-input border border-1 border-dark" value="by_fullname">
+                                        <label for="by_fullname" class="ms-2">By Fullname</label><br><br>
 
-                                    <button type="submit" class="btn btn-dark">Filter</button>
+                                        <input type="radio" id="by_username" name="filter_users" class="form-check-input border border-1 border-dark" value="by_username">
+                                        <label for="by_username" class="ms-2">By Username</label><br><br>
+
+                                        <input type="radio" id="by_creation" name="filter_users" class="form-check-input border border-1 border-dark" value="by_creation">
+                                        <label for="by_creation" class="ms-2">By Latest</label><br><br>
+
+                                        <button type="submit" class="btn btn-dark">Filter</button>
+                                    </form>
+                                </div>
+
+                                <form action="#" method="GET">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search Customers">
+                                        <button class="btn btn-dark">Search</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -94,6 +136,7 @@
                             <th>CONTACT #</th>
                             <th>USERNAME</th>
                             <th>STATUS</th>
+                            <th>DATE REGISTERED</th>
                             <th></th>
                         </tr>
                         @foreach ($users as $user)
@@ -103,11 +146,13 @@
                                         $lastSeen = \Carbon\Carbon::parse($user['last_seen']);
                                         $isOnline = $lastSeen->diffInMinutes(now()) <= 3; // Check if last seen is within 3 minutes
                                     @endphp
+
                                     @if ($isOnline)
                                         <small><img src="{{ asset('icons/online_dot.png') }}" alt="Online" width="15"></small>
                                     @else
                                         <small><img src="{{ asset('icons/offline_dot.png') }}" alt="Online" width="10"></small>
                                     @endif
+                                    
                                     <img src="{{ asset('Images/profile_images/'.$user['profile_img']) }}" alt="Profile Icon" width="50" height="50" style="object-fit: cover; border-radius: 50%;">
                                     <div class="d-flex flex-column ms-3">
                                         <span>{{ $user['fullname'] }}</span>
@@ -123,6 +168,8 @@
                                 @else
                                     <td>not verified</td>
                                 @endif
+                                <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
+
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
