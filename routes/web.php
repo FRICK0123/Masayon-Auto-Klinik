@@ -15,6 +15,7 @@ use App\Http\Controllers\Dashboard\CustomerDashboard;
 use App\Http\Controllers\Dashboard\MaintenanceController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\ManagerDashboard\ManagerDashboardController;
 use App\View\Components\AdminDashboard\MaintenanceOverviewContent;
 use App\View\Components\AdminDashboard\UserManagementContent;
 use Illuminate\Contracts\Foundation\MaintenanceMode;
@@ -151,4 +152,11 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/reports', 'reportsView')->name('reports_view');
         Route::get('/reports/transaction_filter', 'reportsTransactionFilter')->name('reports_transaction_filter');
     });
+//end
+
+/*----------MANAGERS----------*/
+//Routes for Admin Dashboard
+Route::middleware(['auth:customer'])->controller(ManagerDashboardController::class)->group(function () {
+    Route::get('/manager_dashboard', 'managerDashboardView')->name('manager_dashboard');
+});
 //end

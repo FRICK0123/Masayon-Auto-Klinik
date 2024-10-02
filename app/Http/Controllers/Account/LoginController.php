@@ -27,7 +27,7 @@ class LoginController extends Controller
                 if($customer->{'email_verified_at'} === null){
                     Session::flush();
                     return to_route('pending_view');
-                } else {
+                } else if($customer->{'usertype'}=="customer"){
                     //Sessions
                         Session::put([
                             'customerID' => $customer->{'customerID'},
@@ -41,6 +41,20 @@ class LoginController extends Controller
 
                     Customer::where('customerID',$customer->{'customerID'})->update(['last_seen'=>Carbon::now()]);
                     return to_route('customer_dashboard');
+                } else {
+                    //Sessions
+                    Session::put([
+                        'customerID' => $customer->{'customerID'},
+                        'fullname' => $customer->{'fullname'},
+                        'email' => $customer->{'email'},
+                        'phone_number' => $customer->{'phone_number'},
+                        'username' => $customer->{'username'},
+                        'profile_img' => $customer->{'profile_img'},
+                    ]);
+                    //end
+
+                    Customer::where('customerID', $customer->{'customerID'})->update(['last_seen' => Carbon::now()]);
+                    return to_route('manager_dashboard');
                 }
         } else if(Auth::guard('admin')->attempt($validate)){
             return to_route('admin_dashboard');
