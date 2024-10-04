@@ -36,7 +36,14 @@
             <input type="text" class="form-control" value="{{ $customer['username'] }}" id="username" name="username">
             <br>
 
-            <button type="submit" class="btn btn-dark">Update</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="button" id="return" class="btn btn-dark">Return</button>
         </form>
     </div>
 </div>
+
+<script>
+    document.getElementById('return').addEventListener('click',function(){
+        window.history.back();
+    });
+</script>

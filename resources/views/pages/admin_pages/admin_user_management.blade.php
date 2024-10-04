@@ -118,9 +118,10 @@
                                     </form>
                                 </div>
 
-                                <form action="#" method="GET">
+                                <form action="{{ route('users_view') }}" method="GET">
+                                    @csrf
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search Customers">
+                                        <input type="text" class="form-control" placeholder="Search Customers" name="search_customers" autocomplete="off">
                                         <button class="btn btn-dark">Search</button>
                                     </div>
                                 </form>

@@ -39,6 +39,12 @@ class UserManagementController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
+        if($request->has('search_customers') && $request->input('search_customers') !== ''){
+            $searchTerm = $request->input('search_customers');
+
+            $query = Customer::where('fullname', 'LIKE', "%{$searchTerm}%")->orWhere('username', 'LIKE', "%{$searchTerm}%")->orWhere('email', 'LIKE', "%{$searchTerm}%");
+        }
+
         // Paginate with filter parameters
         $customer = $query->paginate(10)->appends($request->except('page'));
 

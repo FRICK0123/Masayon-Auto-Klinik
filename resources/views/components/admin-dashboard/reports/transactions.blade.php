@@ -18,12 +18,6 @@
         </select>
     </form><br>
 
-    <!--Transactions Chart reports-->
-        <div class="container" style="width: 700px;">
-            <canvas id="myChart"></canvas>  
-        </div><br>
-    <!--end-->
-
     <!--Cars table-->
     <div id="carTableContainer">
         <table class="table table-striped table-responsive">
@@ -59,40 +53,3 @@
     <!--End-->
 </div>
 
-<script>
-    // Get the context of the canvas element
-    const ctx = document.getElementById('myChart').getContext('2d');
-
-    // Create the chart
-    const myChart = new Chart(ctx, {
-        type: 'bar', // Specify the chart type (e.g., bar, line, pie, etc.)
-        data: {
-            labels: ['8:00AM','9:00AM','10:00AM','11:00AM','12:00AM','1:00AM','2:00AM','3:00AM','4:00AM','5:00AM'], // Labels for the X-axis
-            datasets: [{
-                label: 'Daily Transactions',
-                data: [12, 19, 3, 5, 2, 3, 16, 4, 7, 12], // Data points for the chart
-                backgroundColor: [
-                    'gray',
-                    'gray',
-                    'gray',
-                    'gray',
-                    'gray',
-                    'gray',
-                    'gray',
-                    'gray',
-                    'gray',
-                    'gray'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true // Make Y-axis start at zero
-                }
-            }
-        }
-    });
-
-</script>
