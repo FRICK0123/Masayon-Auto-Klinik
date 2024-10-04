@@ -245,4 +245,27 @@ class UserManagementController extends Controller
 
         return to_route('maintenance_overview');
     }
+
+    //Edit User Info View
+    public function editUserInfoView($customerID){
+        $customerInfo = Customer::where('customerID',$customerID)->first();
+        return view('pages.admin_pages.admin_users.admin_edit_user', ['customer' => $customerInfo]);
+    }
+
+    //Edit User Info
+    public function editUserInfo(Request $request, $customerID){
+        $fullname = $request->input('fullname');
+        $email_address = $request->input('email_address');
+        $phone_number = $request->input('phone_number');
+        $username = $request->input('username');
+
+        Customer::where('customerID', $customerID)->update([
+            'fullname' => $fullname,
+            'email' => $email_address,
+            'phone_number' => $phone_number,
+            'username' => $username,
+        ]);
+
+        return to_route('users_view');
+    }
 }

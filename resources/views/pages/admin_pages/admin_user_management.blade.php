@@ -102,7 +102,7 @@
                             <div class="d-flex w-50">
                                 <div class="dropdown">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
+                                        <img src="{{asset('icons/bars-filter.svg')}}" alt="Filter">
                                     </button>
                                     <form id="userFilterForm" action="{{ route('users_view') }}" method="GET" class="dropdown-menu p-2">
                                         <input type="radio" id="by_fullname" name="filter_users" class="form-check-input border border-1 border-dark" value="by_fullname">
@@ -175,10 +175,17 @@
                                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
+                                            <li><a class="dropdown-item" href="#">Change Password</a></li>
                                             <li><a class="dropdown-item" href="{{ route('add_vehicle_view',$user['customerID']) }}">Add Vehicle</a></li>
                                             <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
-                                            <li><a class="dropdown-item" href="#">Edit</a></li>
-                                            <li><a class="dropdown-item bg-danger text-light" href="#">Deactivate</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('edit_user_info_view',$user['customerID']) }}">Edit</a></li>
+                                            <li>
+                                                @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
+                                                    <a class="dropdown-item bg-danger text-light" href="#">Deactivate</a>
+                                                @else
+                                                    <a class="dropdown-item bg-success text-light" href="#">Activate</a>
+                                                @endif
+                                            </li>
                                         </ul>
                                     </div>
                                 </td>

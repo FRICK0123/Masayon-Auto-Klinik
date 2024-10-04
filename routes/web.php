@@ -116,6 +116,8 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::post('/store_user_vehicle{customerID}','addUserVehicle')->name('store_user_vehicle');
         Route::get('/add_user_vehicle_maintenance_schedule/{vehicleID}', 'addUserVehicleMaintenanceScheduleView')->name('add_user_vehicle_maintenance_schedule_view');
         Route::post('/store_vehicle_maintenance', 'storeMaintenanceSchedule')->name('store_maintenance_schedule');
+        Route::get('/edit_user/{customerID}','editUserInfoView')->name('edit_user_info_view');
+        Route::post('/update_user/{customerID}', 'editUserInfo')->name('edit_user_info');
     });
 //end
 
