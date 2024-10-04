@@ -118,6 +118,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::post('/store_vehicle_maintenance', 'storeMaintenanceSchedule')->name('store_maintenance_schedule');
         Route::get('/edit_user/{customerID}','editUserInfoView')->name('edit_user_info_view');
         Route::post('/update_user/{customerID}', 'editUserInfo')->name('edit_user_info');
+        Route::post('/change_password/{customerID}', 'changePassword');
     });
 //end
 

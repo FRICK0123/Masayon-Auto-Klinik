@@ -176,10 +176,15 @@
                                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
-                                            <li><a class="dropdown-item" href="#">Change Password</a></li>
+
+                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePassword" data-customerID="{{ $user['customerID'] }}" data-fullname="{{ $user['fullname'] }}" onclick="populatePass(this)">Change Password</a></li>
+
                                             <li><a class="dropdown-item" href="{{ route('add_vehicle_view',$user['customerID']) }}">Add Vehicle</a></li>
+
                                             <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
+
                                             <li><a class="dropdown-item" href="{{ route('edit_user_info_view',$user['customerID']) }}">Edit</a></li>
+
                                             <li>
                                                 @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
                                                     <a class="dropdown-item bg-danger text-light" href="#">Deactivate</a>
@@ -253,6 +258,41 @@
                     </div>
                 </div>
             <!--end-->
+
+            <!--Change User Password-->
+                <div class="modal fade" id="changePassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Change Password for <span id="fullname"></span></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" method="POST" id="changePassForm">
+                            @csrf
+                            <!--New Password-->
+                            <label for="new_password">New Password:</label>
+                            <input type="password" id="new_password" name="new_password" class="form-control" placeholder="********">
+                            <div class="container d-flex mt-2">
+                                <input type="checkbox" id="new_password_checkbox" class="me-2" onclick="showNewPass()">
+                                <label for="new_password_checkbox">Show Password</label>
+                            </div>
+
+                            <!--Confirm Password-->
+                            <label for="new_confirm_password" class="fw-bold mt-4">Confirm Password:</label>
+                            <input type="password" class="form-control mt-1 border border-1 border-dark" name="new_confirm_password" id="new_confirm_password" placeholder="********" autocomplete="off">
+                            <div class="container d-flex mt-2">
+                                <input type="checkbox" id="showNewConfirmPassword" class="me-2" onclick="showNewConfirm()">
+                                <label for="showNewConfirmPassword">Show Password</label>
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            <!--end-->
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->
@@ -286,6 +326,38 @@
                 reader.readAsDataURL(file);
             }
         });
+
+        //Show Password Functions (modal of change password)
+        let new_password = document.getElementById('new_password');
+        let new_confirm_password = document.getElementById('new_confirm_password');
+        let new_password_checkbox = document.getElementById('new_password_checkbox');
+        let new_confirm_password_checkbox = document.getElementById('showNewConfirmPassword');
+
+
+        function showNewPass(){
+            if(new_password_checkbox.checked == true){
+                new_password.type = "text";
+            } else {
+                new_password.type = "password"
+            }
+        }
+
+        function showNewConfirm(){
+            if(new_confirm_password_checkbox.checked == true){
+                new_confirm_password.type = "text";
+            } else {
+                new_confirm_password.type = "password"
+            }
+        }
+
+        //Change Password Modal Script
+        function populatePass(element){
+            const customerID = element.getAttribute('data-customerID');
+            const fullname = element.getAttribute('data-fullname');
+
+            document.getElementById('fullname').innerHTML = fullname;
+            document.getElementById('changePassForm').action = `/change_password/${customerID}`;
+        }
     </script>
 </body>
 

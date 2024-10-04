@@ -258,6 +258,14 @@ class UserManagementController extends Controller
         return view('pages.admin_pages.admin_users.admin_edit_user', ['customer' => $customerInfo]);
     }
 
+    //Change Customer Account Password
+    public function changePassword(Request $request, $customerID){
+        $newPassword = Hash::make($request->input('new_password'));
+
+        Customer::where('customerID',$customerID)->update(['password'=>$newPassword]);
+        return to_route('users_view');
+    }
+
     //Edit User Info
     public function editUserInfo(Request $request, $customerID){
         $fullname = $request->input('fullname');
