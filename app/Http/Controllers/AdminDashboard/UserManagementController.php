@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\Customer;
+use App\Models\MaintenanceHistory;
 use App\Models\MaintenanceSchedule;
 use App\Models\Vehicle;
 use Carbon\Carbon;
@@ -113,7 +114,9 @@ class UserManagementController extends Controller
     //View Users page
     public function viewUserInfo($customerID){
         $customer = Customer::where('customerID',$customerID)->first();
-        return view('pages.admin_pages.admin_users.admin_view_user',['customer' => $customer]);
+        $vehicles = Vehicle::where('customerID', $customerID)->get();
+        $previous_maintenance = MaintenanceHistory::where('customerID', $customerID)->orderBy('date_performed','desc')->get();
+        return view('pages.admin_pages.admin_users.admin_view_user',['customer' => $customer,'vehicles'=>$vehicles,'previous_maintenance'=> $previous_maintenance]);
     }
 
     //View User's vehicle

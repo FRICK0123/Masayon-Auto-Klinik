@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AdminDashboard;
 
+use App\Charts\TransactionChart;
 use App\Http\Controllers\Controller;
 use App\Models\MaintenanceHistory;
 use Carbon\Carbon;
@@ -12,7 +13,6 @@ class ReportController extends Controller
     //reports view and filter
     public function reportsView()
     {
-
         $transaction = MaintenanceHistory::where('date_performed', Carbon::today())->get();
         $interval = 'daily';
         return view('pages.admin_pages.admin_reports',
@@ -47,6 +47,7 @@ class ReportController extends Controller
             default:
                 $transaction = MaintenanceHistory::where('date_performed', Carbon::today())->get();
         }
+
 
         return view(
             'pages.admin_pages.admin_reports',

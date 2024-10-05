@@ -48,7 +48,7 @@
     <!--Main Content-->
     <main>
         <x-admin-dashboard.admin-content>
-            <x-admin-dashboard.view-user-info :customer="$customer"/>
+            <x-admin-dashboard.view-user-info :customer="$customer" :vehicles="$vehicles" :previous_maintenance="$previous_maintenance"/>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->
