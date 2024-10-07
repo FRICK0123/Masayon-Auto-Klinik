@@ -11,6 +11,7 @@ class MaintenanceSchedule extends Model
     protected $fillable = [
         'vehicleID',
         'maintenance_type',
+        'PMS_services',
         'scheduled_date',
         'last_maintenance_date',
         'scheduled_interval',

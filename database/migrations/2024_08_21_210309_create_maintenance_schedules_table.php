@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('maintenanceID')->startingValue('5000');
             $table->bigInteger('vehicleID');
             $table->string('maintenance_type');
+            $table->string('PMS_services');
             $table->date('scheduled_date');
             $table->date('last_maintenance_date');
             $table->integer('scheduled_interval');

@@ -20,6 +20,187 @@
             <option value="Full PMS">Heavy PMS</option>
         </select><br>
 
+        <!--Basic PMS Service Type-->
+            <div class="container" id="basic_pms_services">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="scanning">
+                    <label class="form-check-label" for="scanning">
+                        Scanning
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="change_oil">
+                    <label class="form-check-label" for="change_oil">
+                        Change Oil/Oil Filter
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="air_filter">
+                    <label class="form-check-label" for="air_filter">
+                        Air Filter
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="cabin_filter">
+                    <label class="form-check-label" for="cabin_filter">
+                        Cabin Filter
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="fuel_filter">
+                    <label class="form-check-label" for="fuel_filter">
+                        Fuel Filter
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check_brakes">
+                    <label class="form-check-label" for="check_brakes">
+                        Check Brakes
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check_concerns">
+                    <label class="form-check-label" for="check_concerns">
+                        Check Concerns
+                    </label>
+                </div>
+
+            </div>
+        <!--end-->
+
+        <!--Full PMS Service Type-->
+            <div class="container row" id="full_pms_services">
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="full_change_oil">
+                        <label class="form-check-label" for="full_change_oil">
+                            Change Oil
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="replace_oil_filter">
+                        <label class="form-check-label" for="replace_oil_filter">
+                            Replace Oil Filter
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="replace_air_filter">
+                        <label class="form-check-label" for="replace_air_filter">
+                            Replace Air Filter
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="replace_fuel_filter_diesel">
+                        <label class="form-check-label" for="replace_fuel_filter_diesel">
+                            Replace Fuel Filter(Diesel)
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="replace_cabin_filter">
+                        <label class="form-check-label" for="replace_cabin_filter">
+                            Replace Cabin Filter
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="replace_transmission_oil">
+                        <label class="form-check-label" for="replace_transmission_oil">
+                            Replace Transmission Oil
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="replace_differential_oil">
+                        <label class="form-check-label" for="replace_differential_oil">
+                            Replace Differential Oil
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="inspect&cleaning_throttle_body">
+                        <label class="form-check-label" for="inspect&cleaning_throttle_body">
+                            Inspect & Cleaning Throttle Body
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="inspect&cleaning_brake_lining">
+                        <label class="form-check-label" for="inspect&cleaning_brake_lining">
+                            Inspect & Cleaning Brake Lining
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="inspect_steering_wheel">
+                        <label class="form-check-label" for="inspect_steering_wheel">
+                            Inspect Steering Wheel
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="inspect_linkage&gear_box">
+                        <label class="form-check-label" for="inspect_linkage&gear_box">
+                            Inspect Linkage & Gearbox
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="inspect_front&rear_suspension">
+                        <label class="form-check-label" for="inspect_front&rear_suspension">
+                            Inspect Front & Rear Suspension
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="inspect_battery_life">
+                        <label class="form-check-label" for="inspect_battery_life">
+                            Inspect Battery Life
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="inspect_clutch_system">
+                        <label class="form-check-label" for="inspect_clutch_system">
+                            Inspect Clutch System
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="inspect&replace_drive_belts">
+                        <label class="form-check-label" for="inspect&replace_drive_belts">
+                            Inspect & Replace Drive Belts
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fluid_flushing">
+                        <label class="form-check-label" for="fluid_flushing">
+                            Fluid Flushing
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="full_scanning">
+                        <label class="form-check-label" for="full_scanning">
+                            Scanning
+                        </label>
+                    </div>
+                </div>
+            </div>
+        <!--end-->
+
         <label for="maintenance_date" class="fw-bold">
             Maintenance Date: (current date or last maintenance date)
         </label>
@@ -82,6 +263,10 @@
     let maintenance_type = document.getElementById('maintenance_type');
     let oil_type_select = document.getElementById('oil_type');
     let mileage_interval_input = document.getElementById('mileage_interval');
+    let basic_pms_services_container = document.getElementById('basic_pms_services');
+    let full_pms_services_container = document.getElementById('full_pms_services');
+    basic_pms_services_container.style.display = "none";
+    full_pms_services_container.style.display = "none";
 
     // Show oil type container when 'Oil Change' is selected
     maintenance_type.addEventListener('change', function() {
@@ -103,6 +288,17 @@
             document.getElementById('schedule_interval_pms').style.display = "none";
             document.getElementById('schedule_interval_container').style.display = "block";
             mileage_interval_input.value = ""; // Clear the mileage interval when hidden
+        }
+
+        if(maintenance_type.value === "Basic PMS"){
+            basic_pms_services_container.style.display = "block";
+            full_pms_services_container.style.display = "none";
+        } else if(maintenance_type.value === "Full PMS"){
+            basic_pms_services_container.style.display = "none";
+            full_pms_services_container.style.display = "flex";
+        } else {
+            basic_pms_services_container.style.display = "none";
+            full_pms_services_container.style.display = "none";
         }
     });
 

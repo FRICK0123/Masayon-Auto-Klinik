@@ -29,6 +29,7 @@ class CustomerFactory extends Factory
             'verification_token' => Str::random(40), // Generate a random verification token
             'isVerified' => true,
             'usertype' => "customer",
+            'last_seen' => now(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

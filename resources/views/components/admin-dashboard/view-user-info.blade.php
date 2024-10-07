@@ -77,7 +77,7 @@
     </div>
   
     <div class="container border border-1 shadow pb-3 mt-4">
-        <h5>Previous Vehicle Transactions</h5>
+        <h5>Previous Owner Transactions</h5>
         <table class="table table-responsive">
             <tr>
                 <th>VEHICLE</th>

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('verification_token')->nullable();
             $table->boolean('isVerified');
             $table->string('usertype');
+            $table->dateTime('last_seen');
             $table->timestamps();
         });
     }
