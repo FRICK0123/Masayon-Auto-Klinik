@@ -28,11 +28,16 @@ class MaintenanceController extends Controller
         $oil_type = $request->input('oil_type');
         $milage = $request->input('milage');
         $milage_interval = $request->input('mileage_interval');
+        $basic_pms = $request->input('basic',[]);
+        $basic_services = implode(',',$basic_pms);
+        $full_pms = $request->input('full',[]);
+        $full_pms_services = implode(',',$full_pms);
 
         if($maintenance_type == "Oil Change"){
             MaintenanceSchedule::create([
                 'vehicleID' => $vehicleID,
                 'maintenance_type' => $maintenance_type,
+                'PMS_services' => null,
                 'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
                 'last_maintenance_date' => $last_maintenance_date,
                 'scheduled_interval' => $scheduled_interval,
@@ -44,6 +49,7 @@ class MaintenanceController extends Controller
             MaintenanceSchedule::create([
                 'vehicleID' => $vehicleID,
                 'maintenance_type' => $maintenance_type,
+                'PMS_services' => null,
                 'scheduled_date' => Carbon::parse($maintenance_date)->addMonths(48),
                 'last_maintenance_date' => $last_maintenance_date,
                 'scheduled_interval' => 48,
@@ -55,6 +61,7 @@ class MaintenanceController extends Controller
             MaintenanceSchedule::create([
                 'vehicleID' => $vehicleID,
                 'maintenance_type' => $maintenance_type,
+                'PMS_services' => $basic_services,
                 'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
                 'last_maintenance_date' => $last_maintenance_date,
                 'scheduled_interval' => $scheduled_interval,
@@ -62,10 +69,23 @@ class MaintenanceController extends Controller
                 'current_milage' => $milage,
                 'next_milage_schedule' => $milage + 5000,
             ]);
+        } else if($maintenance_type == "Full PMS"){
+            MaintenanceSchedule::create([
+                'vehicleID' => $vehicleID,
+                'maintenance_type' => $maintenance_type,
+                'PMS_services' => $full_pms_services,
+                'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
+                'last_maintenance_date' => $last_maintenance_date,
+                'scheduled_interval' => $scheduled_interval,
+                'oil_type' => null,
+                'current_milage' => $milage,
+                'next_milage_schedule' => $milage + 50000,
+            ]);
         } else {
             MaintenanceSchedule::create([
                 'vehicleID' => $vehicleID,
                 'maintenance_type' => $maintenance_type,
+                'PMS_services' => null,
                 'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
                 'last_maintenance_date' => $last_maintenance_date,
                 'scheduled_interval' => $scheduled_interval,

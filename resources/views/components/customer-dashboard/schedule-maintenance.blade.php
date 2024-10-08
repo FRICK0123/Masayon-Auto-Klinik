@@ -23,49 +23,49 @@
         <!--Basic PMS Service Type-->
             <div class="container" id="basic_pms_services">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="scanning">
+                    <input class="form-check-input" type="checkbox" value="Scanning" id="scanning" name="basic[]">
                     <label class="form-check-label" for="scanning">
                         Scanning
                     </label>
                 </div>
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="change_oil">
+                    <input class="form-check-input" type="checkbox" value="Change Oil/Oil Filter" id="change_oil" name="basic[]">
                     <label class="form-check-label" for="change_oil">
                         Change Oil/Oil Filter
                     </label>
                 </div>
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="air_filter">
+                    <input class="form-check-input" type="checkbox" value="Air Flter" id="air_filter" name="basic[]">
                     <label class="form-check-label" for="air_filter">
                         Air Filter
                     </label>
                 </div>
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="cabin_filter">
+                    <input class="form-check-input" type="checkbox" value="Cabin Filter" id="cabin_filter" name="basic[]">
                     <label class="form-check-label" for="cabin_filter">
                         Cabin Filter
                     </label>
                 </div>
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="fuel_filter">
+                    <input class="form-check-input" type="checkbox" value="Fuel Filter" id="fuel_filter" name="basic[]">
                     <label class="form-check-label" for="fuel_filter">
                         Fuel Filter
                     </label>
                 </div>
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="check_brakes">
+                    <input class="form-check-input" type="checkbox" value="Check Brakes" id="check_brakes" name="basic[]">
                     <label class="form-check-label" for="check_brakes">
                         Check Brakes
                     </label>
                 </div>
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="check_concerns">
+                    <input class="form-check-input" type="checkbox" value="Check Concerns" id="check_concerns" name="basic[]">
                     <label class="form-check-label" for="check_concerns">
                         Check Concerns
                     </label>
@@ -78,63 +78,63 @@
             <div class="container row" id="full_pms_services">
                 <div class="col-md-6">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="full_change_oil">
+                        <input class="form-check-input" type="checkbox" value="Change Oil" id="full_change_oil" name="full[]">
                         <label class="form-check-label" for="full_change_oil">
                             Change Oil
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="replace_oil_filter">
+                        <input class="form-check-input" type="checkbox" value="Replace Oil filter" id="replace_oil_filter" name="full[]">
                         <label class="form-check-label" for="replace_oil_filter">
                             Replace Oil Filter
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="replace_air_filter">
+                        <input class="form-check-input" type="checkbox" value="Replace Air Filter" id="replace_air_filter" name="full[]">
                         <label class="form-check-label" for="replace_air_filter">
                             Replace Air Filter
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="replace_fuel_filter_diesel">
+                        <input class="form-check-input" type="checkbox" value="Replace Fuel Filter(Diesel)" id="replace_fuel_filter_diesel" name="full[]">
                         <label class="form-check-label" for="replace_fuel_filter_diesel">
                             Replace Fuel Filter(Diesel)
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="replace_cabin_filter">
+                        <input class="form-check-input" type="checkbox" value="Replace Cabin Filter" id="replace_cabin_filter" name="full[]">
                         <label class="form-check-label" for="replace_cabin_filter">
                             Replace Cabin Filter
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="replace_transmission_oil">
+                        <input class="form-check-input" type="checkbox" value="Replace Transmission Oil" id="replace_transmission_oil" name="full[]">
                         <label class="form-check-label" for="replace_transmission_oil">
                             Replace Transmission Oil
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="replace_differential_oil">
+                        <input class="form-check-input" type="checkbox" value="Replace Differential Oil" id="replace_differential_oil" name="full[]">
                         <label class="form-check-label" for="replace_differential_oil">
                             Replace Differential Oil
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="inspect&cleaning_throttle_body">
+                        <input class="form-check-input" type="checkbox" value="Inspect & Cleaning Throttle Body" id="inspect&cleaning_throttle_body" name="full[]">
                         <label class="form-check-label" for="inspect&cleaning_throttle_body">
                             Inspect & Cleaning Throttle Body
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="inspect&cleaning_brake_lining">
+                        <input class="form-check-input" type="checkbox" value="Inspect & Cleaning Brake Lining" id="inspect&cleaning_brake_lining" name="full[]">
                         <label class="form-check-label" for="inspect&cleaning_brake_lining">
                             Inspect & Cleaning Brake Lining
                         </label>
@@ -143,56 +143,56 @@
 
                 <div class="col-md-6">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="inspect_steering_wheel">
+                        <input class="form-check-input" type="checkbox" value="Inspect Steering Wheel" id="inspect_steering_wheel" name="full[]">
                         <label class="form-check-label" for="inspect_steering_wheel">
                             Inspect Steering Wheel
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="inspect_linkage&gear_box">
+                        <input class="form-check-input" type="checkbox" value="Inspect Linkage & Gearbox" id="inspect_linkage&gear_box" name="full[]">
                         <label class="form-check-label" for="inspect_linkage&gear_box">
                             Inspect Linkage & Gearbox
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="inspect_front&rear_suspension">
+                        <input class="form-check-input" type="checkbox" value="Inspect Front & Rear Suspension" id="inspect_front&rear_suspension" name="full[]">
                         <label class="form-check-label" for="inspect_front&rear_suspension">
                             Inspect Front & Rear Suspension
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="inspect_battery_life">
+                        <input class="form-check-input" type="checkbox" value="Inspect Battery Life" id="inspect_battery_life" name="full[]">
                         <label class="form-check-label" for="inspect_battery_life">
                             Inspect Battery Life
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="inspect_clutch_system">
+                        <input class="form-check-input" type="checkbox" value="Inspect Clutch System" id="inspect_clutch_system" name="full[]">
                         <label class="form-check-label" for="inspect_clutch_system">
                             Inspect Clutch System
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="inspect&replace_drive_belts">
+                        <input class="form-check-input" type="checkbox" value="Inspect & Replace Drive Belts" id="inspect&replace_drive_belts" name="full[]">
                         <label class="form-check-label" for="inspect&replace_drive_belts">
                             Inspect & Replace Drive Belts
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="fluid_flushing">
+                        <input class="form-check-input" type="checkbox" value="Fluid Flushing" id="fluid_flushing" name="full[]">
                         <label class="form-check-label" for="fluid_flushing">
                             Fluid Flushing
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="full_scanning">
+                        <input class="form-check-input" type="checkbox" value="Scanning" id="full_scanning" name="full[]">
                         <label class="form-check-label" for="full_scanning">
                             Scanning
                         </label>
@@ -242,7 +242,7 @@
         <div class="container_fluid" id="schedule_interval_pms" style="display: none">
             <label for="scheduled_interval" class="fw-bold">Schedule Interval:</label>
             <select name="scheduled_interval" id="scheduled_interval" class="form-select">
-                <option value="" disabled selected>Select Month Interval</option>
+                <option value="" disabled selected>Select Year Interval</option>
                 <option value="12">1 year</option>
                 <option value="24">2 years</option>
                 <option value="36">3 years</option>
