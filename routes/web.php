@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminDashboard\MaintenanceStatusController;
 use App\Http\Controllers\AdminDashboard\ManagerManagementController;
 use App\Http\Controllers\AdminDashboard\ReportController;
 use App\Http\Controllers\AdminDashboard\UserManagementController;
+use App\Http\Controllers\Dashboard\AppointmentController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
 use App\Http\Controllers\Dashboard\MaintenanceController;
@@ -75,6 +76,12 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:customer','update.last_seen'])->controller(MaintenanceController::class)->group(function(){
         Route::post('/schedule_form/{vehicleID}', 'scheduleMaintenanceView')->name('schedule_maintenance_form');
         Route::post('/schedule_maintenance_store', 'scheduleMaintenance')->name('schedule_maintenance_store');
+    });
+//end
+
+//Routes for Customer Schedule Appointment
+    Route::middleware(['auth:customer', 'update.last_seen'])->controller(AppointmentController::class)->group(function () {
+        Route::get('/scheduled_appointment', 'appointmentView')->name('appointment_view');
     });
 //end
 

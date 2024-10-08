@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('oil_type')->nullable();
             $table->integer('current_milage')->nullable();
             $table->integer('next_milage_schedule')->nullable();
+            $table->boolean('isAppointed');
             $table->timestamps();
         });
     }

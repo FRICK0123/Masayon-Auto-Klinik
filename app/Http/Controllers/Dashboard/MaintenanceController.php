@@ -44,6 +44,7 @@ class MaintenanceController extends Controller
                 'oil_type' => $oil_type,
                 'current_milage' => $milage,
                 'next_milage_schedule' => $milage + $milage_interval,
+                'isAppointed' => false,
             ]);
         } else if($maintenance_type == "EGR Cleaning"){
             MaintenanceSchedule::create([
@@ -56,6 +57,7 @@ class MaintenanceController extends Controller
                 'oil_type' => null,
                 'current_milage' => $milage,
                 'next_milage_schedule' => $milage + 50000,
+                'isAppointed' => false,
             ]);
         } else if($maintenance_type == "Basic PMS"){
             MaintenanceSchedule::create([
@@ -68,6 +70,7 @@ class MaintenanceController extends Controller
                 'oil_type' => null,
                 'current_milage' => $milage,
                 'next_milage_schedule' => $milage + 5000,
+                'isAppointed' => false,
             ]);
         } else if($maintenance_type == "Full PMS"){
             MaintenanceSchedule::create([
@@ -80,6 +83,7 @@ class MaintenanceController extends Controller
                 'oil_type' => null,
                 'current_milage' => $milage,
                 'next_milage_schedule' => $milage + 50000,
+                'isAppointed' => false,
             ]);
         } else {
             MaintenanceSchedule::create([
@@ -92,6 +96,7 @@ class MaintenanceController extends Controller
                 'oil_type' => null,
                 'current_milage' => null,
                 'next_milage_schedule' => null,
+                'isAppointed' => false,
             ]);
         }
 

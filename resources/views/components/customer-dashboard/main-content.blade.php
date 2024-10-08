@@ -6,7 +6,7 @@
     <p class="text-light email_heading">{{Session::get('email')}}</p>
 
     <!--dashboard links-->
-        <div class="container-fluid mt-4 form_links">
+        <div class="container-fluid mt-3 form_links">
 
             <form action="{{route('customer_profile')}}" method="GET" class="text-white d-flex justify-content-between align-items-center" id="customer_profile" onclick="profileForm()">
                 <p class="m-0">Profile</p>
@@ -16,6 +16,11 @@
             <form action="{{route('customer_dashboard')}}" class="text-white d-flex justify-content-between align-items-center" id="customer_dashboard" onclick="dashboardForm()">
                 <p class="m-0">Dashboard</p>
                 <img src="{{asset('icons/dashboard.svg')}}" alt="Dashboard Icon" class="">
+            </form>
+
+            <form action="{{ route('appointment_view') }}" class="text-white d-flex justify-content-between align-items-center" id="customer_schedule_appointment" onclick="appointmentForm()">
+                <p class="m-0">Appointments</p> 
+                <img src="{{asset('icons/calendar-check-white.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
             <form action="{{ route('customer_maintenance_schedule') }}" class="text-white d-flex justify-content-between align-items-center" id="customer_maintenance_schedule" onclick="scheduleForm()">
@@ -33,6 +38,7 @@
                 <p class="m-0">Logout</p>
                 <img src="{{asset('icons/power.svg')}}" alt="Dashboard Icon" class="">
             </form>
+            
         </div>
     <!--End-->
 </div>
@@ -56,6 +62,11 @@
         //Maintenance Schedule Form Submittion
         function scheduleForm(){
             document.getElementById('customer_maintenance_schedule').submit();
+        }
+
+        //Maintenance Schedule Appointment Form Submittion
+        function appointmentForm(){
+            document.getElementById('customer_schedule_appointment').submit();
         }
 
         //Logout Form Submittion

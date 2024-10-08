@@ -30,6 +30,7 @@ class CustomerDashboard extends Controller
 
         $schedules = MaintenanceSchedule::join('vehicles', 'maintenance_schedules.vehicleID', '=', 'vehicles.vehicleID')
             ->where('vehicles.customerID', '=', $customerID) // Filter by the authenticated customer's ID
+            ->where('maintenance_schedules.isAppointed', true)
             ->select('maintenance_schedules.*', 'vehicles.*')
             ->get();
 

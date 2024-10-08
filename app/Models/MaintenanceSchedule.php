@@ -18,6 +18,7 @@ class MaintenanceSchedule extends Model
         'oil_type',
         'current_milage',
         'next_milage_schedule',
+        'isAppointed'
     ];
 
     protected $table = 'maintenance_schedules';

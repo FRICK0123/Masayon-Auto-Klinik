@@ -19,6 +19,11 @@
                 <img src="{{asset('icons/dashboard.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
+            <form action="{{ route('appointment_view') }}" class="text-white d-flex justify-content-between align-items-center" id="customer_schedule_appointment" onclick="appointmentForm()">
+                <p class="m-0">Appointments</p> 
+                <img src="{{asset('icons/calendar-check-white.svg')}}" alt="Dashboard Icon" class="">
+            </form>
+
             <form action="{{route('customer_maintenance_schedule')}}" class="text-white d-flex justify-content-between align-items-center" id="customer_maintenance_schedule" onclick="maintenanceSchedule()">
                 <p class="m-0">Maintenance Schedule</p>
                 <img src="{{asset('icons/calendar.svg')}}" alt="Dashboard Icon" class="">
