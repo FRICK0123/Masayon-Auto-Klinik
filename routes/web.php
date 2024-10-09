@@ -74,7 +74,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 
 //Routes for Maintenance Schedule and History
     Route::middleware(['auth:customer','update.last_seen'])->controller(MaintenanceController::class)->group(function(){
-        Route::post('/schedule_form/{vehicleID}', 'scheduleMaintenanceView')->name('schedule_maintenance_form');
+        Route::get('/schedule_form/{vehicleID}', 'scheduleMaintenanceView')->name('schedule_maintenance_form');
         Route::post('/schedule_maintenance_store', 'scheduleMaintenance')->name('schedule_maintenance_store');
     });
 //end

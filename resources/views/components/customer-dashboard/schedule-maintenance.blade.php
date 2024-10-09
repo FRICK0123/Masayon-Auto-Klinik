@@ -204,7 +204,7 @@
         <label for="maintenance_date" class="fw-bold">
             Maintenance Date: (current date or last maintenance date)
         </label>
-        <input type="date" name="maintenance_date" id="maintenance_date" class="form-control">
+        <input type="date" name="maintenance_date" id="maintenance_date" class="form-control" min="{{ date('Y-m-d') }}">
         <br>
 
         <div class="container_fluid" id="oil_type_container" style="display: none">
@@ -259,7 +259,29 @@
     </form>
 </div>
 
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Appointment Error</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-danger text-white">
+            @error('appointment_date')
+                <span>{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+</div>
+
+
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if ($errors->has('appointment_date'))
+            var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+            errorToast.show();
+        @endif
+    });
+
     let maintenance_type = document.getElementById('maintenance_type');
     let oil_type_select = document.getElementById('oil_type');
     let mileage_interval_input = document.getElementById('mileage_interval');
@@ -313,4 +335,15 @@
             mileage_interval_input.value = ""; // Clear the field if no valid option is selected
         }
     });
+
+    document.getElementById("maintenance_date").addEventListener("input", function() {
+        let inputDate = new Date(this.value);
+        let day = inputDate.getUTCDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
+
+        if (day === 0) { // 0 means Sunday
+            alert("You cannot book appointments on Sunday.");
+            this.value = ""; // Clear the input field
+        }
+    });
+
 </script>

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('current_milage')->nullable();
             $table->integer('next_milage_schedule')->nullable();
             $table->boolean('isAppointed');
+            $table->timestamp('appointment_date');
             $table->timestamps();
         });
     }
