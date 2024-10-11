@@ -39,6 +39,11 @@
                     <p class="m-0">Cars</p>
                 </form>
 
+                <form action="{{ route('admin_appointment_view') }}" method="GET" class="d-flex align-items-center" id="appointment" onclick="adminAppointment()">
+                    <img src="{{asset('icons/calendar-check.svg')}}" alt="Reports" class="me-2">
+                    <p class="m-0">Appointments</p>
+                </form>
+
                 <a class="d-flex align-items-center justify-content-between maintenance_container" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                     <div class="d-flex align-items-center">
                         <img src="{{asset('icons/gear-fine.svg')}}" alt="Maintenance Overview" class="me-2">
@@ -119,6 +124,10 @@
 
         function adminReports(){
             document.getElementById('reports').submit();
+        }
+
+        function adminAppointment(){
+            document.getElementById('appointment').submit();
         }
     </script>
 <!--end-->

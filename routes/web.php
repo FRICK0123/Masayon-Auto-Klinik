@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
+use App\Http\Controllers\AdminDashboard\AdminAppointmentController;
 use App\Http\Controllers\AdminDashboard\AdminController;
 use App\Http\Controllers\AdminDashboard\CarsController;
 use App\Http\Controllers\AdminDashboard\MaintenanceHistoryController;
@@ -122,10 +123,12 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/add_user_vehicle/{customerID}','addVehicleView')->name('add_vehicle_view');
         Route::post('/store_user_vehicle{customerID}','addUserVehicle')->name('store_user_vehicle');
         Route::get('/add_user_vehicle_maintenance_schedule/{vehicleID}', 'addUserVehicleMaintenanceScheduleView')->name('add_user_vehicle_maintenance_schedule_view');
-        Route::post('/store_vehicle_maintenance', 'storeMaintenanceSchedule')->name('store_maintenance_schedule');
+        Route::post('/store_vehicle_maintenance', 'scheduleMaintenance')->name('store_maintenance_schedule');
         Route::get('/edit_user/{customerID}','editUserInfoView')->name('edit_user_info_view');
         Route::post('/update_user/{customerID}', 'editUserInfo')->name('edit_user_info');
         Route::post('/change_password/{customerID}', 'changePassword');
+        Route::get('/walkin_maintenance/{vehicleID}', 'walkinMaintenanceView')->name('walkin_maintenance_view');
+        Route::post('/walkin', 'walkinMaintenance')->name('walkin_maintenance');
     });
 //end
 
@@ -161,6 +164,12 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(ReportController::class)->group(function () {
         Route::get('/reports', 'reportsView')->name('reports_view');
         Route::get('/reports/transaction_filter', 'reportsTransactionFilter')->name('reports_transaction_filter');
+    });
+//end
+
+//Routes for Admin Appointment
+    Route::middleware(['auth:admin'])->controller(AdminAppointmentController::class)->group(function () {
+        Route::get('/customer_appointements', 'adminAppointmentView')->name('admin_appointment_view');
     });
 //end
 

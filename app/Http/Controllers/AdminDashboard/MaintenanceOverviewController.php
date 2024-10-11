@@ -13,7 +13,7 @@ class MaintenanceOverviewController extends Controller
     public function maintenanceOverview()
     {
         // // Fetch maintenance schedules and join with vehicles and customers
-        $schedules = MaintenanceSchedule::with(['vehicle.customer'])
+        $schedules = MaintenanceSchedule::with(['vehicle.customer'])->where('isAppointed',true)
 
         ->orderByRaw("CASE 
             WHEN maintenance_type = 'Oil Change' THEN

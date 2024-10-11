@@ -13,7 +13,8 @@ class ReportController extends Controller
     //reports view and filter
     public function reportsView()
     {
-        $transaction = MaintenanceHistory::where('date_performed', Carbon::today())->get();
+        $today = Carbon::parse(Carbon::today()->toDateString());
+        $transaction = MaintenanceHistory::where('date_performed', $today)->get();
         $interval = 'daily';
         return view('pages.admin_pages.admin_reports',
         [
@@ -25,6 +26,7 @@ class ReportController extends Controller
     //Filter for transaction interval
     public function reportsTransactionFilter(Request $request)
     {
+        $today = Carbon::parse(Carbon::today()->toDateString());
         // Default to daily if no filter is applied
         $interval = $request->input('interval', 'daily');
         // Adjust based on interval
@@ -45,7 +47,7 @@ class ReportController extends Controller
                 ])->get();
                 break;
             default:
-                $transaction = MaintenanceHistory::where('date_performed', Carbon::today())->get();
+                $transaction = MaintenanceHistory::where('date_performed', $today)->get();
         }
 
 

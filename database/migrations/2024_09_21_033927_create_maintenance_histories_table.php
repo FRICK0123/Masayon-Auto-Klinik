@@ -24,7 +24,7 @@ return new class extends Migration
             $table->decimal('cost');
             $table->text('maintenance_description');
             $table->string('maintenance_status');
-            $table->timestamp('date_performed');
+            $table->date('date_performed');
             $table->timestamps();
         });
     }

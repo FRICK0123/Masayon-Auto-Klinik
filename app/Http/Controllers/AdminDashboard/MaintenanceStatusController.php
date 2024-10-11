@@ -107,6 +107,7 @@ class MaintenanceStatusController extends Controller
                 'last_maintenance_date' => Carbon::today(),
                 'current_milage' => $current_milage,
                 'next_milage_schedule' => $current_milage + 8000,
+                'isAppointed' => true,
             ]);
             
             MaintenanceHistory::create([
@@ -133,6 +134,7 @@ class MaintenanceStatusController extends Controller
                 'last_maintenance_date' => Carbon::today(),
                 'current_milage' => $current_milage,
                 'next_milage_schedule' => $current_milage + 5000,
+                'isAppointed' => true,
             ]);
 
             MaintenanceHistory::create([
@@ -159,6 +161,7 @@ class MaintenanceStatusController extends Controller
                 'last_maintenance_date' => Carbon::today(),
                 'current_milage' => $current_milage,
                 'next_milage_schedule' => $current_milage + 50000,
+                'isAppointed' => true,
             ]);
 
             MaintenanceHistory::create([
@@ -185,6 +188,7 @@ class MaintenanceStatusController extends Controller
                 'last_maintenance_date' => Carbon::today(),
                 'current_milage' => $current_milage,
                 'next_milage_schedule' => $current_milage + 5000,
+                'isAppointed' => true,
             ]);
 
             MaintenanceHistory::create([
@@ -211,6 +215,7 @@ class MaintenanceStatusController extends Controller
                 'last_maintenance_date' => Carbon::today(),
                 'current_milage' => $current_milage,
                 'next_milage_schedule' => $current_milage + 50000,
+                'isAppointed' => true,
             ]);
 
             MaintenanceHistory::create([
@@ -235,6 +240,7 @@ class MaintenanceStatusController extends Controller
                 'scheduled_date' => Carbon::today()->addMonths($maintenance->scheduled_interval),
                 'last_maintenance_date' => Carbon::today(),
                 'current_milage' => $current_milage,
+                'isAppointed' => true,
             ]);
 
             MaintenanceHistory::create([

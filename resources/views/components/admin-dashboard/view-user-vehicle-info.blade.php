@@ -24,7 +24,8 @@
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">View</a></li>
-                            <li><a class="dropdown-item" href="{{ route('add_user_vehicle_maintenance_schedule_view',$vehicle['vehicleID']) }}">Add Maintenance Schedule</a></li>
+                            <li><a class="dropdown-item" href="{{ route('walkin_maintenance_view',$vehicle['vehicleID']) }}">Walk In</a></li>
+                            <li><a class="dropdown-item" href="{{ route('add_user_vehicle_maintenance_schedule_view',$vehicle['vehicleID']) }}">Schedule a Maintenance</a></li>
                             <li><a class="dropdown-item bg-danger text-light" href="#">Delete</a></li>
                         </ul>
                     </div>
