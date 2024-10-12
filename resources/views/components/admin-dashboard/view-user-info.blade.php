@@ -1,60 +1,50 @@
 @props(['customer','vehicles','previous_maintenance'])
 <div class="container">
-    <h2 class="pb-2 border-bottom">USER</h2>
+    <h4 class="p-2 border rounded-3 shadow-sm">USER</h4>
 
-    <div class="container border border-1 shadow pb-3 d-flex">
-        <!--User Profile-->
-        <div class="d-flex flex-column">
+    <div class="container row">
+        <div class="col-md-4 border rounded-3 p-2">
             <!--Profile Image-->
             <div class="customer_img_wrapper mt-1">
                 <img src="{{ asset('Images/profile_images/'.$customer['profile_img']) }}" alt="Car Image" class="customer_image" id="car_image">
             </div>
-            <!--User Profile Information-->
-            <div class="container">
-                <div class="d-flex align-items-baseline">
-                    <small class="fw-bold me-2">Fullname:</small>
-                    <p class="border-bottom">{{ $customer['fullname'] }}</p>
-                </div>
 
-                <div class="d-flex align-items-baseline">
-                    <small class="fw-bold me-2">Email:</small>
-                    <p class="border-bottom">{{ $customer['email'] }}</p>
-                </div>
+            <small class="fw-bold me-2">Fullname:</small>
+            <p class="border-bottom" style="text-overflow: ellipsis; overflow:hidden;">{{ $customer['fullname'] }}</p>
 
-                <div class="d-flex align-items-baseline">
-                    <small class="fw-bold me-2">Phone Number:</small>
-                    <p class="border-bottom">+63{{ $customer['phone_number'] }}</p>
-                </div>
+            <small class="fw-bold me-2">Email:</small>
+            <p class="border-bottom" style="text-overflow: ellipsis; overflow:hidden;">{{ $customer['email'] }}</p>
 
-                <div class="d-flex align-items-baseline">
-                    <p class="fw-bold me-2">Username:</p>
-                    <p class="border-bottom">{{ $customer['username'] }}</p>
-                </div>
+            <small class="fw-bold me-2">Phone Number:</small>
+            <p class="border-bottom" style="text-overflow: ellipsis; overflow:hidden;">+63{{ $customer['phone_number'] }}</p>
 
-                <div class="d-flex align-items-baseline">
-                    <p class="fw-bold me-2">Account Status:</p>
-                    @if ($customer['isVerified'] == true && $customer['email_verified_at'] !== null)
-                        <p class="border-bottom border-success text-success">Verified</p>
-                    @elseif($customer['isVerified'] == false && $customer['email_verified_at'] == null)
-                        <p class="border-bottom border-danger text-danger">Deactivated</p>
-                    @else
-                        <p class="border-bottom border-secondary text-secondary">Not Verified</p>
-                    @endif
-                </div>
+            <small class="fw-bold me-2">Username:</small>
+            <p class="border-bottom" style="text-overflow: ellipsis; overflow:hidden;">{{ $customer['username'] }}</p>
 
-                <form action="{{ route('view_user_vehicle_info',$customer['customerID']) }}" method="GET">
-                    <button class="btn btn-primary" type="submit">View Vehicles</button>
-                    <button class="btn btn-dark" type="button" id="returnBtn">Return</button>
-                </form>
-            </div>
+            <small class="fw-bold me-2">Account Status:</small>
+            @if ($customer['isVerified'] == true && $customer['email_verified_at'] !== null)
+                <p class="badge text-bg-success">Verified</p>
+            @elseif($customer['isVerified'] == false && $customer['email_verified_at'] == null)
+                <p class="badge text-bg-danger">Deactivated</p>
+            @else
+                <p class="badge text-bg-secondary">Not Verified</p>
+            @endif
+
+            <form action="{{ route('view_user_vehicle_info',$customer['customerID']) }}" method="GET">
+                <button class="btn btn-primary" type="submit">View Vehicles</button>
+                <button class="btn btn-dark" type="button" id="returnBtn">Return</button>
+            </form>
         </div>
 
-        <div class="container shadow-sm mt-2">
+        <div class="col-md-8 rounded-3 table-responsive border">
             <p class="fw-bold d-flex justify-content-between">
                 {{ $customer['fullname'] }} Cars
-                <button class="btn btn-dark">+<img src="{{ asset('icons/car_white.svg') }}" alt="Add Car"></button>
+                
+                <form action="{{ route('add_vehicle_view',$customer['customerID']) }}" method="get">
+                    <button class="btn btn-dark">+<img src="{{ asset('icons/car_white.svg') }}" alt="Add Car"></button>
+                </form>
             </p>
-            <table class="table table-responsive">
+            <table class="table">
                 <tr>
                     <th><small>IMAGE</small></th>
                     <th><small>MAKE</small></th>
@@ -65,7 +55,7 @@
 
                 @foreach ($vehicles as $vehicle)
                     <tr>
-                        <td><a href="{{ asset('Images/car_images/'.$vehicle['vehicle_image']) }}"><img src="{{ asset('Images/car_images/'.$vehicle['vehicle_image']) }}" alt="Vehicle Image" width="80" height="80"></a></td>
+                        <td><a href="{{ asset('Images/car_images/'.$vehicle['vehicle_image']) }}" target="_blank"><img src="{{ asset('Images/car_images/'.$vehicle['vehicle_image']) }}" alt="Vehicle Image" width="80" height="80" style="border-radius: 50%;"></a></td>
                         <td>{{ $vehicle['make'] }}</td>
                         <td>{{ $vehicle['model'] }}</td>
                         <td>{{ $vehicle['year_of_manufacture'] }}</td>
@@ -76,9 +66,9 @@
         </div>
     </div>
   
-    <div class="container border border-1 shadow pb-3 mt-4">
+    <div class="container border border-1 shadow pb-3 mt-4 table-responsive">
         <h5>Previous Owner Transactions</h5>
-        <table class="table table-responsive">
+        <table class="table">
             <tr>
                 <th>VEHICLE</th>
                 <th>MAINTENANCE TYPE</th>
