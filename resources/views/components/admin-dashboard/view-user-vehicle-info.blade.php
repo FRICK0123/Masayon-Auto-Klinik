@@ -2,7 +2,7 @@
 <div class="container">
     <h2 class="pb-2 border-bottom">{{ $customer['fullname'] }} VEHICLES</h2>
 
-    <table class="table table-striped table-responsive">
+    <table class="table table-striped">
         <tr>
             <th>IMAGE</th>
             <th>MAKE</th>
@@ -14,7 +14,7 @@
 
         @foreach ($vehicles as $vehicle)
             <tr>
-                <td><img src="{{asset('Images/car_images/'.$vehicle['vehicle_image'])}}" alt="Vehicle Image" width="100" height="100"></td>
+                <td><img src="{{asset('Images/car_images/'.$vehicle['vehicle_image'])}}" alt="Vehicle Image" width="100" height="100" style="border-radius: 50%"></td>
                 <td>{{ $vehicle['make'] }}</td>
                 <td>{{ $vehicle['model'] }}</td>
                 <td>{{ $vehicle['year_of_manufacture'] }}</td>
@@ -23,7 +23,22 @@
                     <div class="dropdown">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">View</a></li>
+                            <li>
+                                <a class="dropdown-item" href="#" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#view_vehicle"
+                                data-vehicle-image="{{ asset('Images/car_images/'.$vehicle['vehicle_image']) }}"
+                                data-make="{{ $vehicle['make'] }}"
+                                data-model="{{ $vehicle['model'] }}"
+                                data-year="{{ $vehicle['year_of_manufacture'] }}"
+                                data-milage="{{ $vehicle['milage'] }}"
+                                data-engine-number="{{ $vehicle['engine_number'] }}"
+                                data-vin="{{ $vehicle['vehicle_identification_number'] }}"
+                                data-chassis="{{ $vehicle['chassis_number'] }}"
+                                data-plate-number="{{ $vehicle['plate_number'] }}"
+                                data-engine-type="{{ $vehicle['engine_type'] }}"
+                                onclick="populateModal(this)">View</a>
+                            </li>
                             <li><a class="dropdown-item" href="{{ route('walkin_maintenance_view',$vehicle['vehicleID']) }}">Walk In</a></li>
                             <li><a class="dropdown-item" href="{{ route('add_user_vehicle_maintenance_schedule_view',$vehicle['vehicleID']) }}">Schedule a Maintenance</a></li>
                             <li><a class="dropdown-item bg-danger text-light" href="#">Delete</a></li>
@@ -34,3 +49,96 @@
         @endforeach
     </table>
 </div>
+
+<!--Modal-->
+<div class="modal fade" id="view_vehicle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Vehicle Info</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid row">
+            <img src="" id="user_vehicle_image" width="300" height="300" style="border-radius: 50%;" class="col-md-6">
+            <div class="car_info col-md-6 d-flex flex-column align-items-md-center">
+                <div>
+                    <span class="d-flex">
+                        <p class="fw-bold">Make: &nbsp;</p>
+                        <p id="make"></p>
+                    </span>
+                    
+                    <span class="d-flex">
+                        <p class="fw-bold">Model: &nbsp;</p>
+                        <p id="model"></p>
+                    </span>
+
+                    <span class="d-flex">
+                        <p class="fw-bold">Year of Manufacture: &nbsp;</p>
+                        <p id="year_of_manufacture"></p>
+                    </span>
+
+                    <span class="d-flex">
+                        <p class="fw-bold">Current Mileage: &nbsp;</p>
+                        <p id="milage"></p>
+                    </span>
+
+                    <span class="d-flex">
+                        <p class="fw-bold">Engine Number: &nbsp;</p>
+                        <p id="engine_number"></p>
+                    </span>
+
+                    <span class="d-flex">
+                        <p class="fw-bold">Vehicle Identification Number: &nbsp;</p>
+                        <p id="vin"></p>
+                    </span>
+
+                    <span class="d-flex">
+                        <p class="fw-bold">Chassis Number: &nbsp;</p>
+                        <p id="chassis_number"></p>
+                    </span>
+
+                    <span class="d-flex">
+                        <p class="fw-bold">Plate Number: &nbsp;</p>
+                        <p id="plate_number"></p>
+                    </span>
+
+                    <span class="d-flex">
+                        <p class="fw-bold">Engine Type: &nbsp;</p>
+                        <p id="engine_type"></p>
+                    </span>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function populateModal(element){
+        //Get Data from clicked link
+        const car_image = element.getAttribute('data-vehicle-image');
+        const make = element.getAttribute('data-make');
+        const model = element.getAttribute('data-model');
+        const year = element.getAttribute('data-year');
+        const milage = element.getAttribute('data-milage');
+        const engine_number = element.getAttribute('data-engine-number');
+        const vin = element.getAttribute('data-vin');
+        const chassis = element.getAttribute('data-chassis');
+        const plate_number = element.getAttribute('data-plate-number');
+        const engine_type = element.getAttribute('data-engine-type');
+
+        //Populate Modal
+        document.getElementById('user_vehicle_image').src = car_image;
+        document.getElementById('make').innerHTML = make;
+        document.getElementById('model').innerHTML = model;
+        document.getElementById('year_of_manufacture').innerHTML = year;
+        document.getElementById('milage').innerHTML = milage;
+        document.getElementById('engine_number').innerHTML = engine_number;
+        document.getElementById('vin').innerHTML = vin;
+        document.getElementById('chassis_number').innerHTML = chassis;
+        document.getElementById('plate_number').innerHTML = plate_number;
+        document.getElementById('engine_type').innerHTML = engine_type;
+    }
+</script>

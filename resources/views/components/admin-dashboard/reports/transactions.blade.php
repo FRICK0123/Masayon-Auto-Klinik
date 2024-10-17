@@ -1,5 +1,5 @@
 @props(['transaction','interval'])
-<div class="container-fluid">
+<div class="container-fluid mt-2">
     <h3>Repair/Maintenance Transactions ({{ $interval }})</h3><br>
 
     @php
@@ -38,13 +38,7 @@
                     <td>₱{{ $item->cost }}</td>
                     <td>{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}</td>
                     <td>
-                        <div class="dropdown">
-                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">View</a></li>
-                                <li><a class="dropdown-item" href="#">Notify</a></li>
-                            </ul>
-                        </div>
+                        <button class="btn btn-dark">View</button>
                     </td>
                 </tr>
             @endforeach

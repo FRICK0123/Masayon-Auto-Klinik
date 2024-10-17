@@ -2,7 +2,10 @@
     <div class="admin_sidebar d-flex flex-column d-none d-lg-flex">
         <div class="d-flex align-items-center">
             <img src="{{ asset('Images/Masayon Auto Klinik Logo.png') }}" alt="Masayon Auto Klinik Logo" width="100">
-            <h4 class="ms-3">Admin</h4>
+            <div class="ms-3">
+                <h4 class="m-0 p-0">Admin</h4>
+                <small class="m-0 p-0 text-success">online</small>
+            </div>
         </div>
 
         <!--dashboard links-->

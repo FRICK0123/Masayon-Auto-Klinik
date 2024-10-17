@@ -7,41 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="{{asset('css/admin_dashboard.css')}}">
+    <link rel="stylesheet" href="{{asset('css/table_style.css')}}">
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
 
     <!--Bootstrap CDN Links-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    <style>
-        /* Add rounded corners to the whole table */
-        table {
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: 12px; /* Adjust the radius as needed */
-            overflow: hidden;
-            border: 1px solid #dee2e6; /* Optional: if you want a border */
-        }
-
-        /* Add rounded borders to the first and last cells in the header */
-        th:first-child {
-            border-top-left-radius: 12px;
-        }
-
-        th:last-child {
-            border-top-right-radius: 12px;
-        }
-
-        /* Add rounded borders to the first and last cells in the last row */
-        tr:last-child td:first-child {
-            border-bottom-left-radius: 12px;
-        }
-
-        tr:last-child td:last-child {
-            border-bottom-right-radius: 12px;
-        }
-    </style>
 </head>
 
 <body style="background-color: rgb(245, 245, 245)">

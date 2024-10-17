@@ -1,4 +1,4 @@
-<button class="btn d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobile_sidebar" aria-expanded="false" aria-controls="mobile_sidebar" id="bars">
+<button class="btn btn-light d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobile_sidebar" aria-expanded="false" aria-controls="mobile_sidebar" id="bars">
     <img src="{{asset('icons/hamburger_black.svg')}}" alt="Bars">
 </button>
   <div class="collapse collapse-horizontal" id="mobile_sidebar">
@@ -27,11 +27,6 @@
             <form action="{{route('customer_maintenance_schedule')}}" class="text-white d-flex justify-content-between align-items-center" id="customer_maintenance_schedule" onclick="maintenanceSchedule()">
                 <p class="m-0">Maintenance Schedule</p>
                 <img src="{{asset('icons/calendar.svg')}}" alt="Dashboard Icon" class="">
-            </form>
-
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
-                <p class="m-0">Maintenance History</p>
-                <img src="{{asset('icons/history.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
             <form action="{{route('logout')}}" method="POST" class="text-white d-flex justify-content-between align-items-center" id="customer_logout_mobile" onclick="logOut()">

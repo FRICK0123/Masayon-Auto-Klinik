@@ -111,7 +111,7 @@ class MaintenanceController extends Controller
                 ]);
             }
 
-            return to_route('customer_maintenance_schedule');
+            return to_route('appointment_view');
         }
     }
 }

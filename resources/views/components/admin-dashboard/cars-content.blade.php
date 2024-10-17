@@ -1,14 +1,16 @@
 @props(['cars'])
 
 <div class="container">
-    <h2 class="pb-2 border-bottom">CARS</h2>
+    <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
+        <h5 class="pt-2">CARS</h5>
+
+        <form action="{{ route('car_form') }}" method="get">
+            <button class="btn btn-dark"><small>+ ADD CAR </small></button>
+        </form>
+    </div>
 
     <!--Functionalities-->
         <div class="d-flex justify-content-between">
-            <form action="{{ route('car_form') }}" method="get">
-                <button class="btn btn-dark"><small>+ ADD CAR </small></button>
-            </form>
-
             <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
@@ -42,7 +44,7 @@
             </tr>
             @foreach ($cars as $car)
                 <tr>
-                    <td><img src="{{ asset('Images/car_images/'.$car['car_image']) }}" alt="Car Image" width="100" height="100"></td>
+                    <td><img src="{{ asset('Images/car_images/'.$car['car_image']) }}" alt="Car Image" width="100" height="100" style="border-radius: 50%"></td>
                     <td>{{ $car['car_make'] }}</td>
                     <td>{{ $car['car_model'] }}</td>
                     <td>{{ $car['year_of_manufacture'] }}</td>

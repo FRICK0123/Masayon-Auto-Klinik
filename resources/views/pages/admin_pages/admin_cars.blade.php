@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="{{asset('css/admin_dashboard.css')}}">
+    <link rel="stylesheet" href="{{asset('css/table_style.css')}}">
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
 
     <!--Bootstrap CDN Links-->
@@ -15,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="background-color: rgb(245, 245, 245)">
     <!--Preloader-->
         <x-preloader/>
     <!--End-->

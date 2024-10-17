@@ -1,7 +1,9 @@
 @props(['schedules'])
 
 <div class="container">
-    <h2 class="pb-2 border-bottom">MAINTENANCE OVERVIEW</h2>
+    <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
+        <h5 class="pt-2">MAINTENANCE OVERVIEW</h5>
+    </div>
 
     <!--Functionalities-->
         <div class="d-flex justify-content-between">

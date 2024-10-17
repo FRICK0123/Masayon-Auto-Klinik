@@ -28,11 +28,6 @@
                 <img src="{{asset('icons/calendar.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
-                <p class="m-0">Maintenance History</p>
-                <img src="{{asset('icons/history.svg')}}" alt="Dashboard Icon" class="">
-            </form>
-
             <form action="{{route('logout')}}" method="POST" class="text-white d-flex justify-content-between align-items-center" id="customer_logout">
                 @csrf
                 <p class="m-0">Logout</p>

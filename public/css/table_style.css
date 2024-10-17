@@ -1,0 +1,27 @@
+    /* Add rounded corners to the whole table */
+    .table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 12px;
+        /* Adjust the radius as needed */
+        border: 1px solid #dee2e6;
+        /* Optional: if you want a border */
+    }
+
+    /* Add rounded borders to the first and last cells in the header */
+    .table :first-child {
+        border-top-left-radius: 12px;
+    }
+
+    .table th:last-child {
+        border-top-right-radius: 12px;
+    }
+
+    /* Add rounded borders to the first and last cells in the last row */
+    .table tr:last-child td:first-child {
+        border-bottom-left-radius: 12px;
+    }
+
+    .table tr:last-child td:last-child {
+        border-bottom-right-radius: 12px;
+    }

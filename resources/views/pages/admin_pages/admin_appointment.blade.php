@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Appointment</title>
     <link rel="stylesheet" href="{{asset('css/admin_dashboard.css')}}">
+    <link rel="stylesheet" href="{{asset('css/table_style.css')}}">
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
 
     <!--Bootstrap CDN Links-->
