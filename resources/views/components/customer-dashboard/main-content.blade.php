@@ -38,7 +38,7 @@
     <!--End-->
 </div>
 
-<div class="content">
+<div class="content mt-3">
     {{$slot}}
 </div>
 

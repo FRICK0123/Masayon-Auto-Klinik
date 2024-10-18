@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\MaintenanceHistory;
 use App\Models\MaintenanceSchedule;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -18,9 +19,11 @@ class CustomerDashboard extends Controller
     }
 
     //Profile View
-    public function customerProfileView()
+    public function customerProfileView(Request $request)
     {
-        return view('pages.customer_pages.customer_profile');
+        $query = MaintenanceHistory::where('customerID',Auth::guard('customer')->id());
+        $transactions = $query->paginate(5)->appends($request->except('page'));
+        return view('pages.customer_pages.customer_profile',['transactions'=>$transactions]);
     }
 
     //Maintenance Schedule View

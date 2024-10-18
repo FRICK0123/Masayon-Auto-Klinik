@@ -164,6 +164,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(ReportController::class)->group(function () {
         Route::get('/reports', 'reportsView')->name('reports_view');
         Route::get('/reports/transaction_filter', 'reportsTransactionFilter')->name('reports_transaction_filter');
+        Route::get('/admin/reports/transaction-by-date','reportsTransactionByDate')->name('reports_transaction_by_date');
     });
 //end
 

@@ -67,18 +67,31 @@
                             <img src="{{asset('icons/pulse.svg')}}" alt="Maintenance Status" class="me-2">
                             <p class="m-0">Maintenance Status</p>
                         </form>
-
-                        {{-- <form action="{{ route('maintenance_history') }}" method="GET" class="d-flex align-items-center" id="maintenance_history" onclick="adminMaintenanceHistory()">
-                            <img src="{{asset('icons/history_black.svg')}}" alt="Reports" class="me-2">
-                            <p class="m-0">Maintenance History</p>
-                        </form> --}}
                     </div>
                 <!--end-->
 
-                <form action="{{ route('reports_view') }}" method="GET" class="d-flex align-items-center" id="reports" onclick="adminReports()">
-                    <img src="{{asset('icons/newspaper.svg')}}" alt="Reports" class="me-2">
-                    <p class="m-0">Reports</p>
-                </form>
+                <a class="d-flex align-items-center justify-content-between maintenance_container" data-bs-toggle="collapse" href="#report" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <div class="d-flex align-items-center">
+                        <img src="{{asset('icons/newspaper.svg')}}" alt="Maintenance Overview" class="me-2">
+                        <p class="m-0">Reports</p>
+                    </div>
+
+                    <p class="m-0 fs-5">></p>
+                </a>
+
+                <!--Reports Collapsibble items-->
+                    <div class="collapse ms-2" id="report">            
+                        <form action="{{ route('reports_view') }}" method="GET" class="d-flex align-items-center" id="reports" onclick="adminReports()">
+                            <img src="{{asset('icons/newspaper.svg')}}" alt="Reports" class="me-2">
+                            <p class="m-0">Transactions</p>
+                        </form>
+
+                        <form action="#" method="GET" class="d-flex align-items-center" id="maintenance_status" onclick="#">
+                            <img src="{{asset('icons/newspaper.svg')}}" alt="Maintenance Status" class="me-2">
+                            <p class="m-0">Customer Registrations</p>
+                        </form>
+                    </div>
+                <!--end-->
 
                 <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
                     <img src="{{asset('icons/bell-ringing.svg')}}" alt="Notifications" class="me-2">
@@ -120,10 +133,6 @@
         function adminMaintenanceStatus(){
             document.getElementById('maintenance_status').submit();
         }
-
-        // function adminMaintenanceHistory(){
-        //     document.getElementById('maintenance_history').submit();
-        // }
 
         function adminReports(){
             document.getElementById('reports').submit();

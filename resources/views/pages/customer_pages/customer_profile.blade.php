@@ -29,7 +29,48 @@
             <x-customer-dashboard.mobile-canvas/>
 
             <x-customer-dashboard.main-content>
-                <x-customer-dashboard.profile-content/>
+                <div class="container ms-1 row">
+                    <div class="container border border-1 shadow rounded-3 pb-3 col-md-4">    
+                        <a href="#" class="profile_img_wrapper mt-5">
+                            <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Profile Image" class="profile_image">
+                        </a>
+
+                        <div class="profile_details mt-3">
+                            <p><b>Full Name:</b> {{Session::get('fullname')}}</p>
+                            <p><b>Email Address:</b> {{Session::get('email')}}</p>
+                            <p><b>Phone Number:</b> +63{{Session::get('phone_number')}}</p>
+                            <p><b>Username:</b> {{Session::get('username')}}</p>
+                        </div>
+
+                        <button class="btn btn-dark">Edit Profile Details</button>
+                    </div>
+
+                    <div class="col-md-8">
+                        <!--Transactions History table-->
+                        <div class="table-responsive profile_history">
+                            <table class="table table-striped mt-2 mt-md-0">
+                                <tr>
+                                    <th>VEHICLE</th>
+                                    <th>MAINTENANCE TYPE</th>
+                                    <th>COST</th>
+                                    <th>DATE PERFORMED</th>
+                                    <th></th>
+                                </tr>
+                                @foreach ($transactions as $transaction)
+                                    <tr>
+                                        <td>{{ $transaction['vehicle'] }}</td>
+                                        <td>{{ $transaction['maintenance_type'] }}</td>
+                                        <td>{{ $transaction['cost'] }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($transaction['date_performed'])->format('F j, Y') }}</td>
+                                        <td><button class="btn btn-dark">View</button></td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                            {{ $transactions->appends(request()->input())->links() }}
+                        </div>
+                        <!--End-->
+                    </div>
+                </div>
             </x-customer-dashboard.main-content>
         </main>
     <!--End-->

@@ -59,4 +59,16 @@ class ReportController extends Controller
             ]
         );
     }
+
+    public function reportsTransactionByDate(Request $request){
+        $selectedDate = Carbon::parse($request->input('selected_date'));
+        // Query the transactions based on the selected date
+        $transaction = MaintenanceHistory::whereDate('date_performed', $selectedDate)->get();
+
+        // Pass the transactions and the selected date to the view
+        return view('pages.admin_pages.admin_reports', [
+            'transaction' => $transaction,
+            'interval' => Carbon::parse($selectedDate)->format('F j, Y'), // Optional: You can set a custom interval label
+        ]);
+    }
 }
