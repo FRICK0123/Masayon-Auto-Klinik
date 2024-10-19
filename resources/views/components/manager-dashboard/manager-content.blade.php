@@ -1,31 +1,46 @@
-<!--Sidebar-->
-    <div class="manager_sidebar d-flex flex-column d-none d-lg-flex">
-        <div class="d-flex align-items-center">
-            <img src="{{ asset('Images/Masayon Auto Klinik Logo.png') }}" alt="Masayon Auto Klinik Logo" width="100">
-            <h4 class="ms-3">Manager</h4>
+<div class="dashboard_sidebar bg-dark flex-column align-items-center d-none d-lg-flex" style="height:80%;">
+    <!--dashboard links-->
+        <div class="container-fluid mt-3 form_links">
+
+            <form action="#" method="GET" class="text-white d-flex justify-content-between align-items-center">
+                <p class="m-0">Overview</p>
+                <img src="{{asset('icons/newspaper-white.svg')}}" alt="Dashboard Icon" class="">
+            </form>
+
+            <form action="#" class="text-white d-flex justify-content-between align-items-center">
+                <p class="m-0">Customers</p>
+                <img src="{{asset('icons/user-circle.svg')}}" alt="Dashboard Icon" class="">
+            </form>
+
+            <form action="#" class="text-white d-flex justify-content-between align-items-center">
+                <p class="m-0">Maintenance Tasks</p>
+                <img src="{{asset('icons/calendar.svg')}}" alt="Dashboard Icon" class="">
+            </form>
+
+            <form action="#" class="text-white d-flex justify-content-between align-items-center">
+                <p class="m-0">Reports</p>
+                <img src="{{asset('icons/newspaper-white.svg')}}" alt="Dashboard Icon" class="">
+            </form>
+
+            <form action="{{route('logout')}}" method="POST" class="text-white d-flex justify-content-between align-items-center" id="customer_logout">
+                @csrf
+                <p class="m-0">Logout</p>
+                <img src="{{asset('icons/power.svg')}}" alt="Dashboard Icon" class="">
+            </form>
+            
         </div>
+    <!--End-->
+</div>
 
-        <!--dashboard links-->
-            <div class="container-fluid mt-4 form_links">
-                <form action="{{ route('admin_dashboard') }}" method="GET" class="d-flex align-items-center" id="admin_dashboard" onclick="adminDashboard()">
-                    <img src="{{asset('icons/dashboard_black.svg')}}" alt="Dashboard Icon" class="me-2">
-                    <p class="m-0">Dashboard</p>
-                </form>
-            </div>
-        <!--End-->
-    </div>
-<!--end-->
+<div class="content mt-3">
+    {{$slot}}
+</div>
 
-<!--Content-->
-    <div class="manager_content">
-        {{$slot}}
-    </div>
-<!--End-->
-
-<!--script-->
+<!--Script-->
     <script>
-        // function adminDashboard(){
-        //     document.getElementById('admin_dashboard').submit();
-        // }
+        //Logout Form Submittion
+        const customer_logout = document.getElementById('customer_logout');
+        customer_logout.addEventListener('click',()=>{
+            customer_logout.submit();
+        });
     </script>
-<!--end-->

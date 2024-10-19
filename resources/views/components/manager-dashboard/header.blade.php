@@ -1,14 +1,23 @@
-<div class="container-fluid bg-danger p-0" style="height: 60px;">
-    <div class="container-fluid d-flex p-0 ps-lg-3 pe-lg-3 align-items-center justify-content-between align-items-center" style="height: 100%;">
-        <p class="fw-bold text-light mt-2">V.M.M System</p>
-
-        <button class="btn btn-dark dropdown-toggle rounded-0 h-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ asset('icons/user-circle.svg') }}" alt="Admin Menu">
-            Manager
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Logout</a></li>
-        </ul>
+<nav class="d-flex justify-content-between align-items-center p-2 mt-2 ms-2 me-2 rounded-3 bg-dark" id="nav">
+    <div class="masayon_logo">
+        <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Masayon Logo" width="70" height="70" class="img-fluid" id="logo">
     </div>
-</div>
+
+    <!--Login link/button to be directed to Login page-->
+    @auth('customer')
+        <form action="{{route('homepage')}}" class="text-white d-flex justify-content-center align-items-center me-lg-5" id="homepage" onclick="homePage()">
+            <img src="{{asset('icons/house.svg')}}" alt="Dashboard Icon" class="me-2">
+            <h6 class="m-0 d-none d-lg-block">Homepage</h6>
+        </form>
+    @endauth
+    <!--Login link/button to be directed to Login page End-->
+</nav>
+
+<!--Script-->
+<script>
+    const homepage = document.getElementById('homepage');
+
+    function homePage(){
+        homepage.submit();
+    }
+</script>

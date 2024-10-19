@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminDashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -48,6 +49,7 @@ class ManagerManagementController extends Controller
             'verification_token' => null,
             'isVerified' => true,
             'usertype' => 'manager',
+            'last_seen' => Carbon::now(),
         ]);
 
         return to_route('managers_view');

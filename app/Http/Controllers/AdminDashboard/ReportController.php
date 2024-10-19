@@ -14,7 +14,7 @@ class ReportController extends Controller
     public function reportsView()
     {
         $today = Carbon::parse(Carbon::today()->toDateString());
-        $transaction = MaintenanceHistory::where('date_performed', $today)->get();
+        $transaction = MaintenanceHistory::where('date_performed', $today)->orderBy('date_performed','desc')->get();
         $interval = 'daily';
         return view('pages.admin_pages.admin_reports',
         [
@@ -32,22 +32,22 @@ class ReportController extends Controller
         // Adjust based on interval
         switch ($interval) {
             case 'weekly':
-                $transaction = MaintenanceHistory::whereBetween('date_performed', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+                $transaction = MaintenanceHistory::whereBetween('date_performed', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('date_performed','desc')->get();
                 break;
             case 'monthly':
                 $transaction = MaintenanceHistory::whereBetween('date_performed', [
                     Carbon::now()->startOfMonth(),
                     Carbon::now()->endOfMonth()
-                ])->get();
+                ])->orderBy('date_performed','desc')->get();
                 break;
             case 'yearly':
                 $transaction = MaintenanceHistory::whereBetween('date_performed', [
                     Carbon::now()->startOfYear(),
                     Carbon::now()->endOfYear()
-                ])->get();
+                ])->orderBy('date_performed','desc')->get();
                 break;
             default:
-                $transaction = MaintenanceHistory::where('date_performed', $today)->get();
+                $transaction = MaintenanceHistory::where('date_performed', $today)->orderBy('date_performed','desc')->get();
         }
 
 
