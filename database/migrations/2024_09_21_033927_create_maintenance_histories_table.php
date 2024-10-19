@@ -21,6 +21,8 @@ return new class extends Migration
             $table->bigInteger('previous_milage');
             $table->bigInteger('current_milage');
             $table->string('maintenance_type');
+            $table->string('oil_type')->nullable();
+            $table->text('pms_services')->nullable();
             $table->decimal('cost');
             $table->text('maintenance_description');
             $table->string('maintenance_status');

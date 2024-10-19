@@ -98,6 +98,8 @@ class MaintenanceStatusController extends Controller
         $maintenance_status = "completed";
         $date_performed = Carbon::now();
         $oil_type = $request->input('oil_type');
+
+        $maintenance_schedule = MaintenanceSchedule::where('maintenanceID',$maintenanceID)->first();
         
         if(($maintenance_type == "Oil Change" && $oil_type == "Mobil Delvac I 5W-40 Fully Synthetic Diesel Oil") || ($maintenance_type == "Oil Change" && $oil_type == "Mobil Super 5W-30 Fully Synthetic Gasoline Oil")){
             Vehicle::where('vehicleID',$vehicleID)->update(['milage'=>$current_milage]);
@@ -119,6 +121,8 @@ class MaintenanceStatusController extends Controller
                 'previous_milage' => $previous_milage,
                 'current_milage' => $current_milage,
                 'maintenance_type' => $maintenance_type,
+                'oil_type' => $oil_type,
+                'pms_services' => $maintenance_schedule->PMS_services,
                 'cost' => $cost,
                 'maintenance_description' => $maintenance_description,
                 'maintenance_status' => $maintenance_status,
@@ -146,6 +150,8 @@ class MaintenanceStatusController extends Controller
                 'previous_milage' => $previous_milage,
                 'current_milage' => $current_milage,
                 'maintenance_type' => $maintenance_type,
+                'oil_type' => $oil_type,
+                'pms_services' => $maintenance_schedule->PMS_services,
                 'cost' => $cost,
                 'maintenance_description' => $maintenance_description,
                 'maintenance_status' => $maintenance_status,
@@ -173,6 +179,8 @@ class MaintenanceStatusController extends Controller
                 'previous_milage' => $previous_milage,
                 'current_milage' => $current_milage,
                 'maintenance_type' => $maintenance_type,
+                'oil_type' => $oil_type,
+                'pms_services' => $maintenance_schedule->PMS_services,
                 'cost' => $cost,
                 'maintenance_description' => $maintenance_description,
                 'maintenance_status' => $maintenance_status,
@@ -200,6 +208,8 @@ class MaintenanceStatusController extends Controller
                 'previous_milage' => $previous_milage,
                 'current_milage' => $current_milage,
                 'maintenance_type' => $maintenance_type,
+                'oil_type' => $oil_type,
+                'pms_services' => $maintenance_schedule->PMS_services,
                 'cost' => $cost,
                 'maintenance_description' => $maintenance_description,
                 'maintenance_status' => $maintenance_status,
@@ -227,6 +237,8 @@ class MaintenanceStatusController extends Controller
                 'previous_milage' => $previous_milage,
                 'current_milage' => $current_milage,
                 'maintenance_type' => $maintenance_type,
+                'oil_type' => $oil_type,
+                'pms_services' => $maintenance_schedule->PMS_services,
                 'cost' => $cost,
                 'maintenance_description' => $maintenance_description,
                 'maintenance_status' => $maintenance_status,
@@ -252,6 +264,8 @@ class MaintenanceStatusController extends Controller
                 'previous_milage' => $previous_milage,
                 'current_milage' => $current_milage,
                 'maintenance_type' => $maintenance_type,
+                'oil_type' => $oil_type,
+                'pms_services' => $maintenance_schedule->PMS_services,
                 'cost' => $cost,
                 'maintenance_description' => $maintenance_description,
                 'maintenance_status' => $maintenance_status,

@@ -18,6 +18,8 @@ class MaintenanceHistory extends Model
         'previous_milage',
         'current_milage',
         'maintenance_type',
+        'oil_type',
+        'pms_services',
         'cost',
         'maintenance_description',
         'maintenance_status',
