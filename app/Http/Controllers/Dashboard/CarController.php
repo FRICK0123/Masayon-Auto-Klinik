@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Car;
+use App\Models\MaintenanceHistory;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,8 +68,10 @@ class CarController extends Controller
     }
 
     //View car details
-    public function viewCarDetails($vehicleID){
+    public function viewCarDetails(Request $request,$vehicleID){
         $vehicle = Vehicle::where('vehicleID',$vehicleID)->first();
-        return view('pages.customer_pages.view_car',['vehicle'=>$vehicle]);
+        $query = MaintenanceHistory::where('vehicleID', $vehicleID);
+        $transactions = $query->paginate(5)->appends($request->except('page'));
+        return view('pages.customer_pages.view_car',['vehicle'=>$vehicle,'transactions'=>$transactions]);
     }
 }

@@ -20,13 +20,13 @@
                 @props(['vehicles'])
                 @foreach ($vehicles as $item)
                     <div class="col-md-4 mt-3">
-                        <form action="{{ route('view_car_details',$item['vehicleID']) }}" method="POST" class="card shadow" style="height: 400px; width: 100%; overflow: hidden;">
+                        <form action="{{ route('view_car_details',$item['vehicleID']) }}" method="GET" class="card shadow" style="height: 400px; width: 100%; overflow: hidden;">
                             @csrf
                             <img src="{{asset('Images/car_images/'.$item['vehicle_image'])}}" alt="Car Photo" style="height: 200px; width: 100%; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
-                                <h5>Make: {{$item['make']}}</h5>
-                                <p>Model: {{$item['model']}}</p>
-                                <p>Plate number: {{$item['plate_number']}}</p>
+                                <h5>{{$item['make']}} {{$item['model']}} {{ $item['year_of_manufacture'] }}</h5>
+                                <p><label class="fw-bold">Engine Type:</label> {{ $item['engine_type'] }}</p>
+                                <p><label class="fw-bold">Plate Number:</label> {{$item['plate_number']}}</p>
                                 <button class="btn btn-primary align-self-end">View</button>
                             </div>
                         </form>

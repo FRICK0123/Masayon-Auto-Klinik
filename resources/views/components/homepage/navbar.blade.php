@@ -16,10 +16,17 @@
 
     <!--Login link/button to be directed to Login page-->
     @auth('customer')
-        <form action="{{route('customer_dashboard')}}" method="GET" class="d-none d-lg-block">
-            @csrf
-            <button class="btn" id="login">Dashboard</button>
-        </form>
+        @if (Session::get('usertype') == "customer")
+            <form action="{{route('customer_dashboard')}}" method="GET" class="d-none d-lg-block">
+                @csrf
+                <button class="btn" id="login">Dashboard</button>
+            </form>
+        @else
+            <form action="{{route('manager_dashboard')}}" method="GET" class="d-none d-lg-block">
+                @csrf
+                <button class="btn" id="login">Dashboard</button>
+            </form>
+        @endif
     @endauth
     @guest('customer')
         <form action="{{route('login_view')}}" method="GET" class="d-none d-lg-block">
@@ -53,9 +60,17 @@
                         @endguest
 
                         @auth('customer')
-                            <form action="{{route('customer_dashboard')}}" method="get" class="mt-3">
-                                <button class="btn btn-dark w-100">Dashboard</button>
-                            </form>
+                            @if (Session::get('usertype') == "customer")
+                                <form action="{{route('customer_dashboard')}}" method="GET">
+                                    @csrf
+                                    <button class="btn btn-dark w-100">Dashboard</button>
+                                </form>
+                            @else
+                                <form action="{{route('manager_dashboard')}}" method="GET">
+                                    @csrf
+                                    <button class="btn btn-dark w-100">Dashboard</button>
+                                </form>
+                            @endif
                         @endauth
                     </div>
                 </div>

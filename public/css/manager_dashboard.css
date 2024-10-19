@@ -140,3 +140,7 @@ header {
 .profile_history td {
     font-size: clamp(10px, 2vw, 15px);
 }
+
+.boxes_label {
+    font-size: clamp(12px, 1.5vw, 20px);
+}

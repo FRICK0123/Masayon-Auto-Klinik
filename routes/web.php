@@ -69,7 +69,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:customer','update.last_seen'])->controller(CarController::class)->group(function() {
         Route::get('/car_view','addCarView')->name('car_view');
         Route::post('/add_car', 'addCar')->name('add_car');
-        Route::post('/view_car/{vehicleID}', 'viewCarDetails')->name('view_car_details');
+        Route::get('/view_car/{vehicleID}', 'viewCarDetails')->name('view_car_details');
     });
 //end
 

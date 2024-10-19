@@ -36,6 +36,7 @@ class LoginController extends Controller
                             'phone_number' => $customer->{'phone_number'},
                             'username' => $customer->{'username'},
                             'profile_img' => $customer->{'profile_img'},
+                            'usertype' => $customer->{'usertype'},
                         ]);
                     //end
 
@@ -49,7 +50,7 @@ class LoginController extends Controller
                         'email' => $customer->{'email'},
                         'phone_number' => $customer->{'phone_number'},
                         'username' => $customer->{'username'},
-                        'profile_img' => $customer->{'profile_img'},
+                        'profile_img' => $customer->{'profile_img'},'usertype' => $customer->{'usertype'},
                     ]);
                     //end
 
