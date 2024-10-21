@@ -17,6 +17,7 @@ use App\Http\Controllers\Dashboard\CustomerDashboard;
 use App\Http\Controllers\Dashboard\MaintenanceController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\ManagerDashboard\CustomerManagementController;
 use App\Http\Controllers\ManagerDashboard\ManagerDashboardController;
 use App\View\Components\AdminDashboard\MaintenanceOverviewContent;
 use App\View\Components\AdminDashboard\UserManagementContent;
@@ -175,8 +176,15 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //end
 
 /*----------MANAGERS----------*/
-//Routes for Admin Dashboard
+//Routes for Manager Dashboard
 Route::middleware(['auth:customer'])->controller(ManagerDashboardController::class)->group(function () {
     Route::get('/manager_dashboard', 'managerDashboardView')->name('manager_dashboard');
+});
+//end
+
+//Routes for Manager Customer Management
+Route::middleware(['auth:customer'])->controller(CustomerManagementController::class)->group(function(){
+    Route::get('/customer_management', 'customersView')->name('customer_management');
+    Route::post('/store_customer','storeUser')->name('store_customer');
 });
 //end

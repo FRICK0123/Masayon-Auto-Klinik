@@ -2,12 +2,12 @@
     <!--dashboard links-->
         <div class="container-fluid mt-3 form_links">
 
-            <form action="#" method="GET" class="text-white d-flex justify-content-between align-items-center">
+            <form action="{{ route('manager_dashboard') }}" method="GET" class="text-white d-flex justify-content-between align-items-center" id="manager_dashboard" onclick="managerDashboard()">
                 <p class="m-0">Overview</p>
                 <img src="{{asset('icons/newspaper-white.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
+            <form action="{{ route('customer_management') }}" class="text-white d-flex justify-content-between align-items-center" id="customer_management" onclick="customerManagement()">
                 <p class="m-0">Customers</p>
                 <img src="{{asset('icons/user-circle.svg')}}" alt="Dashboard Icon" class="">
             </form>
@@ -38,6 +38,14 @@
 
 <!--Script-->
     <script>
+        function customerManagement(){
+            document.getElementById('customer_management').submit();
+        }
+
+        function managerDashboard(){
+            document.getElementById('manager_dashboard').submit();
+        }
+
         //Logout Form Submittion
         const customer_logout = document.getElementById('customer_logout');
         customer_logout.addEventListener('click',()=>{

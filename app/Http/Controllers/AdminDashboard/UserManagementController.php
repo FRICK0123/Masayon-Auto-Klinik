@@ -58,8 +58,10 @@ class UserManagementController extends Controller
         ]);
     }
 
-    //Add User to the database
-    public function storeUser(Request $request){
+    // Add User to the database
+    public function storeUser(Request $request)
+    {
+        // Check if a file is uploaded
         if ($request->hasFile('profile_image')) {
             // Get the uploaded file
             $file = $request->file('profile_image');
@@ -73,18 +75,21 @@ class UserManagementController extends Controller
             // Move the file to the specified folder
             $file->move(public_path($uploadPath), $fileName);
 
+            // Set the profile image to the uploaded file name
             $profile_image = $fileName;
         } else {
-            $profile_image = 'default_user.png';
+            // Set a default profile image if no file is uploaded
+            $profile_image = "default_user.png";
         }
 
+        // Create the new customer in the database
         Customer::create([
             'fullname' => $request->input('register_fullname'),
             'email' => $request->input('register_email'),
             'phone_number' => $request->input('register_phone'),
             'username' => $request->input('register_username'),
             'password' => Hash::make($request->input('register_password')),
-            'profile_img' => $profile_image,
+            'profile_img' => $profile_image, // Use the default or uploaded image
             'email_verified_at' => now(),
             'verification_token' => null,
             'isVerified' => true,
@@ -92,8 +97,10 @@ class UserManagementController extends Controller
             'last_seen' => Carbon::now(),
         ]);
 
+        // Redirect to the users view page
         return to_route('users_view');
     }
+
 
     //Users Filter
     // public function userFilter(Request $request)

@@ -110,10 +110,10 @@
         <label class="fw-bold">Maintenance Type:</label>
         <p id="maintenance_type"></p>
 
-        <label class="fw-bold">Oil Type:</label>
+        <label class="fw-bold" id="oil_type_label">Oil Type:</label>
         <p id="oil_type"></p>
 
-        <label class="fw-bold">PMS Services:</label>
+        <label class="fw-bold" id="pms_label">PMS Services:</label>
         <p id="pms_services"></p>
 
 
@@ -151,6 +151,17 @@
         document.getElementById('previous_milage').innerHTML = previous_milage;
         document.getElementById('current_milage').innerHTML = current_milage;
         document.getElementById('maintenance_type').innerHTML = maintenance_type;
+        if(oil_type == ""){
+            document.getElementById('oil_type_label').style.display = "none";
+        }else{
+            document.getElementById('oil_type_label').style.display = "block";
+        }
+
+        if(pms_services == ""){
+            document.getElementById('pms_label').style.display = "none";
+        }else{
+            document.getElementById('pms_label').style.display = "block";
+        }
         document.getElementById('oil_type').innerHTML = oil_type;
         document.getElementById('pms_services').innerHTML = pms_services;
         document.getElementById('cost').innerHTML = `₱ ${cost}`;
