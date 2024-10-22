@@ -52,26 +52,22 @@
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
                     <h5 class="pt-2">USER MANAGEMENT(customer)</h5>
+    
+                    <form action="{{ route('users_view') }}" method="GET" class="search-box">
+                        @csrf
+                        {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
 
-                    <button class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#addUserBackdrop" data-bs-toggle="tooltip" title="Add New Customer"><small>+ <img src="{{ asset('icons/user-circle.svg') }}" alt="Customer"></small></button>
+                        <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
+                        <input type="text" class="input-search" placeholder="Search Customer" name="search_customers">
+                    </form>
                 </div>
                 <br>
                 <!--Functionalities-->
                     <!--Filter-->
                         <div class="d-flex justify-content-between">
-                            <div class="container d-flex mt-2">
-                                <div class="d-flex align-items-baseline">
-                                    <h6>Customers:</h6>
-                                    <p>{{ $customerCount }}</p>
-                                </div>
+                            <div class="d-flex w-100">
+                                <button class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#addUserBackdrop" data-bs-toggle="tooltip" title="Add New Customer"><small>+ <img src="{{ asset('icons/user-circle.svg') }}" alt="Customer"></small></button>
 
-                                <div class="d-flex align-items-baseline ms-3">
-                                    <h6>Active Customers:</h6>
-                                    <p>{{ $onlineCount }}</p>
-                                </div>
-                            </div>
-
-                            <div class="d-flex w-50">
                                 <div class="dropdown">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <img src="{{asset('icons/bars-filter.svg')}}" alt="Filter">
@@ -89,89 +85,94 @@
                                         <button type="submit" class="btn btn-dark">Filter</button>
                                     </form>
                                 </div>
+                            </div>
 
-                                <form action="{{ route('users_view') }}" method="GET">
-                                    @csrf
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search Customers" name="search_customers" autocomplete="off">
-                                        <button class="btn btn-dark">Search</button>
-                                    </div>
-                                </form>
+                            <div class="container d-flex justify-content-end mt-2">
+                                <div class="d-flex align-items-baseline">
+                                    <h6>Customers:</h6>
+                                    <p>{{ $customerCount }}</p>
+                                </div>
+
+                                <div class="d-flex align-items-baseline ms-3">
+                                    <h6>Active Customers:</h6>
+                                    <p>{{ $onlineCount }}</p>
+                                </div>
                             </div>
                         </div>
                     <!--end-->
                 <!--end-->
-
-                <!--User Management Table-->
-                    <table class="table table-responsive">
-                        <tr>
-                            <th>USERS</th>
-                            <th>CONTACT #</th>
-                            <th>USERNAME</th>
-                            <th>STATUS</th>
-                            <th>DATE REGISTERED</th>
-                            <th></th>
-                        </tr>
-                        @foreach ($users as $user)
+                <div class="mt-2">
+                    <!--User Management Table-->
+                        <table class="table">
                             <tr>
-                                <td class="d-flex">
-                                    @php
-                                        $lastSeen = \Carbon\Carbon::parse($user['last_seen']);
-                                        $isOnline = $lastSeen->diffInMinutes(now()) <= 3; // Check if last seen is within 3 minutes
-                                    @endphp
-
-                                    @if ($isOnline)
-                                        <small><img src="{{ asset('icons/online_dot.png') }}" alt="Online" width="15"></small>
-                                    @else
-                                        <small><img src="{{ asset('icons/offline_dot.png') }}" alt="Online" width="10"></small>
-                                    @endif
-                                    
-                                    <img src="{{ asset('Images/profile_images/'.$user['profile_img']) }}" alt="Profile Icon" width="50" height="50" style="object-fit: cover; border-radius: 50%;">
-                                    <div class="d-flex flex-column ms-3">
-                                        <span>{{ $user['fullname'] }}</span>
-                                        <span style="font-size: 13px">{{ $user['email'] }}</span>
-                                    </div>
-                                </td>
-                                <td>0{{ $user['phone_number'] }}</td>
-                                <td>{{ $user['username'] }}</td>
-                                @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
-                                    <td><span class="badge bg-success p-2">verified</span></td>
-                                @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
-                                    <td><span class="badge bg-danger p-2">deactivated</span></td>
-                                @else
-                                    <td>not verified</td>
-                                @endif
-                                <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
-
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
-
-                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePassword" data-customerID="{{ $user['customerID'] }}" data-fullname="{{ $user['fullname'] }}" onclick="populatePass(this)">Change Password</a></li>
-
-                                            <li><a class="dropdown-item" href="{{ route('add_vehicle_view',$user['customerID']) }}">Add Vehicle</a></li>
-
-                                            <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
-
-                                            <li><a class="dropdown-item" href="{{ route('edit_user_info_view',$user['customerID']) }}">Edit</a></li>
-
-                                            <li>
-                                                @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
-                                                    <a class="dropdown-item bg-danger text-light" href="#">Deactivate</a>
-                                                @else
-                                                    <a class="dropdown-item bg-success text-light" href="#">Activate</a>
-                                                @endif
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
+                                <th>USERS</th>
+                                <th>CONTACT #</th>
+                                <th>USERNAME</th>
+                                <th>STATUS</th>
+                                <th>DATE REGISTERED</th>
+                                <th></th>
                             </tr>
-                        @endforeach
-                    </table>
-                    {{ $users->appends(request()->input())->links() }}
-                <!--End-->
+                            @foreach ($users as $user)
+                                <tr>
+                                    <td class="d-flex">
+                                        @php
+                                            $lastSeen = \Carbon\Carbon::parse($user['last_seen']);
+                                            $isOnline = $lastSeen->diffInMinutes(now()) <= 3; // Check if last seen is within 3 minutes
+                                        @endphp
+
+                                        @if ($isOnline)
+                                            <small><img src="{{ asset('icons/online_dot.png') }}" alt="Online" width="15"></small>
+                                        @else
+                                            <small><img src="{{ asset('icons/offline_dot.png') }}" alt="Online" width="10"></small>
+                                        @endif
+                                        
+                                        <img src="{{ asset('Images/profile_images/'.$user['profile_img']) }}" alt="Profile Icon" width="50" height="50" style="object-fit: cover; border-radius: 50%;">
+                                        <div class="d-flex flex-column ms-3">
+                                            <span>{{ $user['fullname'] }}</span>
+                                            <span style="font-size: 13px">{{ $user['email'] }}</span>
+                                        </div>
+                                    </td>
+                                    <td>0{{ $user['phone_number'] }}</td>
+                                    <td>{{ $user['username'] }}</td>
+                                    @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
+                                        <td><span class="badge bg-success p-2">verified</span></td>
+                                    @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
+                                        <td><span class="badge bg-danger p-2">deactivated</span></td>
+                                    @else
+                                        <td>not verified</td>
+                                    @endif
+                                    <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
+
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
+
+                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePassword" data-customerID="{{ $user['customerID'] }}" data-fullname="{{ $user['fullname'] }}" onclick="populatePass(this)">Change Password</a></li>
+
+                                                <li><a class="dropdown-item" href="{{ route('add_vehicle_view',$user['customerID']) }}">Add Vehicle</a></li>
+
+                                                <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
+
+                                                <li><a class="dropdown-item" href="{{ route('edit_user_info_view',$user['customerID']) }}">Edit</a></li>
+
+                                                <li>
+                                                    @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
+                                                        <a class="dropdown-item bg-danger text-light" href="#">Deactivate</a>
+                                                    @else
+                                                        <a class="dropdown-item bg-success text-light" href="#">Activate</a>
+                                                    @endif
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                        {{ $users->appends(request()->input())->links() }}
+                    <!--End-->
+                </div>
             </div>
 
             <!--Add New User Modal-->

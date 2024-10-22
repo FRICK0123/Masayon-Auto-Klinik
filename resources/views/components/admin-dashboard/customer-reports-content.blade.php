@@ -1,7 +1,7 @@
-@props(['transaction','interval'])
+@props(['customers','interval'])
 <div class="container">
     <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
-        <h5 class="pt-2">REPORTS</h5>
+        <h5 class="pt-2">CUSTOMER REPORTS</h5>
         
         <form action="#" method="GET" class="search-box">
             @csrf
@@ -12,16 +12,16 @@
     </div>
     <div class="container pb-3">
         <div class="container-fluid mt-2">
-            <h3>Repair/Maintenance Transactions ({{ $interval }})</h3><br>
+            <h3>Customer Registration ({{ $interval }})</h3><br>
 
             @php
-                $transaction_count = $transaction->count();
+                $customers_count = $customers->count();
             @endphp
 
             <div class="d-flex justify-content-between">
-                <h4>Transactions: {{ $transaction_count }}</h4>
+                <h4>Transactions: {{ $customers_count }}</h4>
 
-               <form method="GET" action="{{route('reports_transaction_filter')}}">
+               <form method="GET" action="{{route('customer_reports_filter')}}">
                     <label for="interval">Select Interval:</label>
                     <select name="interval" id="interval" onchange="this.form.submit()">
                             <option value="daily" {{ $interval == 'daily' ? 'selected' : '' }}>This Day</option>
@@ -45,36 +45,23 @@
             <div id="carTableContainer" class="table-responsive">
                 <table class="table table-striped">
                     <tr>
-                        <th>VEHICLE</th>
-                        <th>OWNER</th>
-                        <th>MAINTENANCE TYPE</th>
-                        <th>COST</th>
-                        <th>DATE PERFORMED</th>
+                        <th>FULLNAME</th>
+                        <th>EMAIL</th>
+                        <th>PHONE NUMBER</th>
+                        <th>USERNAME</th>
+                        <th>DATE REGISTERED</th>
                         <th></th>
                     </tr>
 
-                    @foreach ($transaction as $item)
+                    @foreach ($customers as $item)
                         <tr>
-                            <td>{{ $item->vehicle }}</td>
-                            <td>{{ $item->owner }}</td>
-                            <td>{{ $item->maintenance_type }}</td>
-                            <td>₱{{ $item->cost }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}</td>
+                            <td>{{ $item['fullname'] }}</td>
+                            <td>{{ $item['email'] }}</td>
+                            <td>{{ $item['phone_number'] }}</td>
+                            <td>{{ $item['username'] }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item['created_at'])->format('F j, Y') }}</td>
                             <td>
-                                <button class="btn btn-dark" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#view_transaction"
-                                data-owner="{{ $item['owner'] }}"
-                                data-vehicle="{{ $item['vehicle'] }}"
-                                data-previous-milage="{{ $item['previous_milage'] }}"
-                                data-current-milage="{{ $item['current_milage'] }}"
-                                data-maintenance-type="{{ $item['maintenance_type'] }}"
-                                data-oil-type="{{ $item['oil_type'] }}"
-                                data-pms-services="{{ $item['pms_services'] }}"
-                                data-cost="{{ $item['cost'] }}"
-                                data-date-performed="{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}"
-                                data-maintenance-description="{{ $item['maintenance_description'] }}"
-                                onclick="populateModal(this)">View</button>
+                                <button class="btn btn-dark">View</button>
                             </td>
                         </tr>
                     @endforeach
@@ -85,7 +72,7 @@
     </div>
 </div>
 
-<!--View Transaction-->
+{{-- <!--View Transaction-->
 <div class="modal fade" id="view_transaction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -130,9 +117,9 @@
       </div>
     </div>
   </div>
-</div>
+</div> --}}
 
-<script>
+{{-- <script>
     function populateModal(element){
         const owner = element.getAttribute('data-owner');
         const vehicle = element.getAttribute('data-vehicle');
@@ -167,4 +154,4 @@
         document.getElementById('date_performed').innerHTML = date_performed;
         document.getElementById('maintenance_description').innerHTML = maintenance_description;
     }
-</script>
+</script> --}}

@@ -86,7 +86,7 @@
                             <p class="m-0">Transactions</p>
                         </form>
 
-                        <form action="#" method="GET" class="d-flex align-items-center" id="maintenance_status" onclick="#">
+                        <form action="{{ route('customer_reports_view') }}" method="GET" class="d-flex align-items-center" id="customer_reports" onclick="adminCustomerReports()">
                             <img src="{{asset('icons/newspaper.svg')}}" alt="Maintenance Status" class="me-2">
                             <p class="m-0">Customer Registrations</p>
                         </form>
@@ -136,6 +136,10 @@
 
         function adminReports(){
             document.getElementById('reports').submit();
+        }
+
+        function adminCustomerReports(){
+            document.getElementById('customer_reports').submit();
         }
 
         function adminAppointment(){

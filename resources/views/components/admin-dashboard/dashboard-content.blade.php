@@ -5,32 +5,32 @@
     </div>
 
     <div class="col-md-3">
-        <div class="border border-success rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 200px">
-            <img src="{{ asset('icons/users.svg') }}" alt="Customers" width="100" height="100">
+        <div class="border border-success rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 160px; width: 90%;">
+            <img src="{{ asset('icons/users.svg') }}" alt="Customers" width="70" height="70">
             <h5 class=" boxes_label">CUSTOMERS:</h5>
             <h5 id="customerCount">{{ $customerCount }}</h5>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="border border-secondary rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 200px">
-            <img src="{{ asset('icons/car.svg') }}" alt="Customers" width="100" height="100">
+        <div class="border border-secondary rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 160px; width: 90%;">
+            <img src="{{ asset('icons/car.svg') }}" alt="Customers" width="70" height="70">
             <h5 class=" boxes_label">CUSTOMER CARS:</h5>
             <h5 id="vehicleCount">{{ $vehicleCount }}</h5>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="border border-danger rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 200px">
-            <img src="{{ asset('icons/gear-fine.svg') }}" alt="Customers" width="100" height="100">
-            <h5 class="text-center boxes_label">UPCOMING MAINTENANCE TASKS:</h5>
+        <div class="border border-danger rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 160px; width: 90%;">
+            <img src="{{ asset('icons/gear-fine.svg') }}" alt="Customers" width="70" height="70">
+            <h5 class="text-center boxes_label">MAINTENANCE TASKS:</h5>
             <h5 id="scheduleCount">{{ $scheduleCount }}</h5>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="border border-warning rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 200px">
-            <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Customers" width="100" height="100">
+        <div class="border border-warning rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 160px; width: 90%;">
+            <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Customers" width="70" height="70">
             <h5 class="text-center boxes_label">NOTIFICATIONS SENT:</h5>
             <h5>0</h5>
         </div>

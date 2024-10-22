@@ -51,7 +51,7 @@
     <!--Main Content-->
     <main>
         <x-admin-dashboard.admin-content>
-            <x-admin-dashboard.reports-content :transaction="$transaction" :interval="$interval"/>
+            <x-admin-dashboard.customer-reports-content :customers="$customers" :interval="$interval"/>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->

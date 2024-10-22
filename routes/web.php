@@ -166,6 +166,8 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/reports', 'reportsView')->name('reports_view');
         Route::get('/reports/transaction_filter', 'reportsTransactionFilter')->name('reports_transaction_filter');
         Route::get('/admin/reports/transaction-by-date','reportsTransactionByDate')->name('reports_transaction_by_date');
+        Route::get('/customer_reports','customerReportsView')->name('customer_reports_view');
+        Route::get('/customer_reports/transaction_filter','customerReportsFilter')->name('customer_reports_filter');
     });
 //end
 
