@@ -1,33 +1,36 @@
 @props(['transaction','interval'])
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
-        <h5 class="pt-2">REPORTS</h5>
-        
-        <form action="#" method="GET" class="search-box">
-            @csrf
-            {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
-            <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
-            <input type="text" class="input-search" placeholder="Search Customer">
-        </form>
+    <div class="d-flex justify-content-between align-items-center pb-3 bg-white p-3 rounded-3 shadow-sm mb-4">
+        <h4 class="pt-2 fw-bold">REPORTS</h4>
+
+        <div class="d-flex align-items-center">
+            <form action="#" method="GET" class="search-box me-2">
+                @csrf
+                {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
+                <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
+                <input type="text" class="input-search" placeholder="Search Customer">
+            </form>
+            <button class="btn btn-success rounded-pill">Export PDF</button>
+        </div>
     </div>
+
     <div class="container pb-3">
         <div class="container-fluid mt-2">
-            <h3>Repair/Maintenance Transactions ({{ $interval }})</h3><br>
+            <h4>Repair/Maintenance Transactions ({{ $interval }})</h4><br>
 
             @php
                 $transaction_count = $transaction->count();
             @endphp
 
-            <div class="d-flex justify-content-between">
-                <h4>Transactions: {{ $transaction_count }}</h4>
-
-               <form method="GET" action="{{route('reports_transaction_filter')}}">
-                    <label for="interval">Select Interval:</label>
-                    <select name="interval" id="interval" onchange="this.form.submit()">
-                            <option value="daily" {{ $interval == 'daily' ? 'selected' : '' }}>This Day</option>
-                            <option value="weekly" {{ $interval == 'weekly' ? 'selected' : '' }}>This Week</option>
-                            <option value="monthly" {{ $interval == 'monthly' ? 'selected' : '' }}>This Month</option>
-                            <option value="yearly" {{ $interval == 'yearly' ? 'selected' : '' }}>This Year</option>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold">Total Transactions: {{ $transaction_count }}</h5>
+                <form method="GET" action="{{ route('reports_transaction_filter') }}" class="d-flex align-items-center">
+                    <label for="interval" class="me-2">Filter by:</label>
+                    <select name="interval" id="interval" class="form-select rounded-pill" onchange="this.form.submit()">
+                        <option value="daily" {{ $interval == 'daily' ? 'selected' : '' }}>This Day</option>
+                        <option value="weekly" {{ $interval == 'weekly' ? 'selected' : '' }}>This Week</option>
+                        <option value="monthly" {{ $interval == 'monthly' ? 'selected' : '' }}>This Month</option>
+                        <option value="yearly" {{ $interval == 'yearly' ? 'selected' : '' }}>This Year</option>
                     </select>
                 </form>
             </div>
@@ -37,47 +40,48 @@
                     <input type="date" class="form-control" name="selected_date">
                     <button class="btn btn-dark">Submit</button>
                 </form>
-
-                <button class="btn btn-success">Export PDF</button>
             </div>
 
             <!--Transactions table-->
             <div id="carTableContainer" class="table-responsive">
                 <table class="table table-striped">
-                    <tr>
-                        <th>VEHICLE</th>
-                        <th>OWNER</th>
-                        <th>MAINTENANCE TYPE</th>
-                        <th>COST</th>
-                        <th>DATE PERFORMED</th>
-                        <th></th>
-                    </tr>
-
-                    @foreach ($transaction as $item)
+                    <thead class="table-dark">
                         <tr>
-                            <td>{{ $item->vehicle }}</td>
-                            <td>{{ $item->owner }}</td>
-                            <td>{{ $item->maintenance_type }}</td>
-                            <td>₱{{ $item->cost }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}</td>
-                            <td>
-                                <button class="btn btn-dark" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#view_transaction"
-                                data-owner="{{ $item['owner'] }}"
-                                data-vehicle="{{ $item['vehicle'] }}"
-                                data-previous-milage="{{ $item['previous_milage'] }}"
-                                data-current-milage="{{ $item['current_milage'] }}"
-                                data-maintenance-type="{{ $item['maintenance_type'] }}"
-                                data-oil-type="{{ $item['oil_type'] }}"
-                                data-pms-services="{{ $item['pms_services'] }}"
-                                data-cost="{{ $item['cost'] }}"
-                                data-date-performed="{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}"
-                                data-maintenance-description="{{ $item['maintenance_description'] }}"
-                                onclick="populateModal(this)">View</button>
-                            </td>
+                            <th>VEHICLE</th>
+                            <th>OWNER</th>
+                            <th>MAINTENANCE TYPE</th>
+                            <th>COST</th>
+                            <th>DATE PERFORMED</th>
+                            <th></th>
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody>
+                        @foreach ($transaction as $item)
+                            <tr>
+                                <td>{{ $item->vehicle }}</td>
+                                <td>{{ $item->owner }}</td>
+                                <td>{{ $item->maintenance_type }}</td>
+                                <td>₱{{ number_format($item->cost, 2) }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}</td>
+                                <td>
+                                    <button class="btn btn-dark btn-sm rounded-pill" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#view_transaction"
+                                    data-owner="{{ $item['owner'] }}"
+                                    data-vehicle="{{ $item['vehicle'] }}"
+                                    data-previous-milage="{{ $item['previous_milage'] }}"
+                                    data-current-milage="{{ $item['current_milage'] }}"
+                                    data-maintenance-type="{{ $item['maintenance_type'] }}"
+                                    data-oil-type="{{ $item['oil_type'] }}"
+                                    data-pms-services="{{ $item['pms_services'] }}"
+                                    data-cost="{{ $item['cost'] }}"
+                                    data-date-performed="{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}"
+                                    data-maintenance-description="{{ $item['maintenance_description'] }}"
+                                    onclick="populateModal(this)">View</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
             <!--End-->
@@ -89,7 +93,7 @@
 <div class="modal fade" id="view_transaction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-dark text-white">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Transaction Information</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>

@@ -129,10 +129,10 @@ class ReportController extends Controller
     {
         $selectedDate = Carbon::parse($request->input('selected_date'));
         // Query the transactions based on the selected date
-        $customers = Customer::whereDate('create_at', $selectedDate)->get();
+        $customers = Customer::whereDate('created_at', $selectedDate)->get();
 
         // Pass the transactions and the selected date to the view
-        return view('pages.admin_pages.admin_reports', [
+        return view('pages.admin_pages.admin_customer_reports', [
             'customers' => $customers,
             'interval' => Carbon::parse($selectedDate)->format('F j, Y'), // Optional: You can set a custom interval label
         ]);

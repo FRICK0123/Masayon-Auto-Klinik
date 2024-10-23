@@ -18,7 +18,7 @@
                     <td>{{ $schedule['maintenance_type'] }}</td>
                     <td>{{ \Carbon\Carbon::parse($schedule['appointment_date'])->format('F j, Y') }}</td>
                     <td>
-                        <div class="dropdown">
+                        <div class="dropdown" style="position: static">
                             <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">View</a></li>

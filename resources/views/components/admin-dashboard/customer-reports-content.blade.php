@@ -1,15 +1,19 @@
 @props(['customers','interval'])
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
-        <h5 class="pt-2">CUSTOMER REPORTS</h5>
-        
-        <form action="#" method="GET" class="search-box">
-            @csrf
-            {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
-            <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
-            <input type="text" class="input-search" placeholder="Search Customer">
-        </form>
+    <div class="d-flex justify-content-between align-items-center pb-3 bg-white p-3 rounded-3 shadow-sm mb-4">
+        <h4 class="pt-2 fw-bold">CUSTOMER REPORTS</h4>
+
+        <div class="d-flex align-items-center">
+            <form action="#" method="GET" class="search-box me-2">
+                @csrf
+                {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
+                <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
+                <input type="text" class="input-search" placeholder="Search Customer">
+            </form>
+            <button class="btn btn-success rounded-pill">Export PDF</button>
+        </div>
     </div>
+
     <div class="container pb-3">
         <div class="container-fluid mt-2">
             <h3>Customer Registration ({{ $interval }})</h3><br>
@@ -18,12 +22,12 @@
                 $customers_count = $customers->count();
             @endphp
 
-            <div class="d-flex justify-content-between">
-                <h4>Transactions: {{ $customers_count }}</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>Customer Registrations: {{ $customers_count }}</h5>
 
-               <form method="GET" action="{{route('customer_reports_filter')}}">
+               <form method="GET" action="{{route('customer_reports_filter')}}" class="d-flex align-items-center">
                     <label for="interval">Select Interval:</label>
-                    <select name="interval" id="interval" onchange="this.form.submit()">
+                    <select name="interval" id="interval" onchange="this.form.submit()" class="form-select rounded-pill">
                             <option value="daily" {{ $interval == 'daily' ? 'selected' : '' }}>This Day</option>
                             <option value="weekly" {{ $interval == 'weekly' ? 'selected' : '' }}>This Week</option>
                             <option value="monthly" {{ $interval == 'monthly' ? 'selected' : '' }}>This Month</option>
@@ -33,25 +37,25 @@
             </div>
 
             <div class="d-flex justify-content-between mb-2">
-                <form action="{{ route('reports_transaction_by_date') }}" method="GET" class="d-flex">
+                <form action="{{ route('customer_reports_date') }}" method="GET" class="d-flex">
                     <input type="date" class="form-control" name="selected_date">
                     <button class="btn btn-dark">Submit</button>
                 </form>
-
-                <button class="btn btn-success">Export PDF</button>
             </div>
 
             <!--Transactions table-->
             <div id="carTableContainer" class="table-responsive">
                 <table class="table table-striped">
-                    <tr>
-                        <th>FULLNAME</th>
-                        <th>EMAIL</th>
-                        <th>PHONE NUMBER</th>
-                        <th>USERNAME</th>
-                        <th>DATE REGISTERED</th>
-                        <th></th>
-                    </tr>
+                    <thead class="table-dark">
+                        <tr>
+                            <th>FULLNAME</th>
+                            <th>EMAIL</th>
+                            <th>PHONE NUMBER</th>
+                            <th>USERNAME</th>
+                            <th>DATE REGISTERED</th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
                     @foreach ($customers as $item)
                         <tr>
@@ -61,7 +65,7 @@
                             <td>{{ $item['username'] }}</td>
                             <td>{{ \Carbon\Carbon::parse($item['created_at'])->format('F j, Y') }}</td>
                             <td>
-                                <button class="btn btn-dark">View</button>
+                                <button class="btn btn-dark btn-sm rounded-pill">View</button>
                             </td>
                         </tr>
                     @endforeach

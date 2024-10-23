@@ -5,7 +5,7 @@
     height: 100vh;
     border-right: 1px solid gray;
     margin-top: 60px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(226, 226, 226);
 }
 
 .admin_content {
@@ -28,6 +28,8 @@
 }
 
 .form_links form:hover {
+    background-color: white;
+    border-radius: 15px;
     border-bottom: 1px solid red;
 }
 
@@ -175,4 +177,18 @@
     background-color: transparent;
     border-bottom: 1px solid black;
     transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+
+.active {
+    background-color: rgba(0, 123, 255, 0.1);
+    /* Light blue background */
+    color: black;
+    /* Blue text */
+    border-left: 4px solid #ff0000;
+    /* Blue border on the left */
+}
+
+.active p {
+    font-weight: bold;
+    /* Make text bold */
 }

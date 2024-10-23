@@ -5,34 +5,58 @@
     </div>
 
     <div class="col-md-3">
-        <div class="border border-success rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 160px; width: 90%;">
-            <img src="{{ asset('icons/users.svg') }}" alt="Customers" width="70" height="70">
-            <h5 class=" boxes_label">CUSTOMERS:</h5>
-            <h5 id="customerCount">{{ $customerCount }}</h5>
+        <div class="border border-success rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+            <div class="d-flex align-items-center">
+                <img src="{{ asset('icons/users.svg') }}" alt="Customers" width="30" height="30">
+                <h5 class=" boxes_label ms-2 fw-bold">CUSTOMERS</h5>
+            </div><br>
+
+            <div class="d-flex justify-content-between">
+                <h2 id="customerCount">{{ $customerCount }}</h2>
+                <img src="{{ asset('chart.png') }}" alt="Customers" width="100">
+            </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="border border-secondary rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 160px; width: 90%;">
-            <img src="{{ asset('icons/car.svg') }}" alt="Customers" width="70" height="70">
-            <h5 class=" boxes_label">CUSTOMER CARS:</h5>
-            <h5 id="vehicleCount">{{ $vehicleCount }}</h5>
+        <div class="border border-secondary rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+            <div class="d-flex align-items-center">
+                <img src="{{ asset('icons/car.svg') }}" alt="Customers" width="30" height="30">
+                <h5 class=" boxes_label ms-2 fw-bold">CUSTOMER CARS</h5>
+            </div><br>
+
+            <div class="d-flex justify-content-between">
+                <h2 id="vehicleCount">{{ $vehicleCount }}</h2>
+                <img src="{{ asset('chart.png') }}" alt="Vehicle Count" width="100">
+            </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="border border-danger rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 160px; width: 90%;">
-            <img src="{{ asset('icons/gear-fine.svg') }}" alt="Customers" width="70" height="70">
-            <h5 class="text-center boxes_label">MAINTENANCE TASKS:</h5>
-            <h5 id="scheduleCount">{{ $scheduleCount }}</h5>
+        <div class="border border-danger rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+            <div class="d-flex align-items-center">
+                <img src="{{ asset('icons/gear-fine.svg') }}" alt="Maintenance Tasks" width="30" height="30">
+                <h5 class=" boxes_label ms-2 fw-bold">MAINTENANCE TASKS</h5>
+            </div><br>
+
+            <div class="d-flex justify-content-between">
+                <h2 id="scheduleCount">{{ $scheduleCount }}</h2>
+                <img src="{{ asset('chart.png') }}" alt="Vehicle Count" width="100">
+            </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="border border-warning rounded-3 d-flex flex-column align-items-center mt-3 summary_cards" style="height: 160px; width: 90%;">
-            <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Customers" width="70" height="70">
-            <h5 class="text-center boxes_label">NOTIFICATIONS SENT:</h5>
-            <h5>0</h5>
+        <div class="border border-warning rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+            <div class="d-flex align-items-center">
+                <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notifications Sent" width="30" height="30">
+                <h5 class=" boxes_label ms-2 fw-bold">NOTIFICATIONS SENT</h5>
+            </div><br>
+
+            <div class="d-flex justify-content-between">
+                <h2 id="scheduleCount">0</h2>
+                <img src="{{ asset('chart.png') }}" alt="Vehicle Count" width="100">
+            </div>
         </div>
     </div>
 </div>

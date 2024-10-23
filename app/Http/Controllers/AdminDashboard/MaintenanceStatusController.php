@@ -130,7 +130,7 @@ class MaintenanceStatusController extends Controller
             ]);
 
             echo "Database Updated!";
-        } else if(($maintenance_type == "Oil Change" && $oil_type == "Mobil Delvac 15W-40 Semi Synthetic Diesel Oil") || ($maintenance_type == "Oil Change" && $oil_type == "Mobil Special 20w-50 Ordinary Gasoline Oi")){
+        } else if(($maintenance_type == "Oil Change" && $oil_type == "Mobil Delvac 15W-40 Semi Synthetic Diesel Oil") || ($maintenance_type == "Oil Change" && $oil_type == "Mobil Special 20w-50 Ordinary Gasoline Oil")){
             Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
             $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
             MaintenanceSchedule::where('maintenanceID', $maintenanceID)->update([
@@ -189,6 +189,30 @@ class MaintenanceStatusController extends Controller
 
             echo "Database Updated!";
         } else if($maintenance_type == "Basic PMS"){
+            $oil_maintenance = MaintenanceSchedule::where('vehicleID', $vehicleID)->where('maintenance_type',"Oil Change")->first();
+            if($oil_maintenance){
+                if(($oil_maintenance['oil_type'] == "Mobil Delvac I 5W-40 Fully Synthetic Diesel Oil") || ($oil_maintenance['oil_type'] == "Mobil Super 5W-30 Fully Synthetic Gasoline Oil")){
+                    $maintenanceOil = MaintenanceSchedule::where('vehicleID', $vehicleID)->where('maintenance_type', "Oil Change")->first();
+                    MaintenanceSchedule::where('maintenanceID', $maintenanceOil->maintenanceID)->update([
+                        'scheduled_date' => Carbon::today()->addMonths($maintenanceOil->scheduled_interval),
+                        'last_maintenance_date' => Carbon::today(),
+                        'current_milage' => $current_milage,
+                        'next_milage_schedule' => $current_milage + 8000,
+                        'isAppointed' => true,
+                    ]);
+                }else if(($oil_maintenance['oil_type'] == "Mobil Delvac 15W-40 Semi Synthetic Diesel Oil") || ($oil_maintenance['oil_type']== "Mobil Special 20w-50 Ordinary Gasoline Oil")){
+                    $maintenanceOil = MaintenanceSchedule::where('vehicleID', $vehicleID)->where('maintenance_type', "Oil Change")->first();
+                    MaintenanceSchedule::where('maintenanceID', $maintenanceOil->maintenanceID)->update([
+                        'scheduled_date' => Carbon::today()->addMonths($maintenanceOil->scheduled_interval),
+                        'last_maintenance_date' => Carbon::today(),
+                        'current_milage' => $current_milage,
+                        'next_milage_schedule' => $current_milage + 5000,
+                        'isAppointed' => true,
+                    ]);
+                }
+            } else {
+                echo "Empty!!!";
+            }
             Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
             $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
             MaintenanceSchedule::where('maintenanceID', $maintenanceID)->update([
