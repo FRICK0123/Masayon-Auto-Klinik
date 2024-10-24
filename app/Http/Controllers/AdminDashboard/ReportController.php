@@ -77,7 +77,7 @@ class ReportController extends Controller
     //Customer Reports View
     public function customerReportsView(){
         $today = Carbon::parse(Carbon::today()->toDateString());
-        $customers = Customer::where('created_at', $today)->orderBy('created_at', 'desc')->get();
+        $customers = Customer::whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
         $interval = 'daily';
         return view(
             'pages.admin_pages.admin_customer_reports',
@@ -112,7 +112,7 @@ class ReportController extends Controller
                 ])->orderBy('created_at', 'desc')->get();
                 break;
             default:
-                $customers = Customer::where('created_at', $today)->orderBy('created_at', 'desc')->get();
+                $customers = Customer::whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
         }
 
 

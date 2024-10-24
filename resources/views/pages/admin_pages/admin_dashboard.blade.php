@@ -8,6 +8,7 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="{{asset('css/admin_dashboard.css')}}">
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+    <link rel="stylesheet" href="{{asset('css/table_style.css')}}">
 
     <!--Bootstrap CDN Links-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -48,10 +49,326 @@
     <!--Main Content-->
     <main>
         <x-admin-dashboard.admin-content>
-            <x-admin-dashboard.dashboard-content :schedules="$schedules" :scheduleCount="$scheduleCount" :customerCount="$customerCount" :vehicleCount="$vehicleCount"/>
+            <div class="container row">
+                <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm border">
+                    <h5 class="pt-2">DASHBOARD</h5>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="border border-success rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ asset('icons/users.svg') }}" alt="Customers" width="30" height="30">
+                            <h5 class=" boxes_label ms-2 fw-bold">CUSTOMERS</h5>
+                        </div><br>
+
+                        <div class="d-flex justify-content-between">
+                            <h2 id="customerCount">{{ $customerCount }}</h2>
+                            <img src="{{ asset('chart.png') }}" alt="Customers" width="100">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="border border-secondary rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ asset('icons/car.svg') }}" alt="Customers" width="30" height="30">
+                            <h5 class=" boxes_label ms-2 fw-bold">CUSTOMER CARS</h5>
+                        </div><br>
+
+                        <div class="d-flex justify-content-between">
+                            <h2 id="vehicleCount">{{ $vehicleCount }}</h2>
+                            <img src="{{ asset('chart.png') }}" alt="Vehicle Count" width="100">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="border border-danger rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ asset('icons/gear-fine.svg') }}" alt="Maintenance Tasks" width="30" height="30">
+                            <h5 class=" boxes_label ms-2 fw-bold">MAINTENANCE TASKS</h5>
+                        </div><br>
+
+                        <div class="d-flex justify-content-between">
+                            <h2 id="scheduleCount">{{ $scheduleCount }}</h2>
+                            <img src="{{ asset('chart.png') }}" alt="Vehicle Count" width="100">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="border border-warning rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notifications Sent" width="30" height="30">
+                            <h5 class=" boxes_label ms-2 fw-bold">NOTIFICATIONS SENT</h5>
+                        </div><br>
+
+                        <div class="d-flex justify-content-between">
+                            <h2 id="scheduleCount">0</h2>
+                            <img src="{{ asset('chart.png') }}" alt="Vehicle Count" width="100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+
+            <div class="container table-responsive">
+                <h5>Upcoming Maintenance Tasks:</h5>
+                @if ($schedules->isEmpty())
+                    <div class="container-fluid d-flex flex-column justify-content-center align-items-center" style="width: 100%; height:270px; opacity: 60%;">
+                        <img src="{{ asset('icons/gear-fine.svg') }}" alt="No Maintenance Tasks for today" width="100">
+                        <h6>No Maintenance Task/s for today</h6>
+                    </div>
+                @else
+                <!--Upcoming Maintenance table-->
+                        <table class="table table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>VEHICLE</th>
+                                    <th>OWNER</th>
+                                    <th>MAINTENANCE TYPE</th>
+                                    <th>SCHEDULED DATE</th>
+                                    <th>SCHEDULED MILAGE</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            @foreach ($schedules as $schedule)
+                            <tr>
+                                <td>{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</td>
+                                <td>{{ $schedule->vehicle->customer->fullname }}</td>
+                                <td>{{ $schedule->maintenance_type }}</td>
+                                <td>{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}</td>
+                                <td>{{ $schedule->next_milage_schedule }}</td>
+                            </tr>
+                            @endforeach
+                        </table>
+                    <!--End-->
+                @endif
+            </div>
+
+            <div class="container table-responsive">
+                <div class="d-flex justify-content-between">
+                    @php
+                        $customer_registration_daily_count = $customer_daily_registration->count();
+                        $customer_registration_weekly_count = $customer_weekly_registration->count();      
+                    @endphp
+                    <h5 id="customer_daily_count" style="display: block;">Customer Registration: {{ $customer_registration_daily_count }}</h5>
+                    {{-- <h5 id="customer_weekly_count">Customer Registration: {{ $customer_registration_weekly_count }}</h5> --}}
+
+                    <div>
+                        <button class="btn btn-sm rounded-pill me-2 btn_active" id="day_btn" style="background-color: rgb(214, 1, 1); color: white;">This Day</button>
+                        <button class="btn btn-sm rounded-pill btn_inactive" id="week_btn" style="border: 1px solid black">This Week</button>
+                    </div>
+                </div>
+                    <table class="table mt-2" id="customer_daily_table" style="display: table">
+                        @if($customer_daily_registration->isEmpty())
+                            <div class="container-fluid" style="width: 100%; height:270px; opacity: 60%; display:flex; flex-direction:column; justify-content:center; align-items:center;" id="customer_daily_empty">
+                                <img src="{{ asset('icons/gear-fine.svg') }}" alt="No Maintenance Tasks for today" width="100">
+                                <h6>No customer registration for today</h6>
+                            </div>
+                        @else
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>USERS</th>
+                                    <th>CONTACT #</th>
+                                    <th>USERNAME</th>
+                                    <th>STATUS</th>
+                                    <th>DATE REGISTERED</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($customer_daily_registration as $user)
+                                    <tr>
+                                        <td class="d-flex">
+                                            @php
+                                                $lastSeen = \Carbon\Carbon::parse($user['last_seen']);
+                                                $isOnline = $lastSeen->diffInMinutes(now()) <= 3; // Check if last seen is within 3 minutes
+                                            @endphp
+
+                                            @if ($isOnline)
+                                                <small><img src="{{ asset('icons/online_dot.png') }}" alt="Online" width="15"></small>
+                                            @else
+                                                <small><img src="{{ asset('icons/offline_dot.png') }}" alt="Online" width="10"></small>
+                                            @endif
+                                                
+                                            <img src="{{ asset('Images/profile_images/'.$user['profile_img']) }}" alt="Profile Icon" width="50" height="50" style="object-fit: cover; border-radius: 50%;">
+                                            <div class="d-flex flex-column ms-3">
+                                                <span>{{ $user['fullname'] }}</span>
+                                                <span style="font-size: 13px">{{ $user['email'] }}</span>
+                                            </div>
+                                        </td>
+                                        <td>0{{ $user['phone_number'] }}</td>
+                                        <td>{{ $user['username'] }}</td>
+                                        @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
+                                            <td><span class="badge bg-success p-2">verified</span></td>
+                                        @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
+                                            <td><span class="badge bg-danger p-2">deactivated</span></td>
+                                        @else
+                                            <td>not verified</td>
+                                        @endif
+                                        <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
+
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
+
+                                                    <li><a class="dropdown-item" href="{{ route('add_vehicle_view',$user['customerID']) }}">Add Vehicle</a></li>
+
+                                                    <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
+
+                                                    <li><a class="dropdown-item" href="{{ route('edit_user_info_view',$user['customerID']) }}">Edit</a></li>
+
+                                                    <li>
+                                                        @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
+                                                            <a class="dropdown-item bg-danger text-light" href="#">Deactivate</a>
+                                                        @else
+                                                            <a class="dropdown-item bg-success text-light" href="#">Activate</a>
+                                                        @endif
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        @endif
+                    </table>   
+
+                <table class="table mt-2" id="customer_weekly_table" style="display: none">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>USERS</th>
+                            <th>CONTACT #</th>
+                            <th>USERNAME</th>
+                            <th>STATUS</th>
+                            <th>DATE REGISTERED</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($customer_weekly_registration as $user)
+                            <tr>
+                                <td class="d-flex">
+                                    @php
+                                        $lastSeen = \Carbon\Carbon::parse($user['last_seen']);
+                                        $isOnline = $lastSeen->diffInMinutes(now()) <= 3; // Check if last seen is within 3 minutes
+                                    @endphp
+
+                                    @if ($isOnline)
+                                        <small><img src="{{ asset('icons/online_dot.png') }}" alt="Online" width="15"></small>
+                                    @else
+                                        <small><img src="{{ asset('icons/offline_dot.png') }}" alt="Online" width="10"></small>
+                                    @endif
+                                        
+                                    <img src="{{ asset('Images/profile_images/'.$user['profile_img']) }}" alt="Profile Icon" width="50" height="50" style="object-fit: cover; border-radius: 50%;">
+                                    <div class="d-flex flex-column ms-3">
+                                        <span>{{ $user['fullname'] }}</span>
+                                        <span style="font-size: 13px">{{ $user['email'] }}</span>
+                                    </div>
+                                </td>
+                                <td>0{{ $user['phone_number'] }}</td>
+                                <td>{{ $user['username'] }}</td>
+                                @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
+                                    <td><span class="badge bg-success p-2">verified</span></td>
+                                @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
+                                    <td><span class="badge bg-danger p-2">deactivated</span></td>
+                                @else
+                                    <td>not verified</td>
+                                @endif
+                                <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
+
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
+
+                                            <li><a class="dropdown-item" href="{{ route('add_vehicle_view',$user['customerID']) }}">Add Vehicle</a></li>
+
+                                            <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
+
+                                            <li><a class="dropdown-item" href="{{ route('edit_user_info_view',$user['customerID']) }}">Edit</a></li>
+
+                                            <li>
+                                                @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
+                                                    <a class="dropdown-item bg-danger text-light" href="#">Deactivate</a>
+                                                @else
+                                                    <a class="dropdown-item bg-success text-light" href="#">Activate</a>
+                                                @endif
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->
+
+    <script>
+        // Function to animate counting up numbers
+        function animateValue(id, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const currentValue = Math.floor(progress * (end - start) + start);
+                document.getElementById(id).innerText = currentValue;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Call the animation for each count
+        document.addEventListener("DOMContentLoaded", () => {
+            animateValue("customerCount", 0, {{ $customerCount }}, 600); // 2 seconds duration
+            animateValue("vehicleCount", 0, {{ $vehicleCount }}, 600); 
+            animateValue("scheduleCount", 0, {{ $scheduleCount }}, 600); 
+        });
+
+        //Daily and Weekly Customer Registration Reports button
+        const day_btn = document.getElementById('day_btn');
+        const week_btn = document.getElementById('week_btn');
+
+        day_btn.addEventListener('click',function(){
+            week_btn.style.backgroundColor = "white";
+            week_btn.style.color = "black";
+            week_btn.style.border="1px solid black";
+
+            day_btn.style.backgroundColor = "rgb(214, 1, 1)";
+            day_btn.style.color = "white";
+            day_btn.style.border="none";
+
+            document.getElementById('customer_daily_table').style.display="table";
+            document.getElementById('customer_weekly_table').style.display="none";
+
+            document.getElementById('customer_daily_empty').style.display="flex";
+        });
+
+        week_btn.addEventListener('click',function(){
+            day_btn.style.backgroundColor = "white";
+            day_btn.style.color = "black";
+            day_btn.style.border="1px solid black";
+
+            week_btn.style.backgroundColor = "rgb(214, 1, 1)";
+            week_btn.style.color = "white";
+            week_btn.style.border="none";
+
+            document.getElementById('customer_daily_table').style.display="none";
+            document.getElementById('customer_weekly_table').style.display="table";
+
+            document.getElementById('customer_daily_empty').style.display="none";
+        });
+
+    </script>
 </body>
 
 </html>

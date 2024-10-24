@@ -44,11 +44,17 @@ class AdminController extends Controller
         $scheduleCount = $schedules->count();
         $customerCount = Customer::where('usertype','customer')->count();
         $vehicleCount = Vehicle::all()->count();
+
+        $today = Carbon::parse(Carbon::today()->toDateString());
+        $customer_daily_registration = Customer::where('usertype','customer')->whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
+        $customer_weekly_registration = Customer::where('usertype','customer')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('created_at', 'desc')->get();
         return view('pages.admin_pages.admin_dashboard',[
             'schedules' => $schedules,
             'scheduleCount' => $scheduleCount,
             'customerCount' => $customerCount,
             'vehicleCount' => $vehicleCount,
+            'customer_daily_registration' => $customer_daily_registration,
+            'customer_weekly_registration' => $customer_weekly_registration,
         ]);
     }
 }

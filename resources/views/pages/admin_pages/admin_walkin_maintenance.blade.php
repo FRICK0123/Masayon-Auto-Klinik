@@ -63,7 +63,6 @@
                         <option value="Wheel Alignment">Wheel Alignment</option>
                         <option value="Check Brake">Check Brake</option>
                         <option value="Oil Change">Change Oil/Oil Filter</option>
-                        <option value="Car Checkup & Repair">Car Checkup & Repair</option>
                         <option value="Check Concerns">Check Concerns</option>
                         <option value="Check up">Check up</option>
                         <option value="Basic PMS">Basic PMS</option>
