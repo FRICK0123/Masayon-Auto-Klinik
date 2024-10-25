@@ -1,4 +1,4 @@
-<div class="container-fluid bg-danger p-0" style="height: 60px;">
+<div class="container-fluid bg-danger p-0" style="height: 50px;">
     <div class="container-fluid d-flex p-0 ps-lg-3 pe-lg-3 align-items-center justify-content-between align-items-center" style="height: 100%;">
         <p class="fw-bold text-light mt-2">V.M.M System</p>
 

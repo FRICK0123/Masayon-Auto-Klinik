@@ -1,6 +1,11 @@
 @props(['customer','vehicles','previous_maintenance'])
 <div class="container">
-    <h4 class="p-2 border rounded-3 shadow-sm">USER</h4>
+    <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm mb-3">
+        <h5 class="pt-2">User</h5>
+    
+        <button class="btn btn-dark" type="button" id="returnBtn">Return</button>
+        </form>
+    </div>
 
     <div class="container row">
         <div class="col-md-4 border rounded-3 p-2">
@@ -32,7 +37,7 @@
 
             <form action="{{ route('view_user_vehicle_info',$customer['customerID']) }}" method="GET">
                 <button class="btn btn-primary" type="submit">View Vehicles</button>
-                <button class="btn btn-dark" type="button" id="returnBtn">Return</button>
+                <button class="btn btn-dark" type="button">View Schedules</button>
             </form>
         </div>
 
@@ -83,6 +88,7 @@
                     <td>{{ $item['maintenance_type'] }}</td>
                     <td>{{ $item['cost'] }}</td>
                     <td>{{ \Carbon\Carbon::parse($item['date_performed'])->format('F j, Y') }}</td>
+                    <td><button class="btn btn-sm btn-dark rounded-pill">View</button></td>
                 </tr>
             @endforeach
         </table>

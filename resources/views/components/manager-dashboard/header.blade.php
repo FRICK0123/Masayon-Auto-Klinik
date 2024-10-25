@@ -1,4 +1,4 @@
-<nav class="d-flex justify-content-between align-items-center p-2 mt-2 ms-2 me-2 rounded-3 bg-dark" id="nav">
+<nav class="d-flex justify-content-between align-items-center p-2 mt-2 ms-2 me-2 rounded-4 bg-dark" id="nav">
     <div class="masayon_logo">
         <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Masayon Logo" width="70" height="70" class="img-fluid" id="logo">
     </div>

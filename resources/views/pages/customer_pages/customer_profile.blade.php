@@ -13,7 +13,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="bg-dark">
     <!--Preloader-->
         <x-preloader/>
     <!--End-->
@@ -30,7 +30,7 @@
 
             <x-customer-dashboard.main-content>
                 <div class="container ms-1 row">
-                    <div class="container border border-1 shadow rounded-3 pb-3 col-md-4">    
+                    <div class="container border border-1 shadow rounded-3 pb-3 col-md-4 bg-light">    
                         <a href="#" class="profile_img_wrapper mt-5">
                             <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Profile Image" class="profile_image">
                         </a>

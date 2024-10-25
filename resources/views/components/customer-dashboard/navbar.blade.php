@@ -1,4 +1,4 @@
-<nav class="d-flex justify-content-between align-items-center p-2 mt-2 ms-2 me-2 rounded-3" id="nav">
+<nav class="d-flex justify-content-between align-items-center p-2 mt-2 ms-2 me-2 border-bottom border-light" id="nav">
     <div class="masayon_logo">
         <img src="{{asset('Images/Masayon Auto Klinik Logo.png')}}" alt="Masayon Logo" width="100" height="100" class="img-fluid" id="logo">
     </div>

@@ -43,7 +43,7 @@ class UserManagementController extends Controller
         if($request->has('search_customers') && $request->input('search_customers') !== ''){
             $searchTerm = $request->input('search_customers');
 
-            $query = Customer::where('fullname', 'LIKE', "%{$searchTerm}%")->orWhere('username', 'LIKE', "%{$searchTerm}%")->orWhere('email', 'LIKE', "%{$searchTerm}%")->where('usertype','customer');
+            $query = Customer::where('fullname', 'LIKE', "%{$searchTerm}%")->where('usertype', 'customer')->orWhere('username', 'LIKE', "%{$searchTerm}%")->where('usertype', 'customer')->orWhere('email', 'LIKE', "%{$searchTerm}%")->where('usertype','customer');
         }
 
         // Paginate with filter parameters

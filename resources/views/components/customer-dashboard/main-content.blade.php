@@ -1,4 +1,4 @@
-<div class="dashboard_sidebar bg-dark flex-column align-items-center d-none d-lg-flex">
+<div class="dashboard_sidebar bg-dark border border-light flex-column align-items-center d-none d-lg-flex">
     <div class="profile_img_wrapper mt-5">
         <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Profile Image" class="profile_image">
     </div>
