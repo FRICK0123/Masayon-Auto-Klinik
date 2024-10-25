@@ -4,7 +4,7 @@
             <img src="{{ asset('Images/Masayon Auto Klinik Logo.png') }}" alt="Masayon Auto Klinik Logo" width="100">
             <div class="ms-3">
                 <h4 class="m-0 p-0">Admin</h4>
-                <small class="m-0 p-0 text-success">online</small>
+                <small class="m-0 p-0 text-success"><img src="{{ asset('icons/online_dot.png') }}" alt="Online" width="15">online</small>
             </div>
         </div>
 

@@ -70,7 +70,7 @@
                     
                     <!-- Show mileage if it's an oil type maintenance -->
                     @if ($schedule->maintenance_type == 'Oil Change' || $schedule->maintenance_type == 'EGR Cleaning' || $schedule->maintenance_type == 'Basic PMS' || $schedule->maintenance_type == 'Full PMS')
-                        <td>{{ $schedule->next_milage_schedule }} miles
+                        <td>{{ $schedule->next_milage_schedule }} km
                             @if($isNearingMileage)
                                 <span class="badge bg-danger">Mileage Reached!</span>
                             @elseif($isNearingDate)
