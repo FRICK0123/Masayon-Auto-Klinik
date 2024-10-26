@@ -9,24 +9,19 @@
                 <button type="button" id="closeSidebarBtn" class="btn btn-light">Close</button>
             </div>
 
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
+            <form action="{{ route('manager_dashboard') }}" class="text-white d-flex justify-content-between align-items-center" id="mobile_manager_dashboard" onclick="mobileManagerDashboard()">
                 <p class="m-0">Overview</p>
                 <img src="{{asset('icons/newspaper-white.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
+            <form action="{{ route('customer_management') }}" class="text-white d-flex justify-content-between align-items-center" id="mobile_customer_management" onclick="mobileCustomerManagement()">
                 <p class="m-0">Customers</p>
                 <img src="{{asset('icons/user-circle.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
-                <p class="m-0">Appointments</p> 
+            <form action="{{ route('maintenance_task_view') }}" class="text-white d-flex justify-content-between align-items-center" id="mobile_maintenance_task" onclick="mobileMaintenanceTask()">
+                <p class="m-0">Maintenance Tasks</p> 
                 <img src="{{asset('icons/calendar-check-white.svg')}}" alt="Dashboard Icon" class="">
-            </form>
-
-            <form action="#" class="text-white d-flex justify-content-between align-items-center">
-                <p class="m-0">Maintenance Schedule</p>
-                <img src="{{asset('icons/calendar.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
             <form action="{{route('logout')}}" method="POST" class="text-white d-flex justify-content-between align-items-center" id="customer_logout_mobile" onclick="logOut()">
@@ -44,6 +39,18 @@
         const customer_logout_mobile = document.getElementById('customer_logout_mobile');
         function logOut(){
             customer_logout_mobile.submit();
+        }
+
+        function mobileManagerDashboard(){
+            document.getElementById('mobile_manager_dashboard').submit();
+        }
+
+        function mobileCustomerManagement(){
+            document.getElementById('mobile_customer_management').submit();
+        }
+
+        function mobileMaintenanceTask(){
+            document.getElementById('mobile_maintenance_task').submit();
         }
 
     // Add event listener to the "Close" button

@@ -150,7 +150,7 @@
                                                 data-last-maintenance-date="{{ $schedule->last_maintenance_date }}"
                                                 data-scheduled-interval="{{ $schedule->scheduled_interval }}"
                                                 data-oil-type="{{ $schedule->oil_type }}"
-                                                data-current-milage="{{ $schedule->current_milage }}"
+                                                data-current-milage="{{ $schedule->vehicle->milage }}"
                                                 data-next-milage-schedule="{{ $schedule->next_milage_schedule }}"
                                                 onclick="populateModal(this)">View</a>
                                             </li>

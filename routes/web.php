@@ -18,6 +18,7 @@ use App\Http\Controllers\Dashboard\MaintenanceController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ManagerDashboard\CustomerManagementController;
+use App\Http\Controllers\ManagerDashboard\MaintenanceTaskController;
 use App\Http\Controllers\ManagerDashboard\ManagerDashboardController;
 use App\View\Components\AdminDashboard\MaintenanceOverviewContent;
 use App\View\Components\AdminDashboard\UserManagementContent;
@@ -192,3 +193,9 @@ Route::middleware(['auth:customer'])->controller(CustomerManagementController::c
     Route::post('/store_customer','storeUser')->name('store_customer');
 });
 //end
+
+//Routes for Manager Maintenance Tasks
+Route::middleware(['auth:customer'])->controller(MaintenanceTaskController::class)->group(function(){
+    Route::get('/maintenance_task', 'maintenanceTaskView')->name('maintenance_task_view');
+});
+//End

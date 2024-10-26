@@ -3,6 +3,12 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
         <h5 class="pt-2">Appointments</h5>
+        <form action="{{ route('admin_appointment_view') }}" method="GET" class="search-box me-2">
+            @csrf
+            {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
+            <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Appointment" width="30"></button>
+            <input type="text" class="input-search" placeholder="Search Appointment" name="search_appointment">
+        </form>
     </div>
 
     <!--Functionalities-->

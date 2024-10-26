@@ -31,8 +31,14 @@
                 <div class="container">
                         <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
                             <h5 class="pt-2">CUSTOMERS</h5>
+                            
+                            <form action="{{ route('users_view') }}" method="GET" class="search-box">
+                                @csrf
+                                            {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
 
-                            <button class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#addUserBackdrop" data-bs-toggle="tooltip" title="Add New Customer"><small>+ <img src="{{ asset('icons/user-circle.svg') }}" alt="Customer"></small></button>
+                                <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
+                                 <input type="text" class="input-search" placeholder="Search Customer" name="search_customers">
+                            </form>
                         </div>
                         <br>
                         <!--Functionalities-->
@@ -50,7 +56,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-flex w-50">
+                                    <div class="d-flex">
                                         <div class="dropdown">
                                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <img src="{{asset('icons/bars-filter.svg')}}" alt="Filter">
@@ -69,20 +75,15 @@
                                             </form>
                                         </div>
 
-                                        <form action="{{ route('users_view') }}" method="GET">
-                                            @csrf
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Search Customers" name="search_customers" autocomplete="off">
-                                                <button class="btn btn-dark">Search</button>
-                                            </div>
-                                        </form>
+
                                     </div>
                                 </div>
                             <!--end-->
                         <!--end-->
-
+                        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addUserBackdrop" data-bs-toggle="tooltip" title="Add New Customer"><small>+ <img src="{{ asset('icons/user-circle.svg') }}" alt="Customer"></small></button>
                         <!--User Management Table-->
-                            <table class="table table-responsive">
+                        <div class="table-responsive">
+                            <table class="table">
                                 <tr>
                                     <th>USERS</th>
                                     <th>CONTACT #</th>
@@ -133,6 +134,7 @@
                                     </tr>
                                 @endforeach
                             </table>
+                        </div>
                             {{ $users->appends(request()->input())->links() }}
                         <!--End-->
                     </div>
@@ -146,7 +148,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('store_customer') }}" method="POST">
+                                    <form action="{{ route('store_customer') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <!--Profile Image-->
                                         <div class="car_img_wrapper mt-5">
