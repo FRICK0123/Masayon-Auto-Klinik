@@ -14,7 +14,12 @@ class ManagerManagementController extends Controller
     public function managersView()
     {
         $customer = Customer::where('usertype','manager')->orderBy('fullname', 'asc')->get();
-        return view('pages.admin_pages.admin_manager_management', ["users" => $customer]);
+        $managerCount = $customer->count();
+        $onlineCount = Customer::where('usertype', 'manager')
+        ->where('last_seen', '>=', Carbon::now()->subMinutes(3))  // Active in the last 3 minutes
+        ->where('last_seen', '<=', Carbon::now())  // Ensuring it's not a future time
+        ->count();
+        return view('pages.admin_pages.admin_manager_management', ["users" => $customer,'managerCount'=>$managerCount,'onlineCount'=>$onlineCount]);
     }
 
     //Add User to the database
@@ -67,8 +72,13 @@ class ManagerManagementController extends Controller
         } elseif ($filter_value == "by_creation") {
             $user = Customer::where('usertype', 'manager')->orderBy('created_at', 'desc')->get();
         }
+        $managerCount = $user->count();
+        $onlineCount = Customer::where('usertype', 'manager')
+        ->where('last_seen', '>=', Carbon::now()->subMinutes(3))  // Active in the last 3 minutes
+        ->where('last_seen', '<=', Carbon::now())  // Ensuring it's not a future time
+        ->count();
 
-        return view('pages.admin_pages.admin_manager_management', ["users" => $user]);
+        return view('pages.admin_pages.admin_manager_management', ["users" => $user, 'managerCount' => $managerCount, 'onlineCount' => $onlineCount]);
     }
 
     //View manager page

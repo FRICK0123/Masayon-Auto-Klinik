@@ -130,6 +130,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::post('/change_password/{customerID}', 'changePassword');
         Route::get('/walkin_maintenance/{vehicleID}', 'walkinMaintenanceView')->name('walkin_maintenance_view');
         Route::post('/walkin', 'walkinMaintenance')->name('walkin_maintenance');
+        Route::get('/customer_maintenance/{customerID}','viewUserMaintenance')->name('customer_maintenance_schedules');
     });
 //end
 

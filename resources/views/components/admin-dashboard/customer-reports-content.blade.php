@@ -45,31 +45,63 @@
 
             <!--Transactions table-->
             <div id="carTableContainer" class="table-responsive">
-                <table class="table table-striped">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>FULLNAME</th>
-                            <th>EMAIL</th>
-                            <th>PHONE NUMBER</th>
-                            <th>USERNAME</th>
-                            <th>DATE REGISTERED</th>
-                            <th></th>
-                        </tr>
-                    </thead>
+                        <table class="table">
+                            <tr>
+                                <th>USERS</th>
+                                <th>CONTACT #</th>
+                                <th>USERNAME</th>
+                                <th>STATUS</th>
+                                <th>DATE REGISTERED</th>
+                                <th></th>
+                            </tr>
+                            @foreach ($customers as $user)
+                                <tr>
+                                    <td class="d-flex">
+                                        @php
+                                            $lastSeen = \Carbon\Carbon::parse($user['last_seen']);
+                                            $isOnline = $lastSeen->diffInMinutes(now()) <= 3; // Check if last seen is within 3 minutes
+                                        @endphp
 
-                    @foreach ($customers as $item)
-                        <tr>
-                            <td>{{ $item['fullname'] }}</td>
-                            <td>{{ $item['email'] }}</td>
-                            <td>{{ $item['phone_number'] }}</td>
-                            <td>{{ $item['username'] }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item['created_at'])->format('F j, Y') }}</td>
-                            <td>
-                                <button class="btn btn-dark btn-sm rounded-pill">View</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+                                        @if ($isOnline)
+                                            <small><img src="{{ asset('icons/online_dot.png') }}" alt="Online" width="15"></small>
+                                        @else
+                                            <small><img src="{{ asset('icons/offline_dot.png') }}" alt="Online" width="10"></small>
+                                        @endif
+                                        
+                                        <img src="{{ asset('Images/profile_images/'.$user['profile_img']) }}" alt="Profile Icon" width="50" height="50" style="object-fit: cover; border-radius: 50%;">
+                                        <div class="d-flex flex-column ms-3">
+                                            <span>{{ $user['fullname'] }}</span>
+                                            <span style="font-size: 13px">{{ $user['email'] }}</span>
+                                        </div>
+                                    </td>
+                                    <td>0{{ $user['phone_number'] }}</td>
+                                    <td>{{ $user['username'] }}</td>
+                                    @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
+                                        <td><span class="badge bg-success p-2">verified</span></td>
+                                    @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
+                                        <td><span class="badge bg-danger p-2">deactivated</span></td>
+                                    @else
+                                        <td>not verified</td>
+                                    @endif
+                                    <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
+
+                                    <td>
+                                        <div class="dropdown" style="position: static;">
+                                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
+
+                                                <li><a class="dropdown-item" href="{{ route('add_vehicle_view',$user['customerID']) }}">Add Vehicle</a></li>
+
+                                                <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
+
+                                                <li><a class="dropdown-item" href="{{ route('edit_user_info_view',$user['customerID']) }}">Edit</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
             </div>
             <!--End-->
         </div>

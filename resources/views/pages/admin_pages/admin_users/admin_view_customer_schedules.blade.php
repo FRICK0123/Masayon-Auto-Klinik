@@ -155,9 +155,6 @@
                                                 onclick="populateModal(this)">View</a>
                                             </li>
                                             <li><a class="dropdown-item" href="#">Notify</a></li>
-                                            <li>
-                                                <a href="#" class="dropdown-item">Delete</a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </td>

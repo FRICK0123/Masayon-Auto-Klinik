@@ -77,7 +77,7 @@ class ReportController extends Controller
     //Customer Reports View
     public function customerReportsView(){
         $today = Carbon::parse(Carbon::today()->toDateString());
-        $customers = Customer::whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
+        $customers = Customer::where('usertype', 'customer')->whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
         $interval = 'daily';
         return view(
             'pages.admin_pages.admin_customer_reports',
@@ -97,22 +97,22 @@ class ReportController extends Controller
         // Adjust based on interval
         switch ($interval) {
             case 'weekly':
-                $customers = Customer::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('created_at', 'desc')->get();
+                $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('created_at', 'desc')->get();
                 break;
             case 'monthly':
-                $customers = Customer::whereBetween('created_at', [
+                $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [
                     Carbon::now()->startOfMonth(),
                     Carbon::now()->endOfMonth()
                 ])->orderBy('created_at', 'desc')->get();
                 break;
             case 'yearly':
-                $customers = Customer::whereBetween('created_at', [
+                $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [
                     Carbon::now()->startOfYear(),
                     Carbon::now()->endOfYear()
                 ])->orderBy('created_at', 'desc')->get();
                 break;
             default:
-                $customers = Customer::whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
+                $customers = Customer::where('usertype', 'customer')->whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
         }
 
 
@@ -129,7 +129,7 @@ class ReportController extends Controller
     {
         $selectedDate = Carbon::parse($request->input('selected_date'));
         // Query the transactions based on the selected date
-        $customers = Customer::whereDate('created_at', $selectedDate)->get();
+        $customers = Customer::where('usertype', 'customer')->whereDate('created_at', $selectedDate)->get();
 
         // Pass the transactions and the selected date to the view
         return view('pages.admin_pages.admin_customer_reports', [

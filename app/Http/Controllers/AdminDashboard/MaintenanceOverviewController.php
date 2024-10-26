@@ -12,7 +12,7 @@ class MaintenanceOverviewController extends Controller
     //Admin Maintenance Overview page view
     public function maintenanceOverview()
     {
-        // // Fetch maintenance schedules and join with vehicles and customers
+        //Fetch maintenance schedules and join with vehicles and customers
         $schedules = MaintenanceSchedule::with(['vehicle.customer'])->where('isAppointed',true)
 
         ->orderByRaw("CASE 
@@ -39,4 +39,5 @@ class MaintenanceOverviewController extends Controller
 
         return view('pages.admin_pages.admin_maintenance_overview', ['schedules' => $schedules]);
     }
+
 }
