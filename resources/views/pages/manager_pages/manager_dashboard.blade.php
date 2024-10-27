@@ -195,12 +195,7 @@
                                                 <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
 
                                                 <td>
-                                                    <div class="dropdown">
-                                                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
-                                                        </ul>
-                                                    </div>
+                                                    <a href="{{ route('manager_view_customer_info',$user['customerID']) }}" class="btn btn-primary btn-sm"><img src="{{ asset('icons/eye.svg') }}" alt="View Customer" width="20"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -258,12 +253,7 @@
                                                 <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
 
                                                 <td>
-                                                    <div class="dropdown">
-                                                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
-                                                        </ul>
-                                                    </div>
+                                                    <a href="{{ route('manager_view_customer_info',$user['customerID']) }}" class="btn btn-primary btn-sm"><img src="{{ asset('icons/eye.svg') }}" alt="View Customer" width="20"></a>
                                                 </td>
                                             </tr>
                                         @endforeach

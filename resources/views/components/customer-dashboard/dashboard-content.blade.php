@@ -27,7 +27,7 @@
                                 <h4 class="text-light">{{$item['make']}} {{$item['model']}} {{ $item['year_of_manufacture'] }}</h4>
                                 <p class="text-light"><label class="fw-bold">Engine Type:</label> {{ $item['engine_type'] }}</p>
                                 <p class="text-light"><label class="fw-bold">Plate Number:</label> {{$item['plate_number']}}</p>
-                                <button class="btn btn-primary align-self-end">View</button>
+                                <button class="btn btn-light align-self-end">View</button>
                             </div>
                         </form>
                     </div>

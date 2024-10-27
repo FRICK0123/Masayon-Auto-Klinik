@@ -88,7 +88,7 @@
                 
                 <!--Transactions History table-->
                 <div class="container mt-4">
-                    <h5>Previous Transactions</h5>
+                    <h5 class="text-light">Previous Transactions</h5>
                     <div class="container">
                         <!-- Card-like table layout -->
                         @foreach ($transactions as $transaction)
@@ -97,7 +97,7 @@
                                     <h4 class="card-title text-light">{{ $transaction['vehicle'] }}</h4>
                                     <p class="card-text text-light">
                                         <strong>Maintenance Type:</strong> {{ $transaction['maintenance_type'] }}<br>
-                                        <strong>Service Date:</strong> Oct 20, 2024<br>
+                                        <strong>Service Date:</strong> {{ \Carbon\Carbon::parse($transaction['date_performed'])->format('F j, Y') }}<br>
                                         <strong>Status:</strong> {{$transaction['maintenance_status']}}<br>
                                         <strong>Cost:</strong> ₱{{number_format($transaction['cost'],2)}}<br>
                                     </p>

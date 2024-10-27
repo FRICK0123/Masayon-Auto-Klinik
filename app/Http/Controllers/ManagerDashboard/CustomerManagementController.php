@@ -4,6 +4,8 @@ namespace App\Http\Controllers\ManagerDashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\MaintenanceHistory;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -91,6 +93,16 @@ class CustomerManagementController extends Controller
         ]);
 
         return to_route('customer_management');
+    }
+
+    //View Users page
+    public function viewUserInfo(Request $request,$customerID)
+    {
+        $customer = Customer::where('customerID', $customerID)->first();
+        $vehicles = Vehicle::where('customerID', $customerID)->get();
+        $query = MaintenanceHistory::where('customerID', $customerID)->orderBy('date_performed', 'desc');
+        $previous_maintenance = $query->paginate(2)->appends($request->except('page'));
+        return view('pages.manager_pages.manager_view_customer_info', ['customer' => $customer, 'vehicles' => $vehicles, 'previous_maintenance' => $previous_maintenance]);
     }
 
 }

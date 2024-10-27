@@ -68,29 +68,6 @@
                                 {{ $transactions->appends(request()->input())->links() }}
                             </div>
                         </div>
-                        <!--Transactions History table-->
-                        {{-- <div class="table-responsive profile_history">
-                            <table class="table table-striped mt-2 mt-md-0">
-                                <tr>
-                                    <th>VEHICLE</th>
-                                    <th>MAINTENANCE TYPE</th>
-                                    <th>COST</th>
-                                    <th>DATE PERFORMED</th>
-                                    <th></th>
-                                </tr>
-                                @foreach ($transactions as $transaction)
-                                    <tr>
-                                        <td>{{ $transaction['vehicle'] }}</td>
-                                        <td>{{ $transaction['maintenance_type'] }}</td>
-                                        <td>{{ $transaction['cost'] }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($transaction['date_performed'])->format('F j, Y') }}</td>
-                                        <td><button class="btn btn-dark">View</button></td>
-                                    </tr>
-                                @endforeach
-                            </table>
-                            {{ $transactions->appends(request()->input())->links() }}
-                        </div>
-                        <!--End--> --}}
                     </div>
                 </div>
             </x-customer-dashboard.main-content>

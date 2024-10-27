@@ -191,6 +191,7 @@ Route::middleware(['auth:customer'])->controller(ManagerDashboardController::cla
 Route::middleware(['auth:customer'])->controller(CustomerManagementController::class)->group(function(){
     Route::get('/customer_management', 'customersView')->name('customer_management');
     Route::post('/store_customer','storeUser')->name('store_customer');
+    Route::get('/customer_info/{customerID}','viewUserInfo')->name('manager_view_customer_info');
 });
 //end
 
