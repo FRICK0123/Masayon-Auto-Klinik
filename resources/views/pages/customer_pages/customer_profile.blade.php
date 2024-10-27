@@ -31,24 +31,45 @@
 
             <x-customer-dashboard.main-content>
                 <div class="container ms-1 row">
-                    <div class="container border border-1 shadow rounded-3 pb-3 col-md-4 bg-light">    
+                    <div class="container border border-1 shadow rounded-3 pb-3 col-md-4">    
                         <a href="#" class="profile_img_wrapper mt-5">
                             <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Profile Image" class="profile_image">
                         </a>
 
-                        <div class="profile_details mt-3">
+                        <div class="profile_details mt-3 text-light">
                             <p><b>Full Name:</b> {{Session::get('fullname')}}</p>
                             <p><b>Email Address:</b> {{Session::get('email')}}</p>
                             <p><b>Phone Number:</b> +63{{Session::get('phone_number')}}</p>
                             <p><b>Username:</b> {{Session::get('username')}}</p>
                         </div>
 
-                        <button class="btn btn-dark">Edit Profile Details</button>
+                        <button class="btn btn-light">Edit Profile Details</button>
                     </div>
 
-                    <div class="col-md-8">
+                    <div class="col-md-8 mt-3 mt-lg-0">
+                        <h4 class="text-light">Previous Transactions</h4>
+                        <div class="container">
+                            <!-- Card-like table layout -->
+                            @foreach ($transactions as $transaction)
+                                <div class="card shadow-sm mt-2 bg-dark border border-light">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-light">{{ $transaction['vehicle'] }}</h4>
+                                        <p class="card-text text-light">
+                                            <strong>Maintenance Type:</strong> {{ $transaction['maintenance_type'] }}<br>
+                                            <strong>Service Date:</strong> Oct 20, 2024<br>
+                                            <strong>Status:</strong> {{$transaction['maintenance_status']}}<br>
+                                            <strong>Cost:</strong> ₱{{number_format($transaction['cost'],2)}}<br>
+                                        </p>
+                                        <a href="#" class="btn btn-light btn-sm rounded-pill">View Details</a>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <div class="mt-2">
+                                {{ $transactions->appends(request()->input())->links() }}
+                            </div>
+                        </div>
                         <!--Transactions History table-->
-                        <div class="table-responsive profile_history">
+                        {{-- <div class="table-responsive profile_history">
                             <table class="table table-striped mt-2 mt-md-0">
                                 <tr>
                                     <th>VEHICLE</th>
@@ -69,7 +90,7 @@
                             </table>
                             {{ $transactions->appends(request()->input())->links() }}
                         </div>
-                        <!--End-->
+                        <!--End--> --}}
                     </div>
                 </div>
             </x-customer-dashboard.main-content>

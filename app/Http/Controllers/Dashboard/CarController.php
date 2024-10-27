@@ -71,7 +71,7 @@ class CarController extends Controller
     public function viewCarDetails(Request $request,$vehicleID){
         $vehicle = Vehicle::where('vehicleID',$vehicleID)->first();
         $query = MaintenanceHistory::where('vehicleID', $vehicleID);
-        $transactions = $query->paginate(5)->appends($request->except('page'));
+        $transactions = $query->paginate(3)->appends($request->except('page'));
         return view('pages.customer_pages.view_car',['vehicle'=>$vehicle,'transactions'=>$transactions]);
     }
 }

@@ -14,7 +14,7 @@
             </form>
 
             <form action="{{route('customer_dashboard')}}" class="text-white d-flex justify-content-between align-items-center" id="customer_dashboard" onclick="dashboardForm()">
-                <p class="m-0">Dashboard</p>
+                <p class="m-0">Vehicles</p>
                 <img src="{{asset('icons/dashboard.svg')}}" alt="Dashboard Icon" class="">
             </form>
 

@@ -29,7 +29,7 @@
         <main>            
             <x-customer-dashboard.mobile-canvas/>
             <x-customer-dashboard.main-content>
-                <div class="container p-3 border border-2 shadow rounded-3 bg-light" style="width: 98%">
+                <div class="container p-3 border border-2 shadow rounded-3 bg-dark" style="width: 98%">
                     <div class="row">
                         <div class="col-md-6 mt-2">
                             <div class="view_car_wrapper">
@@ -37,7 +37,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mt-2">
+                        <div class="col-md-6 mt-2 text-light">
                             <h2>{{$vehicle['make']}} {{$vehicle['model']}} {{$vehicle['year_of_manufacture']}}</h2>
                             <div class="d-flex">
                                 <label class="fw-bold">Current Mileage: &nbsp;</label>
@@ -73,7 +73,7 @@
                                 <div class="row">
                                     <form action="{{ route('schedule_maintenance_form',$vehicle['vehicleID']) }}" method="GET" class="col-md-6 mt-3">
                                         @csrf
-                                        <button class="btn btn-dark w-100">Appointment</button>
+                                        <button class="btn btn-light w-100">Appointment</button>
                                     </form>
 
                                     <form action="#" method="POST" class="col-md-6 mt-3">
@@ -89,28 +89,26 @@
                 <!--Transactions History table-->
                 <div class="container mt-4">
                     <h5>Previous Transactions</h5>
-                    <div class="table-responsive profile_history">
-                        <table class="table table-striped mt-2 mt-md-0">
-                            <tr>
-                                <th>VEHICLE</th>
-                                <th>MAINTENANCE TYPE</th>
-                                <th>COST</th>
-                                <th>DATE PERFORMED</th>
-                                <th></th>
-                            </tr>
-                            @foreach ($transactions as $transaction)
-                                <tr>
-                                    <td>{{ $transaction['vehicle'] }}</td>
-                                    <td>{{ $transaction['maintenance_type'] }}</td>
-                                    <td>{{ $transaction['cost'] }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($transaction['date_performed'])->format('F j, Y') }}</td>
-                                    <td><button class="btn btn-dark">View</button></td>
-                                </tr>
-                            @endforeach
-                        </table>
-                        {{ $transactions->appends(request()->input())->links() }}
+                    <div class="container">
+                        <!-- Card-like table layout -->
+                        @foreach ($transactions as $transaction)
+                            <div class="card shadow-sm mt-2 bg-dark border border-light">
+                                <div class="card-body">
+                                    <h4 class="card-title text-light">{{ $transaction['vehicle'] }}</h4>
+                                    <p class="card-text text-light">
+                                        <strong>Maintenance Type:</strong> {{ $transaction['maintenance_type'] }}<br>
+                                        <strong>Service Date:</strong> Oct 20, 2024<br>
+                                        <strong>Status:</strong> {{$transaction['maintenance_status']}}<br>
+                                        <strong>Cost:</strong> ₱{{number_format($transaction['cost'],2)}}<br>
+                                    </p>
+                                    <a href="#" class="btn btn-light btn-sm rounded-pill">View Details</a>
+                                </div>
+                            </div>
+                        @endforeach
+                        <div class="mt-2">
+                            {{ $transactions->appends(request()->input())->links() }}
+                        </div>
                     </div>
-                </div>
                 <!--End-->
             </x-customer-dashboard.main-content>
         </main>

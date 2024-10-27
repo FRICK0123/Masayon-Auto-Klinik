@@ -9,7 +9,7 @@
     }
 
     /* Add rounded borders to the first and last cells in the header */
-    .table :first-child {
+    .table th:first-child {
         border-top-left-radius: 12px;
     }
 
