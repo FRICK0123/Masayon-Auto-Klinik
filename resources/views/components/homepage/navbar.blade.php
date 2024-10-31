@@ -19,12 +19,12 @@
         @if (Session::get('usertype') == "customer")
             <form action="{{route('customer_dashboard')}}" method="GET" class="d-none d-lg-block">
                 @csrf
-                <button class="btn" id="login">Dashboard</button>
+                <button class="btn" id="login">Profile</button>
             </form>
         @else
             <form action="{{route('manager_dashboard')}}" method="GET" class="d-none d-lg-block">
                 @csrf
-                <button class="btn" id="login">Dashboard</button>
+                <button class="btn" id="login">Profile</button>
             </form>
         @endif
     @endauth
@@ -63,12 +63,12 @@
                             @if (Session::get('usertype') == "customer")
                                 <form action="{{route('customer_dashboard')}}" method="GET">
                                     @csrf
-                                    <button class="btn btn-dark w-100">Dashboard</button>
+                                    <button class="btn btn-dark w-100">Profile</button>
                                 </form>
                             @else
                                 <form action="{{route('manager_dashboard')}}" method="GET">
                                     @csrf
-                                    <button class="btn btn-dark w-100">Dashboard</button>
+                                    <button class="btn btn-dark w-100">Profile</button>
                                 </form>
                             @endif
                         @endauth

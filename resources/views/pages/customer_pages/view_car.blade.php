@@ -14,7 +14,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
-<body class="bg-dark">
+<body class="body">
     <!--Preloader-->
         <x-preloader/>
     <!--End-->
@@ -27,9 +27,8 @@
     
     <!--Main Content-->
         <main>            
-            <x-customer-dashboard.mobile-canvas/>
             <x-customer-dashboard.main-content>
-                <div class="container p-3 border border-2 shadow rounded-3 bg-dark" style="width: 98%">
+                <div class="container p-3 border border-2 shadow rounded-3" style="width: 98%" id="minor_details">
                     <div class="row">
                         <div class="col-md-6 mt-2">
                             <div class="view_car_wrapper">
@@ -37,7 +36,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mt-2 text-light">
+                        <div class="col-md-6 mt-2 text-dark">
                             <h2>{{$vehicle['make']}} {{$vehicle['model']}} {{$vehicle['year_of_manufacture']}}</h2>
                             <div class="d-flex">
                                 <label class="fw-bold">Current Mileage: &nbsp;</label>
@@ -88,7 +87,7 @@
                 
                 <!--Transactions History table-->
                 <div class="container mt-4">
-                    <h5 class="text-light">Previous Transactions</h5>
+                    <h5 class="text-dark">Previous Transactions</h5>
                     <div class="container">
                         <!-- Card-like table layout -->
                         @foreach ($transactions as $transaction)

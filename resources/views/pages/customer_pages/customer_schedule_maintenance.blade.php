@@ -14,7 +14,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
-<body class="bg-dark">
+<body class="body">
     <!--Preloader-->
         <x-preloader/>
     <!--End-->
@@ -27,34 +27,13 @@
     
     <!--Main Content-->
         <main>            
-            <x-customer-dashboard.mobile-canvas/>
             <x-customer-dashboard.main-content>
                 <div class="container">
-                    <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm mt-5 mt-lg-0">
                         <h5 class="pt-2">MAINTENANCE SCHEDULE</h5>
                     </div>
 
-                    <!--Functionalities-->
-                        <div class="d-flex justify-content-between">
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="{{asset('icons/bars-filter-white.svg')}}" alt="Filter">
-                                </button>
-                                {{-- <form id="carFilterForm" action="{{ route('car_filter') }}" method="GET" class="dropdown-menu p-2">
-                                    <input type="radio" id="by_make" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_make">
-                                    <label for="by_make" class="ms-2">By Make</label><br><br>
-
-                                    <input type="radio" id="by_model" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_model">
-                                    <label for="by_model" class="ms-2">By Model</label><br><br>
-
-                                    <input type="radio" id="by_year" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_year">
-                                    <label for="by_year" class="ms-2">By Year</label><br><br>
-
-                                    <button type="submit" class="btn btn-dark">Filter</button>
-                                </form> --}}
-                            </div>
-                        </div>
-                    <!--end-->
+                    <br>
                     <div class="row">
                         @php
                             $now = \Carbon\Carbon::now();

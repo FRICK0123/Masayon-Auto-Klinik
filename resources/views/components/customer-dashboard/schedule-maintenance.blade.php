@@ -1,5 +1,5 @@
 @props(['vehicle'])
-<div class="container w-75 border border-2 shadow pt-3 pb-3 bg-light">
+<div class="container w-75 border border-2 shadow pt-3 pb-3">
     <h2 class="text-center">Schedule Maintenance for {{ $vehicle['make'] }} {{ $vehicle['model'] }}</h2>
     <p class="text-secondary">Note: you cannot change the details of this car once submitted</p>
     <form action="{{ route('schedule_maintenance_store') }}" method="post" class="container mt-3">

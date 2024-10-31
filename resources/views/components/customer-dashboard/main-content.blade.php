@@ -1,4 +1,4 @@
-<div class="dashboard_sidebar bg-dark border border-light flex-column align-items-center d-none d-lg-flex">
+{{-- <div class="dashboard_sidebar bg-dark border border-light flex-column align-items-center d-none d-lg-flex">
     <div class="profile_img_wrapper mt-5">
         <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Profile Image" class="profile_image">
     </div>
@@ -36,13 +36,13 @@
             
         </div>
     <!--End-->
-</div>
+</div> --}}
 
 <div class="content mt-3">
     {{$slot}}
 </div>
 
-<!--Script-->
+{{-- <!--Script-->
     <script>
         //Profile Form Submittion
         function profileForm(){
@@ -69,4 +69,4 @@
         customer_logout.addEventListener('click',()=>{
             customer_logout.submit();
         });
-    </script>
+    </script> --}}

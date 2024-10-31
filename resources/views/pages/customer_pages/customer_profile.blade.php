@@ -14,7 +14,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
-<body class="bg-dark">
+<body class="body">
     <!--Preloader-->
         <x-preloader/>
     <!--End-->
@@ -27,27 +27,25 @@
 
     <!--Main Content-->
         <main>
-            <x-customer-dashboard.mobile-canvas/>
-
             <x-customer-dashboard.main-content>
-                <div class="container ms-1 row">
-                    <div class="container border border-1 shadow rounded-3 pb-3 col-md-4">    
+                <div class="container-fluid ms-1 row">
+                    <div class="container border border-1 shadow rounded-3 pb-3 col-md-6" id="minor_details">    
                         <a href="#" class="profile_img_wrapper mt-5">
                             <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Profile Image" class="profile_image">
                         </a>
 
-                        <div class="profile_details mt-3 text-light">
+                        <div class="profile_details mt-3 text-dark">
                             <p><b>Full Name:</b> {{Session::get('fullname')}}</p>
                             <p><b>Email Address:</b> {{Session::get('email')}}</p>
                             <p><b>Phone Number:</b> +63{{Session::get('phone_number')}}</p>
                             <p><b>Username:</b> {{Session::get('username')}}</p>
                         </div>
 
-                        <button class="btn btn-light">Edit Profile Details</button>
+                        <button class="btn btn-dark">Edit Profile Details</button>
                     </div>
 
-                    <div class="col-md-8 mt-3 mt-lg-0">
-                        <h4 class="text-light">Previous Transactions</h4>
+                    <div class="col-md-6 mt-3 mt-lg-0">
+                        <h4 class="text-dark">Previous Transactions</h4>
                         <div class="container">
                             <!-- Card-like table layout -->
                             @foreach ($transactions as $transaction)

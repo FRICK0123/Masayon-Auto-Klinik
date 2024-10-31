@@ -38,7 +38,7 @@
     <!--End-->
   </div>
 
-<!--Script-->
+{{-- <!--Script-->
 <script>
     //Mobile
     //Customer Profile
@@ -73,4 +73,4 @@
             });
             bsCollapse.hide();  // This will hide the collapse
         });
-</script>
+</script> --}}
