@@ -6,7 +6,7 @@
     <!--Login link/button to be directed to Login page-->
     @auth('customer')
         <form action="{{route('homepage')}}" class="text-white d-flex justify-content-center align-items-center me-lg-5" id="homepage" onclick="homePage()">
-            <img src="{{asset('icons/house.svg')}}" alt="Dashboard Icon" class="me-2">
+            <img src="{{asset('icons/house-white.svg')}}" alt="Dashboard Icon" class="me-2">
             <h6 class="m-0 d-none d-lg-block">Homepage</h6>
         </form>
     @endauth

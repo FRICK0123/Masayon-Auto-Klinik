@@ -57,7 +57,7 @@
                                 }
                             @endphp
                             <div class="col-md-6 col-lg-4 mb-4">
-                                <div class="card bg-light">
+                                <div class="card bg-light border border-dark" id="card">
                                     <div class="card-body @if($isNearingDate || $isNearingMileage) bg-danger-subtle" @endif>
                                         <h5 class="card-title">{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</h5>
                                         <p><strong>Maintenance Type:</strong> {{ $schedule->maintenance_type }}</p>
@@ -83,6 +83,10 @@
  
                                         <a href="#" class="btn btn-primary btn-sm">View Details</a>
                                     </div>
+                                    <span class="top"></span>
+                                    <span class="bottom"></span>
+                                    <span class="right"></span>
+                                    <span class="left"></span>
                                 </div>
                             </div> 
                         @endforeach

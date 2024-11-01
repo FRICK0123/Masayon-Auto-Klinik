@@ -29,10 +29,13 @@
         <main>
             <x-customer-dashboard.main-content>
                 <div class="container-fluid ms-1 row">
-                    <div class="container border border-1 shadow rounded-3 pb-3 col-md-6" id="minor_details">    
-                        <a href="#" class="profile_img_wrapper mt-5">
-                            <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Profile Image" class="profile_image">
-                        </a>
+                    <div class="container border border-1 shadow rounded-3 pb-3 col-md-6 border border-1 border-dark">   
+                        <div class="d-flex justify-content-center">
+                            <a href="#" class="profile_img_wrapper mt-5">
+                                <img src="{{ asset('Images/profile_images/'.Session::get('profile_img')) }}" alt="Profile Image" class="profile_image">
+                            </a>
+                        </div>
+                        <h2 class="text-center mt-2">Good Day, {{ Session::get('fullname') }}!!!</h2> 
 
                         <div class="profile_details mt-3 text-dark">
                             <p><b>Full Name:</b> {{Session::get('fullname')}}</p>
@@ -41,7 +44,9 @@
                             <p><b>Username:</b> {{Session::get('username')}}</p>
                         </div>
 
-                        <button class="btn btn-dark">Edit Profile Details</button>
+                        <form action="#" method="get" class="d-flex justify-content-center">
+                            <button class="btn btn-dark rounded-pill">Edit Profile Details</button>
+                        </form>
                     </div>
 
                     <div class="col-md-6 mt-3 mt-lg-0">
@@ -49,7 +54,7 @@
                         <div class="container">
                             <!-- Card-like table layout -->
                             @foreach ($transactions as $transaction)
-                                <div class="card shadow-sm mt-2 bg-dark border border-light">
+                                <div class="card shadow-sm mt-2 bg-dark border border-light" id="card">
                                     <div class="card-body">
                                         <h4 class="card-title text-light">{{ $transaction['vehicle'] }}</h4>
                                         <p class="card-text text-light">
@@ -60,6 +65,10 @@
                                         </p>
                                         <a href="#" class="btn btn-light btn-sm rounded-pill">View Details</a>
                                     </div>
+                                    <span class="top"></span>
+                                    <span class="right"></span>
+                                    <span class="bottom"></span>
+                                    <span class="left"></span>
                                 </div>
                             @endforeach
                             <div class="mt-2">

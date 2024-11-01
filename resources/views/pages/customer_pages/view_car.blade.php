@@ -72,7 +72,7 @@
                                 <div class="row">
                                     <form action="{{ route('schedule_maintenance_form',$vehicle['vehicleID']) }}" method="GET" class="col-md-6 mt-3">
                                         @csrf
-                                        <button class="btn btn-light w-100">Appointment</button>
+                                        <button class="btn btn-dark w-100">Appointment</button>
                                     </form>
 
                                     <form action="#" method="POST" class="col-md-6 mt-3">
@@ -91,7 +91,7 @@
                     <div class="container">
                         <!-- Card-like table layout -->
                         @foreach ($transactions as $transaction)
-                            <div class="card shadow-sm mt-2 bg-dark border border-light">
+                            <div class="card shadow-sm mt-2 bg-dark border border-light" id="card">
                                 <div class="card-body">
                                     <h4 class="card-title text-light">{{ $transaction['vehicle'] }}</h4>
                                     <p class="card-text text-light">
@@ -102,6 +102,10 @@
                                     </p>
                                     <a href="#" class="btn btn-light btn-sm rounded-pill">View Details</a>
                                 </div>
+                                <span class="top"></span>
+                                <span class="bottom"></span>
+                                <span class="right"></span>
+                                <span class="left"></span>
                             </div>
                         @endforeach
                         <div class="mt-2">

@@ -12,9 +12,14 @@
                 <img src="{{asset('icons/user-circle.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
+            <form action="{{ route('manager_appointment') }}" class="text-white d-flex justify-content-between align-items-center" id="appointments" onclick="managerAppointment()">
+                <p class="m-0">Appointments</p>
+                <img src="{{asset('icons/calendar-check-white.svg')}}" alt="Dashboard Icon" class="">
+            </form>
+
             <form action="{{ route('maintenance_task_view') }}" class="text-white d-flex justify-content-between align-items-center" id="maintenance_tasks" onclick="maintenanceTask()">
                 <p class="m-0">Maintenance Tasks</p>
-                <img src="{{asset('icons/calendar.svg')}}" alt="Dashboard Icon" class="">
+                <img src="{{asset('icons/calendar-white.svg')}}" alt="Dashboard Icon" class="">
             </form>
 
             <form action="#" class="text-white d-flex justify-content-between align-items-center">
@@ -25,7 +30,7 @@
             <form action="{{route('logout')}}" method="POST" class="text-white d-flex justify-content-between align-items-center" id="customer_logout">
                 @csrf
                 <p class="m-0">Logout</p>
-                <img src="{{asset('icons/power.svg')}}" alt="Dashboard Icon" class="">
+                <img src="{{asset('icons/power-white.svg')}}" alt="Dashboard Icon" class="">
             </form>
             
         </div>
@@ -44,6 +49,10 @@
 
         function managerDashboard(){
             document.getElementById('manager_dashboard').submit();
+        }
+
+        function managerAppointment(){
+            document.getElementById('appointments').submit();
         }
 
         function maintenanceTask(){

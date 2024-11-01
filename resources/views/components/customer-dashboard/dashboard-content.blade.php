@@ -24,7 +24,7 @@
                 @props(['vehicles'])
                 @foreach ($vehicles as $item)
                     <div class="col-md-4 mt-3">
-                        <form action="{{ route('view_car_details',$item['vehicleID']) }}" method="GET" class="card shadow border border-dark" style="height: 400px; width: 100%; overflow: hidden;">
+                        <form action="{{ route('view_car_details',$item['vehicleID']) }}" method="GET" class="card shadow border border-dark" style="height: 400px; width: 100%; overflow: hidden;" id="card">
                             @csrf
                             <img src="{{asset('Images/car_images/'.$item['vehicle_image'])}}" alt="Car Photo" style="height: 200px; width: 100%; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
@@ -33,6 +33,10 @@
                                 <p class="text-dark"><label class="fw-bold">Plate Number:</label> {{$item['plate_number']}}</p>
                                 <button class="btn btn-dark align-self-end rounded-0">View</button>
                             </div>
+                            <span class="top"></span>
+                            <span class="bottom"></span>
+                            <span class="right"></span>
+                            <span class="left"></span>
                         </form>
                     </div>
                 @endforeach

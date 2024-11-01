@@ -9,7 +9,7 @@
     <!-- Card 1 -->
     @foreach ($schedules as $schedule)
     <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm border border-dark bg-light" id="card">
             <div class="card-body">
             <h4 class="card-title">{{$schedule->vehicle->make}} {{$schedule->vehicle->model}} {{$schedule->vehicle->year_of_manufacture}}</h4>
             <p><strong>Maintenance Type:</strong> {{ $schedule->maintenance_type }}</p>
@@ -17,6 +17,11 @@
             <p><strong>Appointment Date:</strong> {{ \Carbon\Carbon::parse($schedule->appointment_date)->format('F j, Y') }}</p>
             <a href="#" class="btn btn-primary btn-sm">View Details</a>
             </div>
+
+            <span class="top"></span>
+            <span class="bottom"></span>
+            <span class="left"></span>
+            <span class="right"></span>
         </div>
     </div>
     @endforeach

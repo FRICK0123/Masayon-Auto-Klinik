@@ -1,7 +1,7 @@
 @props(['cars'])
 
-<div class="container w-75 border border-2 shadow pt-3 pb-3 rounded-4">
-    <h2 class="text-center text-light">Add Your Car</h2>
+<div class="container border border-2 shadow pt-3 pb-3 rounded-4 col-lg-6 col-md-9">
+    <h2 class="text-center text-dark">Add Your Car</h2>
     <form action="{{ route('add_car') }}" method="post" class="container" enctype="multipart/form-data">
         @csrf
         <div class="car_img_wrapper mt-5">
@@ -9,13 +9,13 @@
         </div>
 
         <div class="mt-3 container">
-            <label class="fw-bold text-light">You can also upload your own car image:</label>
+            <label class="fw-bold text-dark">You can also upload your own car image:</label>
             <input class="form-control" type="file" id="car_image_file" accept=".jpg,.jpeg,.png" name="car_image">
         </div><br><br>
         <!-- Hidden input field to store car image filename -->
             <input type="hidden" id="car_image_hidden" name="car_image_hidden">
         <!-- Car Dropdown -->
-        <label for="car_select" class="fw-bold text-light">Select Car:</label>
+        <label for="car_select" class="fw-bold text-dark">Select Car:</label>
         <select class="form-select" id="car_select">
             <option value="" disabled selected>Select a car</option>
             @foreach ($cars as $car)
@@ -32,36 +32,36 @@
         </select><br>
 
         <!-- Input fields for car details -->
-        <label for="car_make" class="fw-bold text-light">Car Make:</label>
+        <label for="car_make" class="fw-bold text-dark">Car Make:</label>
         <input type="text" id="car_make" name="car_make" class="form-control" readonly><br>
 
-        <label for="car_model" class="fw-bold text-light">Car Model:</label>
+        <label for="car_model" class="fw-bold text-dark">Car Model:</label>
         <input type="text" id="car_model" name="car_model" class="form-control" readonly><br>
 
-        <label for="year_of_manufacture" class="fw-bold text-light">Year of Manufacture:</label>
+        <label for="year_of_manufacture" class="fw-bold text-dark">Year of Manufacture:</label>
         <input type="text" id="year_of_manufacture" name="year_of_manufacture" class="form-control" readonly><br>
         <br>
 
-        <label for="engine_type" class="fw-bold text-light">Engine Type:</label>
+        <label for="engine_type" class="fw-bold text-dark">Engine Type:</label>
         <input type="text" id="engine_type" name="engine_type" class="form-control" readonly><br>
         <br>
 
-        <label for="milage" class="fw-bold text-light" required>Milage:</label>
+        <label for="milage" class="fw-bold text-dark" required>Milage:</label>
         <input type="number" name="milage" class="form-control" id="milage"><br>
 
-        <label for="engine_number" class="fw-bold text-light" required>Engine Number:</label>
+        <label for="engine_number" class="fw-bold text-dark" required>Engine Number:</label>
         <input type="text" name="engine_number" class="form-control" id="engine_number"><br>
 
-        <label for="vehicle_identification_number" class="fw-bold text-light" required>Vehicle Identification Number:</label>
+        <label for="vehicle_identification_number" class="fw-bold text-dark" required>Vehicle Identification Number:</label>
         <input type="text" name="vehicle_identification_number" class="form-control" id="vehicle_identification_number"><br>
 
-        <label for="chassis_number" class="fw-bold text-light" required>Chassis Number:</label>
+        <label for="chassis_number" class="fw-bold text-dark" required>Chassis Number:</label>
         <input type="text" name="chassis_number" class="form-control" id="chassis_number"><br>
 
-        <label for="plate_number" class="fw-bold text-light" required>Plate Number:</label>
+        <label for="plate_number" class="fw-bold text-dark" required>Plate Number:</label>
         <input type="text" placeholder="ABC-123" name="plate_number" class="form-control" id="plate_number" pattern="[A-Z]{3}-[0-9]{3}" title="Please enter a valid plate number in the format ABC-123"><br>
 
-        <button class="btn btn-secondary w-100">Submit</button>
+        <button class="btn btn-dark w-100">Submit</button>
     </form>
 </div>
 

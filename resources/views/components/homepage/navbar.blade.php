@@ -17,7 +17,7 @@
     <!--Login link/button to be directed to Login page-->
     @auth('customer')
         @if (Session::get('usertype') == "customer")
-            <form action="{{route('customer_dashboard')}}" method="GET" class="d-none d-lg-block">
+            <form action="{{route('customer_profile')}}" method="GET" class="d-none d-lg-block">
                 @csrf
                 <button class="btn" id="login">Profile</button>
             </form>

@@ -19,6 +19,7 @@ use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ManagerDashboard\CustomerManagementController;
 use App\Http\Controllers\ManagerDashboard\MaintenanceTaskController;
+use App\Http\Controllers\ManagerDashboard\ManagerAppointmentController;
 use App\Http\Controllers\ManagerDashboard\ManagerDashboardController;
 use App\View\Components\AdminDashboard\MaintenanceOverviewContent;
 use App\View\Components\AdminDashboard\UserManagementContent;
@@ -193,6 +194,13 @@ Route::middleware(['auth:customer'])->controller(CustomerManagementController::c
     Route::post('/store_customer','storeUser')->name('store_customer');
     Route::get('/customer_info/{customerID}','viewUserInfo')->name('manager_view_customer_info');
 });
+//end
+
+//Routes for Manager Appointments Management
+    Route::middleware(['auth:customer'])->controller(ManagerAppointmentController::class)->group(function(){
+        Route::get('/customer_appointments','appointmentView')->name('manager_appointment');
+        Route::post('/appointment_update', 'managerAppointmentUpdate')->name('appointment_update');
+    });
 //end
 
 //Routes for Manager Maintenance Tasks

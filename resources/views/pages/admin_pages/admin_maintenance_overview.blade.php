@@ -96,6 +96,7 @@
                                 // Time-based logic
                                 $scheduledDate = \Carbon\Carbon::parse($schedule->scheduled_date);
                                 $isNearingDate = $scheduledDate->diffInDays($now) <= 7 && $scheduledDate >= $now;
+                                $isOverdue = $scheduledDate->diffInDays($now) <= 7 && $scheduledDate < $now;
 
                                 // Mileage-based logic (for oil type maintenance)
                                 $isNearingMileage = false;
@@ -110,7 +111,7 @@
                                 }
                             @endphp
                             <!-- Highlight if either the time is nearing or mileage is reached -->
-                            <tr @if($isNearingDate || $isNearingMileage) class="table-danger" @endif>
+                            <tr @if($isNearingDate || $isNearingMileage || $isOverdue) class="table-danger" @endif>
                                 <td>{{ $schedule->vehicle->customer->fullname }}</td>
                                 <td>{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</td>
                                 <td>{{ $schedule->maintenance_type }}</td>
@@ -121,14 +122,14 @@
                                     <td>{{ $schedule->next_milage_schedule }} km
                                         @if($isNearingMileage)
                                             <span class="badge bg-danger">Mileage Reached!</span>
-                                        @elseif($isNearingDate)
+                                        @elseif($isNearingDate || $isOverdue)
                                             <span class="badge bg-danger">Schedule for Maintenance!</span>
                                         @endif
                                     </td>
                                 @else
                                     <td>
                                         N/A
-                                        @if($isNearingDate)
+                                        @if($isNearingDate || $isOverdue)
                                             <span class="badge bg-danger">Schedule for Maintenance!</span>
                                         @endif
                                     </td>

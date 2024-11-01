@@ -38,13 +38,20 @@
             <form action="{{route('login')}}" method="POST" class="container mt-4">
                 @csrf
                 <label for="login_username" class="fw-bold">Username:</label>
-                <input type="text" class="login_username form-control mt-1 border border-1 border-dark" name="username" id="login_username" placeholder="Enter Username" autocomplete="off">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"><img src="{{ asset('icons/user-circle-dark.svg') }}" alt="Username"></span>
+                    <input type="text" class="login_username form-control" name="username" id="login_username" placeholder="Enter Username" autocomplete="off">
+                </div>
                 @error('username')
                     <p class="text-danger">{{$message}}</p>
                 @enderror
 
                 <label for="login_password" class="fw-bold mt-4">Password:</label>
-                <input type="password" class="login_password form-control mt-1 border border-1 border-dark" name="password" id="login_password" placeholder="********" autocomplete="off">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"><img src="{{ asset('icons/key.svg') }}" alt="Password"></span>
+                    <input type="password" class="login_password form-control" name="password" id="login_password" placeholder="********" autocomplete="off">
+                </div>
+
                 <div class="container d-flex mt-2">
                     <input type="checkbox" id="showPassword" class="me-2" onclick="showP()">
                     <label for="showPassword">Show Password</label>
