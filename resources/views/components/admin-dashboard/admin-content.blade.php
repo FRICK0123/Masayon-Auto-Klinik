@@ -93,7 +93,7 @@
                     </div>
                 <!--end-->
 
-                <form action="#" method="GET" class="d-flex align-items-center" id="customer_profile">
+                <form action="{{ route('notification_view') }}" method="GET" class="d-flex align-items-center {{ request()->routeIs('notification_view') ? 'active' : '' }}" id="admin_notifications" onclick="adminNotifications()">
                     <img src="{{asset('icons/bell-ringing.svg')}}" alt="Notifications" class="me-2">
                     <p class="m-0">Notifications</p>
                 </form>
@@ -144,6 +144,10 @@
 
         function adminAppointment(){
             document.getElementById('appointment').submit();
+        }
+
+        function adminNotifications(){
+            document.getElementById('admin_notifications').submit();
         }
     </script>
 <!--end-->

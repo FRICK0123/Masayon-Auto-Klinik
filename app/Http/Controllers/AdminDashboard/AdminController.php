@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\MaintenanceHistory;
 use App\Models\MaintenanceSchedule;
+use App\Models\Notification;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -45,6 +46,7 @@ class AdminController extends Controller
         $scheduleCount = $schedules->count();
         $customerCount = Customer::where('usertype','customer')->count();
         $vehicleCount = Vehicle::all()->count();
+        $notificationCount = Notification::all()->count();
 
         $today = Carbon::parse(Carbon::today()->toDateString());
         $customer_daily_registration = Customer::where('usertype','customer')->whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
@@ -57,6 +59,7 @@ class AdminController extends Controller
             'scheduleCount' => $scheduleCount,
             'customerCount' => $customerCount,
             'vehicleCount' => $vehicleCount,
+            'notificationCount' => $notificationCount,
             'customer_daily_registration' => $customer_daily_registration,
             'customer_weekly_registration' => $customer_weekly_registration,
             'customer_daily_transaction' => $customer_daily_transactions,

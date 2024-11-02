@@ -85,6 +85,8 @@
                             <th>SCHEDULED DATE</th>
                             <th>SCHEDULED MILAGE</th>
                             <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
 
                         @php
@@ -134,34 +136,41 @@
                                         @endif
                                     </td>
                                 @endif
-                                
+
                                 <td>
-                                    <div class="dropdown">
-                                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="#"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#view_schedule"
-                                                data-owner="{{ $schedule->vehicle->customer->fullname }}"
-                                                data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
-                                                data-maintenance-type="{{ $schedule->maintenance_type }}"
-                                                data-pms-services="{{ $schedule->PMS_services }}"
-                                                data-scheduled-date="{{ $schedule->scheduled_date }}"
-                                                data-last-maintenance-date="{{ $schedule->last_maintenance_date }}"
-                                                data-scheduled-interval="{{ $schedule->scheduled_interval }}"
-                                                data-oil-type="{{ $schedule->oil_type }}"
-                                                data-current-milage="{{ $schedule->vehicle->milage }}"
-                                                data-next-milage-schedule="{{ $schedule->next_milage_schedule }}"
-                                                onclick="populateModal(this)">View</a>
-                                            </li>
-                                            <li><a class="dropdown-item" href="#">Notify</a></li>
-                                            <li>
-                                                <a href="#" class="dropdown-item">Delete</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <button class="btn btn-primary btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#view_schedule"
+                                        data-owner="{{ $schedule->vehicle->customer->fullname }}"
+                                        data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
+                                        data-maintenance-type="{{ $schedule->maintenance_type }}"
+                                        data-pms-services="{{ $schedule->PMS_services }}"
+                                        data-scheduled-date="{{ $schedule->scheduled_date }}"
+                                        data-last-maintenance-date="{{ $schedule->last_maintenance_date }}"
+                                        data-scheduled-interval="{{ $schedule->scheduled_interval }}"
+                                        data-oil-type="{{ $schedule->oil_type }}"
+                                        data-current-milage="{{ $schedule->vehicle->milage }}"
+                                        data-next-milage-schedule="{{ $schedule->next_milage_schedule }}"
+                                        onclick="populateModal(this)">
+                                        <img src="{{ asset('icons/eye.svg') }}" alt="View" width="20">
+                                    </button>
                                 </td>
+
+                                <td>
+                                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#notify"
+                                        data-customerID="{{ $schedule->vehicle->customer->customerID }}"
+                                        data-vehicleID="{{ $schedule->vehicle->vehicleID }}"
+                                        data-maintenanceID="{{ $schedule->maintenanceID }}"
+                                        data-owner="{{ $schedule->vehicle->customer->fullname }}"
+                                        data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
+                                        data-maintenance-type="{{ $schedule->maintenance_type }}"
+                                        data-scheduled-date="{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}"
+                                        onclick="notifyModal(this)">
+                                        <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notify" width="20">
+                                    </button>
+                                </td>
+
+                                <td><button class="btn btn-danger btn-sm"><img src="{{ asset('icons/trash.svg') }}" alt="Delete" width="20"></button></td>
                             </tr>
                         @endforeach
                     </table>
@@ -215,6 +224,38 @@
                 </div>
             </div>
             </div>
+
+            <!--Notify Customer Modal-->
+            <div class="modal fade" id="notify" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Do you want to notify <span id="customer"></span>?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3>From Masayon Auto Klinik</h3><br>
+                    <p class="fw-bold">Notification Content:</p>
+                    <p class="content">Good Day Sir/Ma'am <span id="contentCustomer" class="fw-bold"></span>, We would like to inform you that your <span id="vehicleContent" class="fw-bold"></span> is due for <span id="contentServiceType" class="fw-bold"></span> on <span id="contentDueDate" class="fw-bold"></span>. Please arrive within the scheduled date to keep your vehicle on top condition</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                    <form action="{{ route('notify_customer') }}" method="POST">
+                        @csrf
+                        <input type="hidden" id="input_customerID" name="customerID">
+                        <input type="hidden" id="input_vehicleID" name="vehicleID">
+                        <input type="hidden" id="input_maintenanceID" name="maintenanceID">
+                        <input type="hidden" id="input_owner" name="owner">
+                        <input type="hidden" id="input_vehicle" name="vehicle">
+                        <input type="hidden" id="input_maintenance_type" name="maintenance_type">
+                        <input type="hidden" id="input_scheduled_date" name="scheduled_date">
+
+                        <button type="submit" class="btn btn-warning">Notify</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+            </div>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->
@@ -243,6 +284,32 @@
             document.getElementById('current_milage').innerHTML = current_milage;
             document.getElementById('next_milage_schedule').innerHTML = next_milage_schedule;
 
+        }
+
+        function notifyModal(element){
+            const customerID = element.getAttribute('data-customerID');
+            const vehicleID = element.getAttribute('data-vehicleID');
+            const maintenanceID = element.getAttribute('data-maintenanceID');
+            const owner = element.getAttribute('data-owner');
+            const vehicle = element.getAttribute('data-vehicle');
+            const maintenance_type = element.getAttribute('data-maintenance-type');
+            const scheduled_date = element.getAttribute('data-scheduled-date');
+
+            //Content
+            document.getElementById('customer').innerHTML = owner;
+            document.getElementById('contentCustomer').innerHTML = owner;
+            document.getElementById('vehicleContent').innerHTML = vehicle;
+            document.getElementById('contentServiceType').innerHTML = maintenance_type;
+            document.getElementById('contentDueDate').innerHTML = scheduled_date;
+
+            //Input Value
+            document.getElementById('input_customerID').value=customerID;
+            document.getElementById('input_vehicleID').value=vehicleID;
+            document.getElementById('input_maintenanceID').value=maintenanceID;
+            document.getElementById('input_owner').value=owner;
+            document.getElementById('input_vehicle').value=vehicle;
+            document.getElementById('input_maintenance_type').value=maintenance_type;
+            document.getElementById('input_scheduled_date').value=scheduled_date;
         }
     </script>
 </body>

@@ -4,6 +4,7 @@ use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\AdminDashboard\AdminAppointmentController;
 use App\Http\Controllers\AdminDashboard\AdminController;
+use App\Http\Controllers\AdminDashboard\AdminNotificationController;
 use App\Http\Controllers\AdminDashboard\CarsController;
 use App\Http\Controllers\AdminDashboard\MaintenanceHistoryController;
 use App\Http\Controllers\AdminDashboard\MaintenanceOverviewController;
@@ -174,6 +175,13 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/customer_reports/customer_by_date', 'customerReportsByDate')->name('customer_reports_date');
     });
 //end
+
+//Routes for Admin Notification
+    Route::middleware(['auth:admin'])->controller(AdminNotificationController::class)->group(function(){
+        Route::get('/notifications', 'notificationView')->name('notification_view');
+        Route::post('/notification_sent', 'notifyCustomer')->name('notify_customer');
+    });
+//End
 
 //Routes for Admin Appointment
     Route::middleware(['auth:admin'])->controller(AdminAppointmentController::class)->group(function () {

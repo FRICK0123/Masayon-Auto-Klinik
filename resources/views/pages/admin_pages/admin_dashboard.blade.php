@@ -104,7 +104,7 @@
                         </div><br>
 
                         <div class="d-flex justify-content-between">
-                            <h2 id="scheduleCount">0</h2>
+                            <h2 id="notificationCount">{{ $notificationCount }}</h2>
                             <img src="{{ asset('chart.png') }}" alt="Vehicle Count" width="100">
                         </div>
                     </div>
@@ -531,6 +531,7 @@
             animateValue("customerCount", 0, {{ $customerCount }}, 600); // 2 seconds duration
             animateValue("vehicleCount", 0, {{ $vehicleCount }}, 600); 
             animateValue("scheduleCount", 0, {{ $scheduleCount }}, 600); 
+            animateValue("notificationCount", 0, {{ $notificationCount }}, 600);
         });
 
         //Daily and Weekly Customer Registration Reports button
