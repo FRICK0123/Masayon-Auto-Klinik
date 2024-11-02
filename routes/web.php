@@ -16,6 +16,7 @@ use App\Http\Controllers\Dashboard\AppointmentController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
 use App\Http\Controllers\Dashboard\MaintenanceController;
+use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ManagerDashboard\CustomerManagementController;
@@ -95,6 +96,12 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/dashboard', 'customerDashboardView')->name('customer_dashboard');
         Route::get('/profile', 'customerProfileView')->name('customer_profile');
         Route::get('/maintenance_schedule', 'scheduleView')->name('customer_maintenance_schedule');
+    });
+//end
+
+//Routes for Customer Notifications
+    Route::middleware(['auth:customer','update.last_seen'])->controller(NotificationController::class)->group(function(){
+        Route::get('/customers_notifications','customerNotificationView')->name('customer_notification_view');
     });
 //end
 

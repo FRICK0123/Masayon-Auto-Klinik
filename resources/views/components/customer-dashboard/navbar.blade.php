@@ -42,7 +42,7 @@
                     </li>
                     <li class="nav-item d-flex align-items-center">
                         <div id="notif"></div>
-                        <a class="nav-link" href="#"><img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notifications" width="20"> <strong>Notifications</strong></a>
+                        <a class="nav-link" href="{{ route('customer_notification_view') }}"><img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notifications" width="20"> <strong>Notifications</strong></a>
                     </li>
                     <li class="nav-item">
                         <form action="{{route('logout')}}" method="POST" class="text-dark d-flex justify-content-between align-items-center nav-link" id="customer_logout" style="cursor: pointer" onclick="logOut()">
