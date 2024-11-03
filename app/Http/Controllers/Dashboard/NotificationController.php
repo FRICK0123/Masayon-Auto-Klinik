@@ -11,7 +11,17 @@ class NotificationController extends Controller
 {
     //Customer Notification Overview
     public function customerNotificationView(){
-        $notifications = Notification::where('customerID',Auth::guard('customer')->id())->get();
-        return view('pages.customer_pages.notifications',['notifications'=>$notifications]);  
+        $customerID = Auth::guard('customer')->id();
+        $notifications = Notification::where('customerID', $customerID)->get();
+
+        // Count notifications with isConfirmed = false
+        $unconfirmedCount = Notification::where('customerID', $customerID)
+            ->where('isConfirmed', false)
+            ->count();
+
+        return view('pages.customer_pages.notifications', [
+            'notifications' => $notifications,
+            'unconfirmedCount' => $unconfirmedCount
+        ]);
     }
 }

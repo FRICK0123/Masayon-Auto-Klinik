@@ -40,8 +40,20 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('customer_maintenance_schedule') }}"><img src="{{ asset('icons/calendar.svg') }}" alt="Maintenance Schedule" width="20"> <strong>Maintenance Schedule</strong></a>
                     </li>
+
+                    @php
+                        $unconfirmedCount = 0;
+                        if (Auth::guard('customer')->check()) {
+                            $unconfirmedCount = \App\Models\Notification::where('customerID', Auth::guard('customer')->id())
+                                ->where('isConfirmed', false)
+                                ->count();
+                        }
+                    @endphp
                     <li class="nav-item d-flex align-items-center">
-                        <div id="notif"></div>
+                        @if($unconfirmedCount > 0)
+                            <div id="notif">
+                            </div>
+                        @endif
                         <a class="nav-link" href="{{ route('customer_notification_view') }}"><img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notifications" width="20"> <strong>Notifications</strong></a>
                     </li>
                     <li class="nav-item">

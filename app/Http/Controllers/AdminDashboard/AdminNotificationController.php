@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\AdminDashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client as GuzzleHttpClient;
 
 class AdminNotificationController extends Controller
 {
@@ -18,6 +20,23 @@ class AdminNotificationController extends Controller
         $maintenance_type = $request->input('maintenance_type');
         $scheduled_date = $request->input('scheduled_date');
         $content = "Good Day Sir/Ma'am ". $owner. ", we would like to inform you that your ". $vehicle. " is due for ". $maintenance_type. " on ". $scheduled_date. ". PLease arrive within the scheduled date to keep your vehicle on top condition";
+
+        $customer = Customer::where('customerID',$customerID)->first();
+        $customerNum = "+63".$customer['phone_number'];
+
+        $client = new GuzzleHttpClient();
+        $apiKey = "6txNEfdDAqAZSHw1PF18iWG0GkWHtGeBW_sAX9z8PEUS59HU3zuZAgd_h8wiLuv6";
+
+        $res = $client->request('POST', 'https://api.httpsms.com/v1/messages/send', [
+            'headers' => [
+                'x-api-key' => $apiKey,
+            ],
+            'json'    => [
+                'content' => "From Masayon Auto Klinik: \nGood Day Sir/Ma'am " . $owner . ", we would like to inform you that your " . $vehicle . " is due for " . $maintenance_type . " on " . $scheduled_date . ". PLease arrive within the scheduled date to keep your vehicle on top condition",
+                'from'    => "+639999129152",
+                'to'      => $customerNum
+            ]
+        ]);
 
         Notification::create([
             'customerID' => $customerID,
