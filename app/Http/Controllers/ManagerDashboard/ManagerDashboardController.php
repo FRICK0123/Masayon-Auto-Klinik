@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ManagerDashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\MaintenanceSchedule;
+use App\Models\Notification;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ class ManagerDashboardController extends Controller
         $scheduleCount = $schedules->count();
         $customerCount = Customer::where('usertype', 'customer')->count();
         $vehicleCount = Vehicle::all()->count();
+        $notificatonCount = Notification::all()->count();
 
         $today = Carbon::parse(Carbon::today()->toDateString());
         $customer_daily_registration = Customer::where('usertype', 'customer')->whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
@@ -54,6 +56,7 @@ class ManagerDashboardController extends Controller
             'scheduleCount' => $scheduleCount,
             'customerCount' => $customerCount,
             'vehicleCount' => $vehicleCount,
+            'notificationCount' => $notificatonCount,
             'customer_daily_registration' => $customer_daily_registration,
             'customer_weekly_registration' => $customer_weekly_registration,
         ]);

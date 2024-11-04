@@ -61,15 +61,20 @@ class ReportController extends Controller
         );
     }
 
-    public function reportsTransactionByDate(Request $request){
-        $selectedDate = Carbon::parse($request->input('selected_date'));
-        // Query the transactions based on the selected date
-        $transaction = MaintenanceHistory::whereDate('date_performed', $selectedDate)->get();
+    public function reportsTransactionByDateRange(Request $request)
+    {
+        $startDate = Carbon::parse($request->input('start_date'));
+        $endDate = Carbon::parse($request->input('end_date'));
 
-        // Pass the transactions and the selected date to the view
+        // Query transactions within the specified date range
+        $transaction = MaintenanceHistory::whereBetween('date_performed', [$startDate, $endDate])
+            ->orderBy('date_performed', 'desc')
+            ->get();
+
+        // Pass the transactions, start, and end dates to the view
         return view('pages.admin_pages.admin_reports', [
             'transaction' => $transaction,
-            'interval' => Carbon::parse($selectedDate)->format('F j, Y'), // Optional: You can set a custom interval label
+            'interval' => "From " . $startDate->format('F j, Y') . " to " . $endDate->format('F j, Y'),
         ]);
     }
 
@@ -125,16 +130,17 @@ class ReportController extends Controller
         );
     }
 
-    public function customerReportsByDate(Request $request)
+    public function customerReportsByDateRange(Request $request)
     {
-        $selectedDate = Carbon::parse($request->input('selected_date'));
+        $startDate = Carbon::parse($request->input('start_date'));
+        $endDate = Carbon::parse($request->input('end_date'));
         // Query the transactions based on the selected date
-        $customers = Customer::where('usertype', 'customer')->whereDate('created_at', $selectedDate)->get();
+        $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [$startDate,$endDate])->orderBy('created_at','desc')->get();
 
         // Pass the transactions and the selected date to the view
         return view('pages.admin_pages.admin_customer_reports', [
             'customers' => $customers,
-            'interval' => Carbon::parse($selectedDate)->format('F j, Y'), // Optional: You can set a custom interval label
+            'interval' => "From " . $startDate->format('F j, Y') . " to " . $endDate->format('F j, Y'),
         ]);
     }
 }

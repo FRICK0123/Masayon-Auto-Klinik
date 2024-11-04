@@ -37,9 +37,14 @@
             </div>
 
             <div class="d-flex justify-content-between mb-2">
-                <form action="{{ route('customer_reports_date') }}" method="GET" class="d-flex">
-                    <input type="date" class="form-control" name="selected_date">
-                    <button class="btn btn-dark">Submit</button>
+                <form action="{{ route('customer_reports_date_range') }}" method="GET" class="d-flex">
+                    <label for="start_date" class="me-2">Start Date:</label>
+                    <input type="date" class="me-2" name="start_date" required>
+
+                    <label for="end_date" class="me-2">End Date:</label>
+                    <input type="date" class="me-2" name="end_date" required>
+
+                    <button class="btn btn-dark">Filter</button>
                 </form>
             </div>
 

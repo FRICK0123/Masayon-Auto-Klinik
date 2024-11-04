@@ -26,7 +26,6 @@
     
     <!--Main Content-->
         <main>            
-            <x-manager-dashboard.mobile-canvas/>
             <x-manager-dashboard.manager-content>
                 <div class="container-fluid">
                     <div class="container-fluid row">
@@ -89,7 +88,7 @@
                                 </div><br>
 
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <h2 id="notificationCount">0</h2>
+                                    <h2 id="notificationCount">{{ $notificationCount }}</h2>
                                     <img src="{{ asset('chart.png') }}" alt="Notifications Sent" class="box_chart">
                                 </div>
                             </div>
@@ -288,6 +287,7 @@
         animateValue("customerCount", 0, {{ $customerCount }}, 600); // 2 seconds duration
         animateValue("vehicleCount", 0, {{ $vehicleCount }}, 600); 
         animateValue("scheduleCount", 0, {{ $scheduleCount }}, 600); 
+        animateValue("notificationCount", 0, {{ $notificationCount }}, 600); 
     });
 
         //Daily and Weekly Customer Registration Reports button

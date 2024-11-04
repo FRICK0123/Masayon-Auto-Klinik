@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('owner');
             $table->string('vehicle');
             $table->string('maintenance_type');
+            $table->date('scheduled_date');
             $table->text('content');
             $table->boolean('isConfirmed');
             $table->timestamps();

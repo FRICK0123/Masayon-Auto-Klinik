@@ -19,37 +19,51 @@ class AdminNotificationController extends Controller
         $vehicle = $request->input('vehicle');
         $maintenance_type = $request->input('maintenance_type');
         $scheduled_date = $request->input('scheduled_date');
+        $scheduled_date_orig = $request->input('scheduled_date_orig');
         $content = "Good Day Sir/Ma'am ". $owner. ", we would like to inform you that your ". $vehicle. " is due for ". $maintenance_type. " on ". $scheduled_date. ". PLease arrive within the scheduled date to keep your vehicle on top condition";
 
         $customer = Customer::where('customerID',$customerID)->first();
         $customerNum = "+63".$customer['phone_number'];
 
-        $client = new GuzzleHttpClient();
-        $apiKey = "6txNEfdDAqAZSHw1PF18iWG0GkWHtGeBW_sAX9z8PEUS59HU3zuZAgd_h8wiLuv6";
+        $existingNotification = Notification::where([
+            ['customerID', $customerID],
+            ['vehicleID', $vehicleID],
+            ['maintenanceID', $maintenanceID],
+            ['maintenance_type', $maintenance_type],
+            ['scheduled_date', $scheduled_date_orig]
+        ])->first();
 
-        $res = $client->request('POST', 'https://api.httpsms.com/v1/messages/send', [
-            'headers' => [
-                'x-api-key' => $apiKey,
-            ],
-            'json'    => [
-                'content' => "From Masayon Auto Klinik: \nGood Day Sir/Ma'am " . $owner . ", we would like to inform you that your " . $vehicle . " is due for " . $maintenance_type . " on " . $scheduled_date . ". PLease arrive within the scheduled date to keep your vehicle on top condition",
-                'from'    => "+639999129152",
-                'to'      => $customerNum
-            ]
-        ]);
+        if($existingNotification){
+            echo "Notification Already Sent";
+        } else {
+            $client = new GuzzleHttpClient();
+            $apiKey = "6txNEfdDAqAZSHw1PF18iWG0GkWHtGeBW_sAX9z8PEUS59HU3zuZAgd_h8wiLuv6";
 
-        Notification::create([
-            'customerID' => $customerID,
-            'vehicleID' => $vehicleID,
-            'maintenanceID' => $maintenanceID,
-            'owner' => $owner,
-            'vehicle' => $vehicle,
-            'maintenance_type' => $maintenance_type,
-            'content' => $content,
-            'isConfirmed' => false,
-        ]);
+            $res = $client->request('POST', 'https://api.httpsms.com/v1/messages/send', [
+                'headers' => [
+                    'x-api-key' => $apiKey,
+                ],
+                'json'    => [
+                    'content' => "From Masayon Auto Klinik: \nGood Day Sir/Ma'am " . $owner . ", we would like to inform you that your " . $vehicle . " is due for " . $maintenance_type . " on " . $scheduled_date . ". Please arrive within the scheduled date to keep your vehicle on top condition",
+                    'from'    => "+639999129152",
+                    'to'      => $customerNum
+                ]
+            ]);
 
-        return to_route('maintenance_overview');
+            Notification::create([
+                'customerID' => $customerID,
+                'vehicleID' => $vehicleID,
+                'maintenanceID' => $maintenanceID,
+                'owner' => $owner,
+                'vehicle' => $vehicle,
+                'maintenance_type' => $maintenance_type,
+                'scheduled_date' => $scheduled_date_orig,
+                'content' => $content,
+                'isConfirmed' => false,
+            ]);
+
+            return to_route('maintenance_overview');
+        }
     }
 
     //Notification View

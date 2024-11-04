@@ -24,4 +24,15 @@ class NotificationController extends Controller
             'unconfirmedCount' => $unconfirmedCount
         ]);
     }
+
+    public function confirmNotif($notificationID){
+        Notification::where('notificationID',$notificationID)->update(['isConfirmed' => true]);
+        return to_route('customer_notification_view');
+    }
+
+    public function unconfirmNotif($notificationID)
+    {
+        Notification::where('notificationID', $notificationID)->update(['isConfirmed'=>false]);
+        return to_route('customer_notification_view');
+    }
 }

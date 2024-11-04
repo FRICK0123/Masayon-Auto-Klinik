@@ -26,7 +26,6 @@
     
     <!--Main Content-->
         <main>            
-            <x-manager-dashboard.mobile-canvas/>
             <x-manager-dashboard.manager-content>
                 <div class="container ms-1 row">
                     <div class="container border border-1 shadow rounded-3 pb-3 col-md-4">    

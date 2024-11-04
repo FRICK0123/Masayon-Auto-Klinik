@@ -44,7 +44,11 @@
                                 <h4 class="card-title">{{ $notification['maintenance_type'] }} for {{ $notification['vehicle'] }}</h4>
                                 
                                 <p>{{ $notification['content'] }}</p>
-                                <a href="#" class="btn btn-success btn-sm">Confirm</a>
+                                @if ($notification['isConfirmed'] == false)
+                                    <a href="{{ route('confirm_notification',$notification['notificationID']) }}" class="btn btn-success btn-sm">Confirm</a>
+                                @else
+                                    <a href="{{ route('unconfirm_notification',$notification['notificationID']) }}" class="btn btn-danger btn-sm">Unconfirm</a>
+                                @endif
                                 </div>
 
                                 <span class="top"></span>

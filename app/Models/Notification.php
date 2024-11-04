@@ -15,6 +15,7 @@ class Notification extends Model
         'owner',
         'vehicle',
         'maintenance_type',
+        'scheduled_date',
         'content',
         'isConfirmed',
     ];

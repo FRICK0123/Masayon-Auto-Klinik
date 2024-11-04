@@ -26,7 +26,6 @@
     
     <!--Main Content-->
         <main>            
-            <x-manager-dashboard.mobile-canvas/>
             <x-manager-dashboard.manager-content>
                 <div class="container">
                         <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm mt-5 mt-lg-0">

@@ -165,6 +165,7 @@
                                         data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
                                         data-maintenance-type="{{ $schedule->maintenance_type }}"
                                         data-scheduled-date="{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}"
+                                        data-scheduled-date-orig="{{ $schedule->scheduled_date }}"
                                         onclick="notifyModal(this)">
                                         <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notify" width="20">
                                     </button>
@@ -227,34 +228,35 @@
 
             <!--Notify Customer Modal-->
             <div class="modal fade" id="notify" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5">Do you want to notify <span id="customer"></span>?</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h3>From Masayon Auto Klinik</h3><br>
-                    <p class="fw-bold">Notification Content:</p>
-                    <p class="content">Good Day Sir/Ma'am <span id="contentCustomer" class="fw-bold"></span>, We would like to inform you that your <span id="vehicleContent" class="fw-bold"></span> is due for <span id="contentServiceType" class="fw-bold"></span> on <span id="contentDueDate" class="fw-bold"></span>. Please arrive within the scheduled date to keep your vehicle on top condition</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-                    <form action="{{ route('notify_customer') }}" method="POST">
-                        @csrf
-                        <input type="hidden" id="input_customerID" name="customerID">
-                        <input type="hidden" id="input_vehicleID" name="vehicleID">
-                        <input type="hidden" id="input_maintenanceID" name="maintenanceID">
-                        <input type="hidden" id="input_owner" name="owner">
-                        <input type="hidden" id="input_vehicle" name="vehicle">
-                        <input type="hidden" id="input_maintenance_type" name="maintenance_type">
-                        <input type="hidden" id="input_scheduled_date" name="scheduled_date">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Do you want to notify <span id="customer"></span>?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>From Masayon Auto Klinik</h3><br>
+                        <p class="fw-bold">Notification Content:</p>
+                        <p class="content">Good Day Sir/Ma'am <span id="contentCustomer" class="fw-bold"></span>, We would like to inform you that your <span id="vehicleContent" class="fw-bold"></span> is due for <span id="contentServiceType" class="fw-bold"></span> on <span id="contentDueDate" class="fw-bold"></span>. Please arrive within the scheduled date to keep your vehicle on top condition</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                        <form action="{{ route('notify_customer') }}" method="POST">
+                            @csrf
+                            <input type="hidden" id="input_customerID" name="customerID">
+                            <input type="hidden" id="input_vehicleID" name="vehicleID">
+                            <input type="hidden" id="input_maintenanceID" name="maintenanceID">
+                            <input type="hidden" id="input_owner" name="owner">
+                            <input type="hidden" id="input_vehicle" name="vehicle">
+                            <input type="hidden" id="input_maintenance_type" name="maintenance_type">
+                            <input type="hidden" id="input_scheduled_date" name="scheduled_date">
+                            <input type="hidden" id="input_scheduled_date_orig" name="scheduled_date_orig">
 
-                        <button type="submit" class="btn btn-warning">Notify</button>
-                    </form>
+                            <button type="submit" class="btn btn-warning">Notify</button>
+                        </form>
+                    </div>
+                    </div>
                 </div>
-                </div>
-            </div>
             </div>
         </x-admin-dashboard.admin-content>
     </main>
@@ -294,6 +296,7 @@
             const vehicle = element.getAttribute('data-vehicle');
             const maintenance_type = element.getAttribute('data-maintenance-type');
             const scheduled_date = element.getAttribute('data-scheduled-date');
+            const scheduled_date_orig = element.getAttribute('data-scheduled-date-orig');
 
             //Content
             document.getElementById('customer').innerHTML = owner;
@@ -310,6 +313,7 @@
             document.getElementById('input_vehicle').value=vehicle;
             document.getElementById('input_maintenance_type').value=maintenance_type;
             document.getElementById('input_scheduled_date').value=scheduled_date;
+            document.getElementById('input_scheduled_date_orig').value=scheduled_date_orig;
         }
     </script>
 </body>

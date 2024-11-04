@@ -23,6 +23,7 @@ use App\Http\Controllers\ManagerDashboard\CustomerManagementController;
 use App\Http\Controllers\ManagerDashboard\MaintenanceTaskController;
 use App\Http\Controllers\ManagerDashboard\ManagerAppointmentController;
 use App\Http\Controllers\ManagerDashboard\ManagerDashboardController;
+use App\Http\Controllers\ManagerDashboard\ManagerReportsController;
 use App\View\Components\AdminDashboard\MaintenanceOverviewContent;
 use App\View\Components\AdminDashboard\UserManagementContent;
 use Illuminate\Contracts\Foundation\MaintenanceMode;
@@ -102,6 +103,8 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //Routes for Customer Notifications
     Route::middleware(['auth:customer','update.last_seen'])->controller(NotificationController::class)->group(function(){
         Route::get('/customers_notifications','customerNotificationView')->name('customer_notification_view');
+        Route::get('/confirm_notif/{notificationID}','confirmNotif')->name('confirm_notification');
+        Route::get('/unconfirm_notif/{notificationID}', 'unconfirmNotif')->name('unconfirm_notification');
     });
 //end
 
@@ -176,10 +179,10 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(ReportController::class)->group(function () {
         Route::get('/reports', 'reportsView')->name('reports_view');
         Route::get('/reports/transaction_filter', 'reportsTransactionFilter')->name('reports_transaction_filter');
-        Route::get('/admin/reports/transaction-by-date','reportsTransactionByDate')->name('reports_transaction_by_date');
+        Route::get('/admin/reports/by-date-range', 'reportsTransactionByDateRange')->name('reports_transaction_by_date_range');
         Route::get('/customer_reports','customerReportsView')->name('customer_reports_view');
         Route::get('/customer_reports/transaction_filter','customerReportsFilter')->name('customer_reports_filter');
-        Route::get('/customer_reports/customer_by_date', 'customerReportsByDate')->name('customer_reports_date');
+        Route::get('/customer_reports/customer_by_date_range', 'customerReportsByDateRange')->name('customer_reports_date_range');
     });
 //end
 
@@ -223,3 +226,10 @@ Route::middleware(['auth:customer'])->controller(MaintenanceTaskController::clas
     Route::get('/maintenance_task', 'maintenanceTaskView')->name('maintenance_task_view');
 });
 //End
+
+//Routes for Manager Reports
+Route::middleware(['auth:customer'])->controller(ManagerReportsController::class)->group(function(){
+    Route::get('/manager_reports','reportsView')->name('manager_reports_view');
+    Route::get('/manager_reports/transaction_filter', 'managerReportsTransactionFilter')->name('manager_reports_transaction');
+});
+//end
