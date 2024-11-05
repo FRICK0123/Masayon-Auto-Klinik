@@ -60,4 +60,27 @@ class ManagerReportsController extends Controller
             'interval' => $interval,
         ]);
     }
+
+    public function reportsTransactionByDateRange(Request $request)
+    {
+        $startDate = Carbon::parse($request->input('start_date'));
+        $endDate = Carbon::parse($request->input('end_date'));
+
+        // Query transactions within the specified date range
+        $transaction = MaintenanceHistory::whereBetween('date_performed', [$startDate, $endDate])
+            ->orderBy('date_performed', 'desc')
+            ->paginate(6)
+            ->appends([
+                'start_date' => $startDate->toDateString(),
+                'end_date' => $endDate->toDateString(),
+            ]);
+
+        // Pass the transactions, start, and end dates to the view
+        return view('pages.manager_pages.manager_reports', [
+            'transaction' => $transaction,
+            'interval' => "From " . $startDate->format('F j, Y') . " to " . $endDate->format('F j, Y'),
+            'start_date' => $startDate->toDateString(),
+            'end_date' => $endDate->toDateString(),
+        ]);
+    }
 }

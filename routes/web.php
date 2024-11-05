@@ -231,5 +231,6 @@ Route::middleware(['auth:customer'])->controller(MaintenanceTaskController::clas
 Route::middleware(['auth:customer'])->controller(ManagerReportsController::class)->group(function(){
     Route::get('/manager_reports','reportsView')->name('manager_reports_view');
     Route::get('/manager_reports/transaction_filter', 'managerReportsTransactionFilter')->name('manager_reports_transaction');
+    Route::get('/reports_range', 'reportsTransactionByDateRange')->name('reports_by_date_range');
 });
 //end

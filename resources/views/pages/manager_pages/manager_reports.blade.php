@@ -62,7 +62,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between mb-2">
-                            <form action="{{ route('reports_transaction_by_date_range') }}" method="GET" class="d-flex">
+                            <form action="{{ route('reports_by_date_range') }}" method="GET" class="d-flex">
                                 <label for="start_date" class="me-2">Start Date:</label>
                                 <input type="date" class="me-2" name="start_date" required>
 
