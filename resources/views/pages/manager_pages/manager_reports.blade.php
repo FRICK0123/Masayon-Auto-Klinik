@@ -45,7 +45,7 @@
                         <h4>Repair/Maintenance Transactions ({{ $interval }})</h4><br>
 
                         @php
-                            $transaction_count = $transaction->count();
+                            $transaction_count = App\Models\MaintenanceHistory::all()->count();
                         @endphp
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -93,6 +93,30 @@
                     <!-- Pagination Links -->
                     <div class="d-flex justify-content-center mt-4">
                         {{ $transaction->appends(['interval' => $interval])->links() }}
+                    </div>
+                    
+                    <h4>Customer Registration ({{ $interval }})</h4><br>
+
+                    <!-- Cards for Customers Data -->
+                    <div class="row mt-4">
+                        @foreach ($customers as $item)
+                            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Fullname: {{ $item['fullname'] }}</h5>
+                                        <p class="card-text">Email: {{ $item['email'] }}</p>
+                                        <p class="card-text">Phone Number: {{ $item['phone_number'] }}</p>
+                                        <p class="card-text">Date Registered: {{ $item['created_at'] }}</p>
+                                        <!-- Add more fields as necessary -->
+                                        <a href="#" class="btn btn-primary">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-center mt-4">
+                        {{ $customers->appends(['interval' => $interval])->links() }}
                     </div>
                 </div>
             </x-manager-dashboard.manager-content>

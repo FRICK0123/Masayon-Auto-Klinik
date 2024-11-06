@@ -85,10 +85,10 @@
                             <table class="table">
                                 <tr>
                                     <th>USERS</th>
-                                    <th>CONTACT #</th>
-                                    <th>USERNAME</th>
+                                    <th class="hide-mobile">CONTACT #</th>
+                                    <th class="hide-mobile">USERNAME</th>
                                     <th>STATUS</th>
-                                    <th>DATE REGISTERED</th>
+                                    <th class="hide-mobile">DATE REGISTERED</th>
                                     <th></th>
                                 </tr>
                                 @foreach ($users as $user)
@@ -111,8 +111,8 @@
                                                 <span style="font-size: 13px">{{ $user['email'] }}</span>
                                             </div>
                                         </td>
-                                        <td>0{{ $user['phone_number'] }}</td>
-                                        <td>{{ $user['username'] }}</td>
+                                        <td class="hide-mobile">0{{ $user['phone_number'] }}</td>
+                                        <td class="hide-mobile">{{ $user['username'] }}</td>
                                         @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
                                             <td><span class="badge bg-success p-2">verified</span></td>
                                         @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
@@ -120,7 +120,7 @@
                                         @else
                                             <td>not verified</td>
                                         @endif
-                                        <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
+                                        <td class="hide-mobile">{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
 
                                         <td>
                                             <a href="{{ route('manager_view_customer_info',$user['customerID']) }}" class="btn btn-primary btn-sm"><img src="{{ asset('icons/eye.svg') }}" alt="View Customer" width="20"></a>

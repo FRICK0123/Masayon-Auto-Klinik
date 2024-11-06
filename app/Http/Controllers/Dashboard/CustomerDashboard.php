@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\MaintenanceHistory;
 use App\Models\MaintenanceSchedule;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CustomerDashboard extends Controller
 {
@@ -40,5 +42,29 @@ class CustomerDashboard extends Controller
         return view('pages.customer_pages.customer_schedule_maintenance', [
             'schedules' => $schedules,
         ]);
+    }
+
+    //Edit Customer Profile Details
+    public function editCustomerDetails(Request $request){
+        $fullname = $request->input('fullname');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $username = $request->input('username');
+
+        Customer::where('customerID',Auth::guard('customer')->id())->update([
+            'fullname' => $fullname,
+            'email' => $email,
+            'phone_number' => $phone,
+            'username' => $username
+        ]);
+
+        Session::put([
+            'fullname' => $fullname,
+            'email' => $email,
+            'phone_number' => $phone,
+            'username' => $username
+        ]);
+
+        return to_route('customer_profile');
     }
 }

@@ -111,8 +111,8 @@
                                             <th>VEHICLE</th>
                                             <th>OWNER</th>
                                             <th>MAINTENANCE TYPE</th>
-                                            <th>SCHEDULED DATE</th>
-                                            <th>SCHEDULED MILAGE</th>
+                                            <th class="hide-mobile">SCHEDULED DATE</th>
+                                            <th class="hide-mobile">SCHEDULED MILAGE</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -121,8 +121,8 @@
                                         <td>{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</td>
                                         <td>{{ $schedule->vehicle->customer->fullname }}</td>
                                         <td>{{ $schedule->maintenance_type }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}</td>
-                                        <td>{{ $schedule->next_milage_schedule }}</td>
+                                        <td class="hide-mobile">{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}</td>
+                                        <td class="hide-mobile">{{ $schedule->next_milage_schedule }}</td>
                                     </tr>
                                     @endforeach
                                 </table>
@@ -154,10 +154,10 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>USERS</th>
-                                            <th>CONTACT #</th>
-                                            <th>USERNAME</th>
+                                            <th class="hide-mobile">CONTACT #</th>
+                                            <th class="hide-mobile">USERNAME</th>
                                             <th>STATUS</th>
-                                            <th>DATE REGISTERED</th>
+                                            <th class="hide-mobile">DATE REGISTERED</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -182,8 +182,8 @@
                                                         <span style="font-size: 13px">{{ $user['email'] }}</span>
                                                     </div>
                                                 </td>
-                                                <td>0{{ $user['phone_number'] }}</td>
-                                                <td>{{ $user['username'] }}</td>
+                                                <td class="hide-mobile">0{{ $user['phone_number'] }}</td>
+                                                <td class="hide-mobile">{{ $user['username'] }}</td>
                                                 @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
                                                     <td><span class="badge bg-success p-2">verified</span></td>
                                                 @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
@@ -191,7 +191,7 @@
                                                 @else
                                                     <td>not verified</td>
                                                 @endif
-                                                <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
+                                                <td class="hide-mobile">{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
 
                                                 <td>
                                                     <a href="{{ route('manager_view_customer_info',$user['customerID']) }}" class="btn btn-primary btn-sm"><img src="{{ asset('icons/eye.svg') }}" alt="View Customer" width="20"></a>

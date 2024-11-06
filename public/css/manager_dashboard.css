@@ -241,3 +241,9 @@ header {
         width: 200px;
     }
 }
+
+@media (max-width: 800px){
+    .hide-mobile{
+        display: none;
+    }
+}

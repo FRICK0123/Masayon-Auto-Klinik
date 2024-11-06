@@ -97,6 +97,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/dashboard', 'customerDashboardView')->name('customer_dashboard');
         Route::get('/profile', 'customerProfileView')->name('customer_profile');
         Route::get('/maintenance_schedule', 'scheduleView')->name('customer_maintenance_schedule');
+        Route::post('/edit_details','editCustomerDetails')->name('edit_customer_details');
     });
 //end
 
