@@ -42,17 +42,17 @@
 
                 <div class="container">
                     <div class="container-fluid mt-2">
-                        <a href="#" class="btn btn-danger btn-sm rounded-pill">Transactions</a>
-                        <a href="{{ route('customer_reports_view') }}" class="btn border border-dark btn-sm rounded-pill">Customer Registrations</a>
+                        <a href="{{ route('manager_reports_view') }}" class="btn border border-dark btn-sm rounded-pill">Transactions</a>
+                        <a href="#" class="btn btn-danger btn-sm rounded-pill">Customer Registrations</a>
                         <h4>Repair/Maintenance Transactions ({{ $interval }})</h4><br>
 
                         @php
-                            $transaction_count = $transaction->count();
+                            $transaction_count = $customers->count();
                         @endphp
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="fw-bold">Total Transactions: {{ $transaction_count }}</h5>
-                            <form method="GET" action="{{ route('manager_reports_transaction') }}" class="d-flex align-items-center">
+                            <h5 class="fw-bold">Total Customers: {{ $transaction_count }}</h5>
+                            <form method="GET" action="{{ route('customer_filters') }}" class="d-flex align-items-center">
                                 <label for="interval" class="me-2">Filter by:</label>
                                 <select name="interval" id="interval" class="form-select rounded-pill" onchange="this.form.submit()">
                                     <option value="daily" {{ $interval == 'daily' ? 'selected' : '' }}>This Day</option>
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="mb-2">
-                            <form action="{{ route('reports_by_date_range') }}" method="GET" class="d-flex flex-column flex-md-row">
+                            <form action="{{ route('customers_by_date_range') }}" method="GET" class="d-flex flex-column flex-md-row">
                                 <label for="start_date" class="me-2">Start Date:</label>
                                 <input type="date" class="me-2" name="start_date" required>
 
@@ -74,31 +74,7 @@
                                 <button class="btn btn-dark">Filter</button>
                             </form>
                         </div>
-
-                    <!-- Cards for Transaction Data -->
-                    <div class="row mt-4">
-                        @foreach ($transaction as $item)
-                            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vehicle: {{ $item['vehicle'] }}</h5>
-                                        <p class="card-text">Owner: {{ $item['owner'] }}</p>
-                                        <p class="card-text">Maintenance Type: {{ $item['maintenance_type'] }}</p>
-                                        <p class="card-text">Date Performed: {{ $item['date_performed'] }}</p>
-                                        <!-- Add more fields as necessary -->
-                                        <a href="#" class="btn btn-primary">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <!-- Pagination Links -->
-                    <div class="d-flex justify-content-center mt-4">
-                        {{ $transaction->appends(['interval' => $interval])->links() }}
-                    </div>
-                    
-                    {{-- <h4>Customer Registration ({{ $interval }})</h4><br>
-
+                        
                     <!-- Cards for Customers Data -->
                     <div class="row mt-4">
                         @foreach ($customers as $item)
@@ -119,7 +95,7 @@
                     <!-- Pagination Links -->
                     <div class="d-flex justify-content-center mt-4">
                         {{ $customers->appends(['interval' => $interval])->links() }}
-                    </div> --}}
+                    </div>
                 </div>
             </x-manager-dashboard.manager-content>
         </main>
