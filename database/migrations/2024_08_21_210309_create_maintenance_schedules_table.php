@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('maintenance_schedules', function (Blueprint $table) {
             $table->id('maintenanceID')->startingValue('5000');
             $table->bigInteger('vehicleID');
+            $table->bigInteger('customerID');
             $table->string('maintenance_type');
             $table->text('PMS_services')->nullable();
             $table->date('scheduled_date');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->integer('next_milage_schedule')->nullable();
             $table->boolean('isAppointed');
             $table->timestamp('appointment_date');
+            $table->boolean('isDeactivated');
             $table->timestamps();
         });
     }

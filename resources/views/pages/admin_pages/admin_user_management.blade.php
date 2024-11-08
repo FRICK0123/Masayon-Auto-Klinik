@@ -136,13 +136,15 @@
                                     </td>
                                     <td>0{{ $user['phone_number'] }}</td>
                                     <td>{{ $user['username'] }}</td>
-                                    @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
-                                        <td><span class="badge bg-success p-2">verified</span></td>
-                                    @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
-                                        <td><span class="badge bg-danger p-2">deactivated</span></td>
+
+                                    @if ($user['isDeactivated'] == true)
+                                        <td><span class="badge bg-danger p-2">Deactivated</span></td>
+                                    @elseif($user['isDeactivated'] == false && $user['isVerified'] == true)
+                                        <td><span class="badge bg-success p-2">Verified</span></td>
                                     @else
-                                        <td>not verified</td>
+                                        <td>Not Verified</td>
                                     @endif
+                                    
                                     <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
                                     <td><a href="{{ route('view_user_info',$user['customerID']) }}" class="btn btn-primary btn-sm"><img src="{{ asset('icons/eye.svg') }}" alt="View" width="20"></a></td>
                                     <td><a href="{{ route('edit_user_info_view',$user['customerID']) }}" class="btn btn-warning btn-sm"><img src="{{ asset('icons/pencil-line.svg') }}" alt="Edit" width="20"></a></td>
@@ -157,10 +159,18 @@
                                                 <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
 
                                                 <li>
-                                                    @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
-                                                        <a class="dropdown-item bg-danger-subtle" href="#">Deactivate</a>
+                                                    @if ($user['isVerified'] == false)
+                                                        <a class="dropdown-item" href="#">Verify</a>
                                                     @else
-                                                        <a class="dropdown-item bg-success text-light" href="#">Activate</a>
+                                                        <a class="dropdown-item" href="#">Unverify</a>
+                                                    @endif
+                                                </li>
+
+                                                <li>
+                                                    @if ($user['isDeactivated'] == false)
+                                                        <a class="dropdown-item bg-danger-subtle" href="{{ route('deactivate_customer', $user['customerID']) }}">Deactivate</a>
+                                                    @else
+                                                        <a class="dropdown-item bg-success text-light" href="{{ route('activate_customer', $user['customerID']) }}">Activate</a>
                                                     @endif
                                                 </li>
                                                 <li><a class="dropdown-item bg-danger text-light" href="#">Delete</a></li></li>

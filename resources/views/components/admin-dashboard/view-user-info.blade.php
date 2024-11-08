@@ -27,9 +27,9 @@
             <p class="border-bottom" style="text-overflow: ellipsis; overflow:hidden;">{{ $customer['username'] }}</p>
 
             <small class="fw-bold me-2">Account Status:</small>
-            @if ($customer['isVerified'] == true && $customer['email_verified_at'] !== null)
+            @if ($customer['isVerified'] == true)
                 <p class="badge text-bg-success">Verified</p>
-            @elseif($customer['isVerified'] == false && $customer['email_verified_at'] == null)
+            @elseif($customer['isDeactivated'] == true)
                 <p class="badge text-bg-danger">Deactivated</p>
             @else
                 <p class="badge text-bg-secondary">Not Verified</p>

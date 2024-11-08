@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('chassis_number');
             $table->string('plate_number');
             $table->string('engine_type');
+            $table->boolean('isDeactivated');
             $table->timestamps();
         });
     }

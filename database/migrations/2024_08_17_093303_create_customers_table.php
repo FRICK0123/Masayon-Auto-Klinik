@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_token')->nullable();
             $table->boolean('isVerified');
+            $table->boolean('isDeactivated');
             $table->string('usertype');
             $table->dateTime('last_seen');
             $table->timestamps();

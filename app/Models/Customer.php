@@ -23,6 +23,7 @@ class Customer extends Authenticatable
         'email_verified_at',
         'verification_token',
         'isVerified',
+        'isDeactivated',
         'usertype',
         'last_seen',
     ];

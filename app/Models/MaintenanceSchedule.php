@@ -10,6 +10,7 @@ class MaintenanceSchedule extends Model
     use HasFactory;
     protected $fillable = [
         'vehicleID',
+        'customerID',
         'maintenance_type',
         'PMS_services',
         'scheduled_date',
@@ -20,6 +21,7 @@ class MaintenanceSchedule extends Model
         'next_milage_schedule',
         'isAppointed',
         'appointment_date',
+        'isDeactivated',
     ];
 
     protected $table = 'maintenance_schedules';

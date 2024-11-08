@@ -21,6 +21,7 @@ class MaintenanceController extends Controller
     //Maintenance Schedule Form Submittion
     public function scheduleMaintenance(Request $request){
         $vehicleID = $request->input('vehicleID');
+        $customerID = Auth::guard('customer')->id();
         $maintenance_type = $request->input('maintenance_type');
         $maintenance_date = $request->input('maintenance_date');
         $scheduled_interval = $request->input('scheduled_interval');
@@ -42,6 +43,7 @@ class MaintenanceController extends Controller
             if($maintenance_type == "Oil Change"){
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => null,
                     'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
@@ -52,10 +54,12 @@ class MaintenanceController extends Controller
                     'next_milage_schedule' => $milage + $milage_interval,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else if($maintenance_type == "EGR Cleaning"){
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => null,
                     'scheduled_date' => Carbon::parse($maintenance_date)->addMonths(48),
@@ -66,10 +70,12 @@ class MaintenanceController extends Controller
                     'next_milage_schedule' => $milage + 50000,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else if($maintenance_type == "Basic PMS"){
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => $basic_services,
                     'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
@@ -80,10 +86,12 @@ class MaintenanceController extends Controller
                     'next_milage_schedule' => $milage + 5000,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else if($maintenance_type == "Full PMS"){
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => $full_pms_services,
                     'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
@@ -94,10 +102,12 @@ class MaintenanceController extends Controller
                     'next_milage_schedule' => $milage + 50000,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => null,
                     'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
@@ -108,6 +118,7 @@ class MaintenanceController extends Controller
                     'next_milage_schedule' => null,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             }
 

@@ -93,6 +93,7 @@ class UserManagementController extends Controller
             'email_verified_at' => now(),
             'verification_token' => null,
             'isVerified' => true,
+            'isDeactivated' => false,
             'usertype' => 'customer',
             'last_seen' => Carbon::now(),
         ]);
@@ -188,6 +189,7 @@ class UserManagementController extends Controller
             'chassis_number' => $chassis_number,
             'engine_type' => $engine_type,
             'plate_number' => $plate_number,
+            'isDeactivated' => false,
         ]);
 
         $vehicles = Vehicle::where('customerID', $customerID)->get();
@@ -205,6 +207,7 @@ class UserManagementController extends Controller
     public function scheduleMaintenance(Request $request)
     {
         $vehicleID = $request->input('vehicleID');
+        $customerID = $request->input('customerID');
         $maintenance_type = $request->input('maintenance_type');
         $maintenance_date = $request->input('maintenance_date');
         $scheduled_interval = $request->input('scheduled_interval');
@@ -226,6 +229,7 @@ class UserManagementController extends Controller
             if ($maintenance_type == "Oil Change") {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => null,
                     'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
@@ -236,10 +240,12 @@ class UserManagementController extends Controller
                     'next_milage_schedule' => $milage + $milage_interval,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else if ($maintenance_type == "EGR Cleaning") {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => null,
                     'scheduled_date' => Carbon::parse($maintenance_date)->addMonths(48),
@@ -250,10 +256,12 @@ class UserManagementController extends Controller
                     'next_milage_schedule' => $milage + 50000,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else if ($maintenance_type == "Basic PMS") {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => $basic_services,
                     'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
@@ -264,10 +272,12 @@ class UserManagementController extends Controller
                     'next_milage_schedule' => $milage + 5000,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else if ($maintenance_type == "Full PMS") {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => $full_pms_services,
                     'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
@@ -278,10 +288,12 @@ class UserManagementController extends Controller
                     'next_milage_schedule' => $milage + 50000,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => null,
                     'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
@@ -292,6 +304,7 @@ class UserManagementController extends Controller
                     'next_milage_schedule' => null,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             }
 
@@ -309,6 +322,7 @@ class UserManagementController extends Controller
     public function walkinMaintenance(Request $request)
     {
         $vehicleID = $request->input('vehicleID');
+        $customerID = $request->input('customerID');
         $maintenance_type = $request->input('maintenance_type');
         $maintenance_date = $request->input('maintenance_date');
         $scheduled_interval = $request->input('scheduled_interval');
@@ -330,6 +344,7 @@ class UserManagementController extends Controller
             if ($maintenance_type == "Oil Change") {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => null,
                     'scheduled_date' => Carbon::parse($maintenance_date),
@@ -340,10 +355,12 @@ class UserManagementController extends Controller
                     'next_milage_schedule' => $milage + $milage_interval,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else if ($maintenance_type == "EGR Cleaning") {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => null,
                     'scheduled_date' => Carbon::parse($maintenance_date),
@@ -354,10 +371,12 @@ class UserManagementController extends Controller
                     'next_milage_schedule' => $milage + 50000,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else if ($maintenance_type == "Basic PMS") {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => $basic_services,
                     'scheduled_date' => Carbon::parse($maintenance_date),
@@ -368,10 +387,12 @@ class UserManagementController extends Controller
                     'next_milage_schedule' => $milage + 5000,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else if ($maintenance_type == "Full PMS") {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => $full_pms_services,
                     'scheduled_date' => Carbon::parse($maintenance_date),
@@ -382,10 +403,12 @@ class UserManagementController extends Controller
                     'next_milage_schedule' => $milage + 50000,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             } else {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => null,
                     'scheduled_date' => Carbon::parse($maintenance_date),
@@ -396,6 +419,7 @@ class UserManagementController extends Controller
                     'next_milage_schedule' => null,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
                 ]);
             }
 
@@ -466,5 +490,40 @@ class UserManagementController extends Controller
             ->get();
 
         return view('pages.admin_pages.admin_users.admin_view_customer_schedules', ['schedules' => $schedules]);
+    }
+
+    //Deactivate Customer Account
+    public function deactivateCustomer($customerID){
+        Customer::where('customerID',$customerID)->update([
+            'isDeactivated' => true
+        ]);
+
+        Vehicle::where('customerID', $customerID)->update([
+            'isDeactivated' => true
+        ]);
+
+        MaintenanceSchedule::where('customerID', $customerID)->update([
+            'isDeactivated' => true
+        ]);
+
+        return to_route('users_view');
+    }
+
+    //activate Customer Account
+    public function activateCustomer($customerID)
+    {
+        Customer::where('customerID', $customerID)->update([
+            'isDeactivated' => false
+        ]);
+
+        Vehicle::where('customerID', $customerID)->update([
+            'isDeactivated' => false
+        ]);
+
+        MaintenanceSchedule::where('customerID', $customerID)->update([
+            'isDeactivated' => false
+        ]);
+
+        return to_route('users_view');
     }
 }

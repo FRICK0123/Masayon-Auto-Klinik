@@ -62,6 +62,7 @@ class CarController extends Controller
             'chassis_number' => $chassis_number,
             'engine_type' => $engine_type,
             'plate_number' => $plate_number,
+            'isDeactivated' => false,
         ]);
 
         return to_route('customer_dashboard');

@@ -69,6 +69,7 @@ class RegisterController extends Controller
             'profile_img' => "default_user.png",
             'verification_token' => Str::random(60),
             'isVerified' => false,
+            'isDeactivated' => false,
             'usertype' => "customer",
             'last_seen' => Carbon::now(),
         ]);

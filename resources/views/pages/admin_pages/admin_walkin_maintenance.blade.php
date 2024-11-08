@@ -299,6 +299,7 @@
                     </div>
 
                     <input type="hidden" value="{{$vehicle['vehicleID']}}" name="vehicleID">
+                    <input type="hidden" value="{{$vehicle['customerID']}}" name="customerID">
                     <input type="hidden" value="{{ $vehicle['milage'] }}" name="milage">
 
                     <button class="btn btn-dark" type="">Submit</button>
