@@ -233,7 +233,7 @@ Route::middleware(['auth:customer'])->controller(ManagerReportsController::class
     Route::get('/manager_reports','reportsView')->name('manager_reports_view');
     Route::get('/manager_reports/transaction_filter', 'managerReportsTransactionFilter')->name('manager_reports_transaction');
     Route::get('/reports_range', 'reportsTransactionByDateRange')->name('reports_by_date_range');
-    Route::get('/customer_reports','customerReportsView')->name('customer_reports_view');
+    Route::get('/customer_reports/manager','customerReportsView')->name('manager_customer_reports_view');
     Route::get('/customer_reports/filter', 'managerCustomerRegistrationsFilter')->name('customer_filters');
     Route::get('/customer_reports/by_date_range', 'reportCustomersByDateRange')->name('customers_by_date_range');
 });

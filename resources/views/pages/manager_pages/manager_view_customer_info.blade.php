@@ -47,7 +47,6 @@
                             <p><b>Username:</b> {{ $customer['username'] }}</p>
                         </div>
 
-                        <button class="btn btn-dark">Edit Profile Details</button>
                     </div>
 
                     <div class="col-md-8 mt-3 mt-lg-0">

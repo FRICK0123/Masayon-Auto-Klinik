@@ -210,7 +210,7 @@
                                         <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
 
                                         <td>
-                                            <div class="dropdown">
+                                            <div class="dropdown" style="position: static">
                                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                                                 <ul class="dropdown-menu">
                                                     <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
@@ -287,7 +287,7 @@
                                         <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
 
                                         <td>
-                                            <div class="dropdown">
+                                            <div class="dropdown" style="position: static">
                                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                                                 <ul class="dropdown-menu">
                                                     <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
@@ -322,8 +322,8 @@
                         $customer_transaction_daily_count = $customer_daily_transaction->count();
                         $customer_transaction_weekly_count = $customer_weekly_transaction->count();      
                     @endphp
-                    <h5 id="customer_daily_transaction_count" style="display: block;">Customer Transactions: {{ $customer_registration_daily_count }}</h5>
-                    <h5 id="customer_weekly_transaction_count" style="display: none;">Customer Transactions: {{ $customer_registration_weekly_count }}</h5>
+                    <h5 id="customer_daily_transaction_count" style="display: block;">Customer Transactions: {{ $customer_transaction_daily_count }}</h5>
+                    <h5 id="customer_weekly_transaction_count" style="display: none;">Customer Transactions: {{ $customer_transaction_weekly_count }}</h5>
 
                     <div>
                         <button class="btn btn-sm rounded-pill me-2 btn_active" id="day_transaction_btn" style="background-color: rgb(214, 1, 1); color: white;">This Day</button>
@@ -381,7 +381,7 @@
                     @if ($customer_weekly_transaction->isEmpty())
                          <div class="container-fluid" style="width: 100%; height:270px; opacity: 60%; display:none; flex-direction:column; justify-content:center; align-items:center;" id="customer_weekly_transaction_empty">
                             <img src="{{ asset('icons/gear-fine.svg') }}" alt="No Customer Transaction This Week" width="100">
-                            <h6>No customer registration for this week</h6>
+                            <h6>No customer transaction for this week</h6>
                         </div>
                     @else
                         <thead class="table-dark">

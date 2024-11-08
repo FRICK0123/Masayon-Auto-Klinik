@@ -111,6 +111,8 @@
                                 <th>STATUS</th>
                                 <th>DATE REGISTERED</th>
                                 <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             @foreach ($users as $user)
                                 <tr>
@@ -142,28 +144,26 @@
                                         <td>not verified</td>
                                     @endif
                                     <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
-
+                                    <td><a href="{{ route('view_user_info',$user['customerID']) }}" class="btn btn-primary btn-sm"><img src="{{ asset('icons/eye.svg') }}" alt="View" width="20"></a></td>
+                                    <td><a href="{{ route('edit_user_info_view',$user['customerID']) }}" class="btn btn-warning btn-sm"><img src="{{ asset('icons/pencil-line.svg') }}" alt="Edit" width="20"></a></td>
                                     <td>
                                         <div class="dropdown">
-                                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                                            <button class="btn btn-dark btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{ route('view_user_info',$user['customerID']) }}">View</a></li>
-
                                                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePassword" data-customerID="{{ $user['customerID'] }}" data-fullname="{{ $user['fullname'] }}" onclick="populatePass(this)">Change Password</a></li>
 
                                                 <li><a class="dropdown-item" href="{{ route('add_vehicle_view',$user['customerID']) }}">Add Vehicle</a></li>
 
                                                 <li><a class="dropdown-item" href="{{ route('view_user_vehicle_info', $user['customerID']) }}">Add Maintenance Schedule</a></li>
 
-                                                <li><a class="dropdown-item" href="{{ route('edit_user_info_view',$user['customerID']) }}">Edit</a></li>
-
                                                 <li>
                                                     @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
-                                                        <a class="dropdown-item bg-danger text-light" href="#">Deactivate</a>
+                                                        <a class="dropdown-item bg-danger-subtle" href="#">Deactivate</a>
                                                     @else
                                                         <a class="dropdown-item bg-success text-light" href="#">Activate</a>
                                                     @endif
                                                 </li>
+                                                <li><a class="dropdown-item bg-danger text-light" href="#">Delete</a></li></li>
                                             </ul>
                                         </div>
                                     </td>

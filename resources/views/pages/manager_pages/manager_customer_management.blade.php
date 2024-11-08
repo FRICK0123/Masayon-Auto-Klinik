@@ -31,12 +31,12 @@
                         <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm mt-5 mt-lg-0">
                             <h5 class="pt-2">CUSTOMERS</h5>
                             
-                            <form action="{{ route('users_view') }}" method="GET" class="search-box">
+                            <form action="{{ route('customer_management') }}" method="GET" class="search-box">
                                 @csrf
-                                            {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
+                                {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
 
                                 <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
-                                 <input type="text" class="input-search" placeholder="Search Customer" name="search_customers">
+                                <input type="text" class="input-search" placeholder="Search Customer" name="search_customers">
                             </form>
                         </div>
                         <br>
@@ -60,7 +60,7 @@
                                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <img src="{{asset('icons/bars-filter.svg')}}" alt="Filter">
                                             </button>
-                                            <form id="userFilterForm" action="{{ route('users_view') }}" method="GET" class="dropdown-menu p-2">
+                                            <form id="userFilterForm" action="{{ route('customer_management') }}" method="GET" class="dropdown-menu p-2">
                                                 <input type="radio" id="by_fullname" name="filter_users" class="form-check-input border border-1 border-dark" value="by_fullname">
                                                 <label for="by_fullname" class="ms-2">By Fullname</label><br><br>
 

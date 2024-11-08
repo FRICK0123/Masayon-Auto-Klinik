@@ -43,7 +43,7 @@
                 <div class="container">
                     <div class="container-fluid mt-2">
                         <a href="#" class="btn btn-danger btn-sm rounded-pill">Transactions</a>
-                        <a href="{{ route('customer_reports_view') }}" class="btn border border-dark btn-sm rounded-pill">Customer Registrations</a>
+                        <a href="{{ route('manager_customer_reports_view') }}" class="btn border border-dark btn-sm rounded-pill">Customer Registrations</a>
                         <h4>Repair/Maintenance Transactions ({{ $interval }})</h4><br>
 
                         @php

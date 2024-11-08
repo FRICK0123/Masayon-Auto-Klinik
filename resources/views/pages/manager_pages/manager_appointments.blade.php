@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Manager Dashboard</title>
     <link rel="stylesheet" href="{{asset('css/manager_dashboard.css')}}">
+    <link rel="stylesheet" href="{{asset('css/table_style.css')}}">
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
 
     <!--Bootstrap CDN Links-->
@@ -30,7 +31,7 @@
                 <div class="container">
                     <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
                         <h5 class="pt-2">Appointments</h5>
-                        <form action="{{ route('admin_appointment_view') }}" method="GET" class="search-box me-2">
+                        <form action="{{ route('manager_appointment') }}" method="GET" class="search-box me-2">
                             @csrf
                             {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
                             <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Appointment" width="30"></button>
@@ -61,12 +62,12 @@
                     <!--end-->
 
                     <!--Cars table-->
-                    <div id="carTableContainer">
-                        <table class="table table-striped table-responsive">
-                            <tr>
+                    <div id="carTableContainer" class="table-responsive">
+                        <table class="table">
+                            <tr class="table-dark">
                                 <th>OWNER</th>
                                 <th>VEHICLE</th>
-                                <th>MAINTENANCE TYPE</th>
+                                <th class="hide-mobile">MAINTENANCE TYPE</th>
                                 <th>Appointment Date</th>
                                 <th></th>
                             </tr>
@@ -80,12 +81,12 @@
                                 <tr>
                                     <td>{{ $schedule->vehicle->customer->fullname }}</td>
                                     <td>{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</td>
-                                    <td>{{ $schedule->maintenance_type }}</td>
+                                    <td class="hide-mobile">{{ $schedule->maintenance_type }}</td>
                                     <td>{{ \Carbon\Carbon::parse($schedule->appointment_date)->format('F j, Y') }}</td>
                                     
                                     <td>
-                                        <div class="dropdown">
-                                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                                        <div class="dropdown" style="position: static;">
+                                            <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="#">View</a></li>
                                                 <li><a class="dropdown-item" href="#" 
