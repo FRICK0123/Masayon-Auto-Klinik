@@ -526,4 +526,35 @@ class UserManagementController extends Controller
 
         return to_route('users_view');
     }
+
+    // Delete User Account
+    public function deleteUser($customerID)
+    {
+        // Find the customer
+        $customer = Customer::where('customerID', $customerID)->first();
+
+        if ($customer) {
+            // Delete associated vehicles
+            Vehicle::where('customerID', $customerID)->delete();
+
+            // Delete associated maintenance schedules
+            MaintenanceSchedule::where('customerID', $customerID)->delete();
+
+            // Delete the customer
+            $customer->delete();
+        }
+
+        return to_route('users_view');
+    }
+
+    public function deleteVehicle($vehicleID){
+        $vehicle = Vehicle::where('vehicleID', $vehicleID)->first();
+
+        if($vehicle){
+            MaintenanceSchedule::where('vehicleID',$vehicleID)->delete();
+            $vehicle->delete();
+        }
+
+        return to_route('users_view');
+    }
 }

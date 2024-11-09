@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MaintenanceSchedule extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'maintenanceID';
     protected $fillable = [
         'vehicleID',
         'customerID',

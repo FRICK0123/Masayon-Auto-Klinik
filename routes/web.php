@@ -145,8 +145,10 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/walkin_maintenance/{vehicleID}', 'walkinMaintenanceView')->name('walkin_maintenance_view');
         Route::post('/walkin', 'walkinMaintenance')->name('walkin_maintenance');
         Route::get('/customer_maintenance/{customerID}','viewUserMaintenance')->name('customer_maintenance_schedules');
-        Route::get('/deactivate_customer/{customerID}','deactivateCustomer')->name('deactivate_customer');
+        Route::post('/deactivate_customer/{customerID}','deactivateCustomer')->name('deactivate_customer');
         Route::get('/activate_customer/{customerID}', 'activateCustomer')->name('activate_customer');
+        Route::delete('/delete_user/{customerID}','deleteUser');
+        Route::delete('/delete_vehicle/{vehicleID}','deleteVehicle');
     });
 //end
 

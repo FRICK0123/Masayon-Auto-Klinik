@@ -65,7 +65,7 @@ class MaintenanceStatusController extends Controller
                 $query->where('maintenance_type', '!=', 'Oil Change')
                 ->where('scheduled_date', '<=', Carbon::now())
                 ->orWhereBetween('scheduled_date', [Carbon::today(), Carbon::now()->addDay(1)]); // Updated to start from today
-            })->orderByRaw("CASE 
+            })->where('isDeactivated', false)->orderByRaw("CASE 
             WHEN maintenance_type = 'Oil Change' THEN
                 CASE
                     WHEN current_milage >= next_milage_schedule THEN 0

@@ -41,7 +41,7 @@
                             </li>
                             <li><a class="dropdown-item" href="{{ route('walkin_maintenance_view',$vehicle['vehicleID']) }}">Walk In</a></li>
                             <li><a class="dropdown-item" href="{{ route('add_user_vehicle_maintenance_schedule_view',$vehicle['vehicleID']) }}">Schedule a Maintenance</a></li>
-                            <li><a class="dropdown-item bg-danger text-light" href="#">Delete</a></li>
+                            <li><a class="dropdown-item bg-danger text-light" href="#" data-bs-toggle="modal" data-bs-target="#delete_car" data-vehicleID="{{ $vehicle['vehicleID'] }}" onclick="deleteVehicle(this)">Delete</a></li>
                         </ul>
                     </div>
                 </td>
@@ -50,7 +50,7 @@
     </table>
 </div>
 
-<!--Modal-->
+<!--View Vehicle Modal-->
 <div class="modal fade" id="view_vehicle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -115,6 +115,29 @@
   </div>
 </div>
 
+<!-- Delete Vehicle Modal -->
+<div class="modal fade" id="delete_car" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Do you want to delete this car?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        The information and maintenance schedules associated with this car will also be deleted!
+      </div>
+      <div class="modal-footer">
+        <form action="" method="post" id="delete_car_form">
+            @csrf
+            @method('DELETE')
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
     function populateModal(element){
         //Get Data from clicked link
@@ -140,5 +163,12 @@
         document.getElementById('chassis_number').innerHTML = chassis;
         document.getElementById('plate_number').innerHTML = plate_number;
         document.getElementById('engine_type').innerHTML = engine_type;
+    }
+
+    //delete customer vehicle
+    function deleteVehicle(element){
+        const vehicleID = element.getAttribute('data-vehicleID');
+
+        document.getElementById('delete_car_form').action=`/delete_vehicle/${vehicleID}`;
     }
 </script>
