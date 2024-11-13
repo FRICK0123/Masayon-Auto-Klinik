@@ -51,9 +51,8 @@
                         @endphp
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="fw-bold">Total Transactions: {{ $transaction_count }}</h5>
+                            <h6 class="fw-bold">Total Transactions: {{ $transaction_count }}</h6>
                             <form method="GET" action="{{ route('manager_reports_transaction') }}" class="d-flex align-items-center">
-                                <label for="interval" class="me-2">Filter by:</label>
                                 <select name="interval" id="interval" class="form-select rounded-pill" onchange="this.form.submit()">
                                     <option value="daily" {{ $interval == 'daily' ? 'selected' : '' }}>This Day</option>
                                     <option value="weekly" {{ $interval == 'weekly' ? 'selected' : '' }}>This Week</option>

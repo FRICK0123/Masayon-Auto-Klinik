@@ -277,13 +277,15 @@
                                         </td>
                                         <td>0{{ $user['phone_number'] }}</td>
                                         <td>{{ $user['username'] }}</td>
-                                        @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
-                                            <td><span class="badge bg-success p-2">verified</span></td>
-                                        @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
-                                            <td><span class="badge bg-danger p-2">deactivated</span></td>
+
+                                        @if ($user['isDeactivated'] == true)
+                                            <td><span class="badge bg-danger p-2">Deactivated</span></td>
+                                        @elseif($user['isDeactivated'] == false && $user['isVerified'] == true)
+                                            <td><span class="badge bg-success p-2">Verified</span></td>
                                         @else
-                                            <td>not verified</td>
+                                            <td>Not Verified</td>
                                         @endif
+
                                         <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
 
                                         <td>
@@ -430,49 +432,49 @@
 
     <!--View Transactions Modal-->
     <div class="modal fade" id="view_transaction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header bg-dark text-white">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Transaction Information</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Transaction Information</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label class="fw-bold">Owner:</label>
+                <p id="owner"></p>
+
+                <label class="fw-bold">Vehicle:</label>
+                <p id="vehicle"></p>
+
+                <label class="fw-bold">Previous Mileage:</label>
+                <p id="previous_milage"></p>
+
+                <label class="fw-bold">Current Mileage:</label>
+                <p id="current_milage"></p>
+
+                <label class="fw-bold">Maintenance Type:</label>
+                <p id="maintenance_type"></p>
+
+                <label class="fw-bold" id="oil_type_label">Oil Type:</label>
+                <p id="oil_type"></p>
+
+                <label class="fw-bold" id="pms_label">PMS Services:</label>
+                <p id="pms_services"></p>
+
+
+                <label class="fw-bold">Cost:</label>
+                <p id="cost"></p>
+
+                <label class="fw-bold">Date Performed:</label>
+                <p id="date_performed"></p>
+
+                <label class="fw-bold">Maintenance Description:</label>
+                <p id="maintenance_description"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
         </div>
-        <div class="modal-body">
-            <label class="fw-bold">Owner:</label>
-            <p id="owner"></p>
-
-            <label class="fw-bold">Vehicle:</label>
-            <p id="vehicle"></p>
-
-            <label class="fw-bold">Previous Mileage:</label>
-            <p id="previous_milage"></p>
-
-            <label class="fw-bold">Current Mileage:</label>
-            <p id="current_milage"></p>
-
-            <label class="fw-bold">Maintenance Type:</label>
-            <p id="maintenance_type"></p>
-
-            <label class="fw-bold" id="oil_type_label">Oil Type:</label>
-            <p id="oil_type"></p>
-
-            <label class="fw-bold" id="pms_label">PMS Services:</label>
-            <p id="pms_services"></p>
-
-
-            <label class="fw-bold">Cost:</label>
-            <p id="cost"></p>
-
-            <label class="fw-bold">Date Performed:</label>
-            <p id="date_performed"></p>
-
-            <label class="fw-bold">Maintenance Description:</label>
-            <p id="maintenance_description"></p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-        </div>
-    </div>
     </div>
 
     <script>

@@ -110,6 +110,7 @@ class MaintenanceStatusController extends Controller
                 'current_milage' => $current_milage,
                 'next_milage_schedule' => $current_milage + 8000,
                 'isAppointed' => true,
+                'isRegarded' => false,
             ]);
             
             MaintenanceHistory::create([
@@ -139,6 +140,7 @@ class MaintenanceStatusController extends Controller
                 'current_milage' => $current_milage,
                 'next_milage_schedule' => $current_milage + 5000,
                 'isAppointed' => true,
+                'isRegarded' => false,
             ]);
 
             MaintenanceHistory::create([
@@ -168,6 +170,7 @@ class MaintenanceStatusController extends Controller
                 'current_milage' => $current_milage,
                 'next_milage_schedule' => $current_milage + 50000,
                 'isAppointed' => true,
+                'isRegarded' => false,
             ]);
 
             MaintenanceHistory::create([
@@ -199,6 +202,7 @@ class MaintenanceStatusController extends Controller
                         'current_milage' => $current_milage,
                         'next_milage_schedule' => $current_milage + 8000,
                         'isAppointed' => true,
+                        'isRegarded' => false,
                     ]);
                 }else if(($oil_maintenance['oil_type'] == "Mobil Delvac 15W-40 Semi Synthetic Diesel Oil") || ($oil_maintenance['oil_type']== "Mobil Special 20w-50 Ordinary Gasoline Oil")){
                     $maintenanceOil = MaintenanceSchedule::where('vehicleID', $vehicleID)->where('maintenance_type', "Oil Change")->first();
@@ -208,6 +212,7 @@ class MaintenanceStatusController extends Controller
                         'current_milage' => $current_milage,
                         'next_milage_schedule' => $current_milage + 5000,
                         'isAppointed' => true,
+                        'isRegarded' => false,
                     ]);
                 }
             } else {
@@ -221,6 +226,7 @@ class MaintenanceStatusController extends Controller
                 'last_maintenance_date' => Carbon::today(),
                 'current_milage' => $current_milage,
                 'isAppointed' => true,
+                'isRegarded' => false,
                 ]);
             } else {
                 echo "Empty Check Brakes";
@@ -233,6 +239,7 @@ class MaintenanceStatusController extends Controller
                     'last_maintenance_date' => Carbon::today(),
                     'current_milage' => $current_milage,
                     'isAppointed' => true,
+                    'isRegarded' => false,
                 ]);
             } else {
                 echo "Empty Check Concerns";
@@ -246,6 +253,7 @@ class MaintenanceStatusController extends Controller
                 'current_milage' => $current_milage,
                 'next_milage_schedule' => $current_milage + 5000,
                 'isAppointed' => true,
+                'isRegarded' => false,
             ]);
 
             MaintenanceHistory::create([
@@ -277,6 +285,7 @@ class MaintenanceStatusController extends Controller
                         'current_milage' => $current_milage,
                         'next_milage_schedule' => $current_milage + 8000,
                         'isAppointed' => true,
+                        'isRegarded' => false,
                     ]);
                 } else if (($oil_maintenance['oil_type'] == "Mobil Delvac 15W-40 Semi Synthetic Diesel Oil") || ($oil_maintenance['oil_type'] == "Mobil Special 20w-50 Ordinary Gasoline Oil")) {
                     $maintenanceOil = MaintenanceSchedule::where('vehicleID', $vehicleID)->where('maintenance_type', "Oil Change")->first();
@@ -286,6 +295,7 @@ class MaintenanceStatusController extends Controller
                         'current_milage' => $current_milage,
                         'next_milage_schedule' => $current_milage + 5000,
                         'isAppointed' => true,
+                        'isRegarded' => false,
                     ]);
                 }
             } else {
@@ -299,6 +309,7 @@ class MaintenanceStatusController extends Controller
                 'current_milage' => $current_milage,
                 'next_milage_schedule' => $current_milage + 50000,
                 'isAppointed' => true,
+                'isRegarded' => false,
             ]);
 
             MaintenanceHistory::create([
@@ -326,6 +337,7 @@ class MaintenanceStatusController extends Controller
                 'last_maintenance_date' => Carbon::today(),
                 'current_milage' => $current_milage,
                 'isAppointed' => true,
+                'isRegarded' => false,
             ]);
 
             MaintenanceHistory::create([

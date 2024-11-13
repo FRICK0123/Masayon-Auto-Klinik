@@ -53,6 +53,7 @@ class ManagerManagementController extends Controller
             'email_verified_at' => now(),
             'verification_token' => null,
             'isVerified' => true,
+            'isDeactivated' => false,
             'usertype' => 'manager',
             'last_seen' => Carbon::now(),
         ]);

@@ -55,6 +55,7 @@ class MaintenanceController extends Controller
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
                     'isDeactivated' => false,
+                    'isRegarded' => false,
                 ]);
             } else if($maintenance_type == "EGR Cleaning"){
                 MaintenanceSchedule::create([
@@ -71,6 +72,7 @@ class MaintenanceController extends Controller
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
                     'isDeactivated' => false,
+                    'isRegarded' => false,
                 ]);
             } else if($maintenance_type == "Basic PMS"){
                 MaintenanceSchedule::create([
@@ -87,6 +89,7 @@ class MaintenanceController extends Controller
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
                     'isDeactivated' => false,
+                    'isRegarded' => false,
                 ]);
             } else if($maintenance_type == "Full PMS"){
                 MaintenanceSchedule::create([
@@ -103,6 +106,7 @@ class MaintenanceController extends Controller
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
                     'isDeactivated' => false,
+                    'isRegarded' => false,
                 ]);
             } else {
                 MaintenanceSchedule::create([
@@ -119,6 +123,7 @@ class MaintenanceController extends Controller
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
                     'isDeactivated' => false,
+                    'isRegarded' => false,
                 ]);
             }
 

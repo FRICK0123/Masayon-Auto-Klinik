@@ -100,6 +100,9 @@
                                 $isNearingDate = $scheduledDate->diffInDays($now) <= 7 && $scheduledDate >= $now;
                                 $isOverdue = $scheduledDate->diffInDays($now) <= 7 && $scheduledDate < $now;
 
+                                $lastTaskDate = \Carbon\Carbon::parse($schedule->last_maintenance_date);
+                                $sendRegards = $lastTaskDate->diffInDays($now) >= 3;
+
                                 // Mileage-based logic (for oil type maintenance)
                                 $isNearingMileage = false;
                                 if ($schedule->maintenance_type == 'Oil Change' || $schedule->maintenance_type == 'EGR Cleaning' || $schedule->maintenance_type == 'Basic PMS' || $schedule->maintenance_type == 'Full PMS') {
@@ -113,7 +116,7 @@
                                 }
                             @endphp
                             <!-- Highlight if either the time is nearing or mileage is reached -->
-                            <tr @if($isNearingDate || $isNearingMileage || $isOverdue) class="table-danger" @endif>
+                            <tr @if($isNearingDate || $isNearingMileage || $isOverdue) class="table-danger"  @elseif($sendRegards && $schedule->isRegarded==false) class="table-warning" @endif>
                                 <td>{{ $schedule->vehicle->customer->fullname }}</td>
                                 <td>{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</td>
                                 <td>{{ $schedule->maintenance_type }}</td>
@@ -126,6 +129,8 @@
                                             <span class="badge bg-danger">Mileage Reached!</span>
                                         @elseif($isNearingDate || $isOverdue)
                                             <span class="badge bg-danger">Schedule for Maintenance!</span>
+                                        @elseif($sendRegards && $schedule->isRegarded == false)
+                                            <span class="badge bg-danger">Send Regards</span>
                                         @endif
                                     </td>
                                 @else
@@ -133,6 +138,8 @@
                                         N/A
                                         @if($isNearingDate || $isOverdue)
                                             <span class="badge bg-danger">Schedule for Maintenance!</span>
+                                        @elseif($sendRegards && $schedule->isRegarded == false)
+                                            <span class="badge bg-danger">Send Regards</span>
                                         @endif
                                     </td>
                                 @endif
@@ -145,8 +152,8 @@
                                         data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
                                         data-maintenance-type="{{ $schedule->maintenance_type }}"
                                         data-pms-services="{{ $schedule->PMS_services }}"
-                                        data-scheduled-date="{{ $schedule->scheduled_date }}"
-                                        data-last-maintenance-date="{{ $schedule->last_maintenance_date }}"
+                                        data-scheduled-date="{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}"
+                                        data-last-maintenance-date="{{ \Carbon\Carbon::parse($schedule->last_maintenance_date)->format('F j, Y') }}"
                                         data-scheduled-interval="{{ $schedule->scheduled_interval }}"
                                         data-oil-type="{{ $schedule->oil_type }}"
                                         data-current-milage="{{ $schedule->vehicle->milage }}"
@@ -157,7 +164,12 @@
                                 </td>
 
                                 <td>
-                                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#notify"
+                                <div class="dropdown">
+                                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                            <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notify" width="20">
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#notify"
                                         data-customerID="{{ $schedule->vehicle->customer->customerID }}"
                                         data-vehicleID="{{ $schedule->vehicle->vehicleID }}"
                                         data-maintenanceID="{{ $schedule->maintenanceID }}"
@@ -166,12 +178,25 @@
                                         data-maintenance-type="{{ $schedule->maintenance_type }}"
                                         data-scheduled-date="{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}"
                                         data-scheduled-date-orig="{{ $schedule->scheduled_date }}"
-                                        onclick="notifyModal(this)">
-                                        <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notify" width="20">
-                                    </button>
+                                        onclick="notifyModal(this)">Notify Customer</a></li>
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#sendRegardsModal"
+                                        data-customerID="{{ $schedule->vehicle->customer->customerID }}"
+                                        data-vehicleID="{{ $schedule->vehicle->vehicleID }}"
+                                        data-maintenanceID="{{ $schedule->maintenanceID }}"
+                                        data-owner="{{ $schedule->vehicle->customer->fullname }}"
+                                        data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
+                                        data-maintenance-type="{{ $schedule->maintenance_type }}"
+                                        data-scheduled-date="{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}"
+                                        data-scheduled-date-orig="{{ $schedule->scheduled_date }}"
+                                        data-last-maintenance-date="{{ \Carbon\Carbon::parse($schedule->last_maintenance_date)->format('F j, Y') }}"
+                                        onclick="sendRegards(this)">Send Regards</a>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </td>
 
-                                <td><button class="btn btn-danger btn-sm"><img src="{{ asset('icons/trash.svg') }}" alt="Delete" width="20"></button></td>
+                                <td><button class="btn btn-danger btn-sm"><img src="{{ asset('icons/trash.svg') }}" alt="Delete" width="20" data-bs-toggle="modal" data-bs-target="#delete_maintenance" data-maintenanceID="{{ $schedule->maintenanceID }}" onclick="deleteModal(this)"></button></td>
                             </tr>
                         @endforeach
                     </table>
@@ -258,6 +283,61 @@
                     </div>
                 </div>
             </div>
+
+            <!--Delete Maintenance Modal-->
+            <div class="modal fade" id="delete_maintenance" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Do you want to delete this maintenance task</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>This will delete all the records and schedule associated with this task</p>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                            <form action="" method="post" id="delete_maintenance_form">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Send Regards Modal-->
+            <div class="modal fade" id="sendRegardsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Send Regards to <span id="regCustomer"></span></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Content: </h5><br>
+                        <p class="content">"Hi <span id="regCustomerContent"></span>, we hope your <span id="regVehicle"></span> is running smoothly after the recent <span id="regServiceType"></span> on <span id="regServiceDate"></span>. If you have any questions or need further assistance, please reach out. Safe travels! - Masayon Auto Klinik"</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <form action="{{ route('send_regards') }}" method="POST">
+                            @csrf
+                            <input type="hidden" id="reg_customerID" name="customerID">
+                            <input type="hidden" id="reg_vehicleID" name="vehicleID">
+                            <input type="hidden" id="reg_maintenanceID" name="maintenanceID">
+                            <input type="hidden" id="reg_owner" name="owner">
+                            <input type="hidden" id="reg_vehicle" name="vehicle">
+                            <input type="hidden" id="reg_maintenance_type" name="maintenance_type">
+                            <input type="hidden" id="reg_scheduled_date" name="scheduled_date">
+                            <input type="hidden" id="reg_scheduled_date_orig" name="scheduled_date_orig">
+                            <input type="hidden" id="reg_last_maintenance_date" name="last_maintenance_date">
+
+                            <button type="submit" class="btn btn-warning">Send Regards</button>
+                    </div>
+                </div>
+            </div>
+            </div>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->
@@ -314,6 +394,40 @@
             document.getElementById('input_maintenance_type').value=maintenance_type;
             document.getElementById('input_scheduled_date').value=scheduled_date;
             document.getElementById('input_scheduled_date_orig').value=scheduled_date_orig;
+        }
+
+        function sendRegards(element){
+            const customerID = element.getAttribute('data-customerID');
+            const vehicleID = element.getAttribute('data-vehicleID');
+            const maintenanceID = element.getAttribute('data-maintenanceID');
+            const owner = element.getAttribute('data-owner');
+            const vehicle = element.getAttribute('data-vehicle');
+            const maintenance_type = element.getAttribute('data-maintenance-type');
+            const scheduled_date = element.getAttribute('data-scheduled-date');
+            const scheduled_date_orig = element.getAttribute('data-scheduled-date-orig');
+            const last_maintenance_date = element.getAttribute('data-last-maintenance-date');
+
+            document.getElementById('regCustomer').innerHTML=owner;
+            document.getElementById('regCustomerContent').innerHTML=owner;
+            document.getElementById('regVehicle').innerHTML=vehicle;
+            document.getElementById('regServiceType').innerHTML=maintenance_type;
+            document.getElementById('regServiceDate').innerHTML=last_maintenance_date;
+
+            document.getElementById('reg_customerID').value=customerID;
+            document.getElementById('reg_vehicleID').value=vehicleID;
+            document.getElementById('reg_maintenanceID').value=maintenanceID;
+            document.getElementById('reg_owner').value=owner;
+            document.getElementById('reg_vehicle').value=vehicle;
+            document.getElementById('reg_maintenance_type').value=maintenance_type;
+            document.getElementById('reg_scheduled_date').value=scheduled_date;
+            document.getElementById('reg_scheduled_date_orig').value=scheduled_date_orig;
+            document.getElementById('reg_last_maintenance_date').value=last_maintenance_date;
+        }
+
+        function deleteModal(element){
+            const maintenanceID = element.getAttribute('data-maintenanceID');
+
+            document.getElementById('delete_maintenance_form').action=`/delete_maintenance/${maintenanceID}`;
         }
     </script>
 </body>

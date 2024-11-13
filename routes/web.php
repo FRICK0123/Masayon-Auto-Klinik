@@ -164,6 +164,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //Routes for Admin Maintenance Overview
     Route::middleware(['auth:admin'])->controller(MaintenanceOverviewController::class)->group(function (){
         Route::get('/maintenance_overview', 'maintenanceOverview')->name('maintenance_overview');
+        Route::delete('/delete_maintenance/{maintenanceID}','deleteMaintenance');
     });
 //end
 
@@ -195,6 +196,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(AdminNotificationController::class)->group(function(){
         Route::get('/notifications', 'notificationView')->name('notification_view');
         Route::post('/notification_sent', 'notifyCustomer')->name('notify_customer');
+        Route::post('/send_regards','sendRegards')->name('send_regards');
     });
 //End
 

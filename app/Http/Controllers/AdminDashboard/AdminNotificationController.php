@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminDashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\MaintenanceSchedule;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client as GuzzleHttpClient;
@@ -25,17 +26,7 @@ class AdminNotificationController extends Controller
         $customer = Customer::where('customerID',$customerID)->first();
         $customerNum = "+63".$customer['phone_number'];
 
-        $existingNotification = Notification::where([
-            ['customerID', $customerID],
-            ['vehicleID', $vehicleID],
-            ['maintenanceID', $maintenanceID],
-            ['maintenance_type', $maintenance_type],
-            ['scheduled_date', $scheduled_date_orig]
-        ])->first();
-
-        if($existingNotification){
-            echo "Notification Already Sent";
-        } else {
+        //Send SMS notification
             $client = new GuzzleHttpClient();
             $apiKey = "6txNEfdDAqAZSHw1PF18iWG0GkWHtGeBW_sAX9z8PEUS59HU3zuZAgd_h8wiLuv6";
 
@@ -63,7 +54,6 @@ class AdminNotificationController extends Controller
             ]);
 
             return to_route('maintenance_overview');
-        }
     }
 
     //Notification View
@@ -73,4 +63,55 @@ class AdminNotificationController extends Controller
         ]);
     }
 
+    //Send Regards Notification
+    //Store Notification Data and Send Notification
+    public function sendRegards(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $vehicleID = $request->input('vehicleID');
+        $maintenanceID = $request->input('maintenanceID');
+        $owner = $request->input('owner');
+        $vehicle = $request->input('vehicle');
+        $maintenance_type = $request->input('maintenance_type');
+        $scheduled_date = $request->input('scheduled_date');
+        $scheduled_date_orig = $request->input('scheduled_date_orig');
+        $last_maintenance_date = $request->input('last_maintenance_date');
+        $content = "Hi $owner, we hope your $vehicle is running smoothly after the recent $maintenance_type on $last_maintenance_date. If you have any questions or need further assistance, please reach out. Safe travels! - MASAYON AUTO KLINIK";
+
+        $customer = Customer::where('customerID', $customerID)->first();
+        $customerNum = "+63" . $customer['phone_number'];
+
+        //Send SMS notification
+        $client = new GuzzleHttpClient();
+        $apiKey = "6txNEfdDAqAZSHw1PF18iWG0GkWHtGeBW_sAX9z8PEUS59HU3zuZAgd_h8wiLuv6";
+
+        $res = $client->request('POST', 'https://api.httpsms.com/v1/messages/send', [
+            'headers' => [
+                'x-api-key' => $apiKey,
+            ],
+            'json'    => [
+                'content' => "Hi $owner, we hope your $vehicle is running smoothly after the recent $maintenance_type on $last_maintenance_date. If you have any questions or need further assistance, please reach out. Safe travels! - MASAYON AUTO KLINIK",
+                'from'    => "+639999129152",
+                'to'      => $customerNum
+            ]
+        ]);
+
+        Notification::create([
+            'customerID' => $customerID,
+            'vehicleID' => $vehicleID,
+            'maintenanceID' => $maintenanceID,
+            'owner' => $owner,
+            'vehicle' => $vehicle,
+            'maintenance_type' => $maintenance_type,
+            'scheduled_date' => $scheduled_date_orig,
+            'content' => $content,
+            'isConfirmed' => false,
+        ]);
+
+        MaintenanceSchedule::where('maintenanceID',$maintenanceID)->update([
+            'isRegarded' => true,
+        ]);
+
+        return to_route('maintenance_overview');
+    }
 }

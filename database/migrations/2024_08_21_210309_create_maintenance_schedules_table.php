@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('isAppointed');
             $table->timestamp('appointment_date');
             $table->boolean('isDeactivated');
+            $table->boolean('isRegarded');
             $table->timestamps();
         });
     }

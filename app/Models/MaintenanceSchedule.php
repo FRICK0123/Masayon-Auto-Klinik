@@ -23,6 +23,7 @@ class MaintenanceSchedule extends Model
         'isAppointed',
         'appointment_date',
         'isDeactivated',
+        'isRegarded',
     ];
 
     protected $table = 'maintenance_schedules';

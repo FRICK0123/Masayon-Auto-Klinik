@@ -40,4 +40,12 @@ class MaintenanceOverviewController extends Controller
         return view('pages.admin_pages.admin_maintenance_overview', ['schedules' => $schedules]);
     }
 
+    //Delete Maintenance schedule modal
+    public function deleteMaintenance($maintenanceID){
+        $schedule = MaintenanceSchedule::where('maintenanceID', $maintenanceID)->first();
+        $schedule->delete();
+
+        return to_route('maintenance_overview');
+    }
+
 }

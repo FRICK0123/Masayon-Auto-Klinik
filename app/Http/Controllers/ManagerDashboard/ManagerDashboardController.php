@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ManagerDashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\MaintenanceHistory;
 use App\Models\MaintenanceSchedule;
 use App\Models\Notification;
 use App\Models\Vehicle;
@@ -51,6 +52,9 @@ class ManagerDashboardController extends Controller
         $customer_daily_registration = Customer::where('usertype', 'customer')->whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
         $customer_weekly_registration = Customer::where('usertype', 'customer')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('created_at', 'desc')->get();
 
+        $customer_daily_transactions = MaintenanceHistory::where('date_performed', $today)->orderBy('date_performed', 'desc')->get();
+        $customer_weekly_transactions = MaintenanceHistory::whereBetween('date_performed', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('date_performed', 'desc')->get();
+
         return view('pages.manager_pages.manager_dashboard',[
             'schedules' => $schedules,
             'scheduleCount' => $scheduleCount,
@@ -59,6 +63,8 @@ class ManagerDashboardController extends Controller
             'notificationCount' => $notificatonCount,
             'customer_daily_registration' => $customer_daily_registration,
             'customer_weekly_registration' => $customer_weekly_registration,
+            'customer_daily_transaction' => $customer_daily_transactions,
+            'customer_weekly_transaction' => $customer_weekly_transactions,
         ]);
     }
 }

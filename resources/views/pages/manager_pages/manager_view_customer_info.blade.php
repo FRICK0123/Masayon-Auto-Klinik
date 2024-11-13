@@ -38,11 +38,13 @@
                             <p><b>Email Address:</b> {{ $customer['email'] }}</p>
                             <p><b>Phone Number:</b> +63{{ $customer['phone_number'] }}</p>
                             <p><b>Account Status:</b> 
-                                @if ($customer['isVerified'] == true)
-                                    <span class="badge bg-success">Verified</span>
-                                @else
-                                    <span class="badge bg-danger">Not Verified</span>
-                                @endif
+                            @if ($customer['isDeactivated'] == true)
+                                <p class="badge text-bg-danger">Deactivated</p>
+                            @elseif($customer['isDeactivated'] == false && $customer['isVerified'] == true)
+                                <p class="badge text-bg-success">Verified</p>
+                            @else
+                                <p class="badge text-bg-secondary">Not Verified</p>
+                            @endif
                             </p>
                             <p><b>Username:</b> {{ $customer['username'] }}</p>
                         </div>
