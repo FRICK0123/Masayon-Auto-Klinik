@@ -189,6 +189,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/customer_reports','customerReportsView')->name('customer_reports_view');
         Route::get('/customer_reports/transaction_filter','customerReportsFilter')->name('customer_reports_filter');
         Route::get('/customer_reports/customer_by_date_range', 'customerReportsByDateRange')->name('customer_reports_date_range');
+        Route::get('/customer_vehicles','customerVehiclesView')->name('customer_vehicles_view');
     });
 //end
 

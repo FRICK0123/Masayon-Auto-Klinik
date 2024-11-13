@@ -90,6 +90,11 @@
                             <img src="{{asset('icons/newspaper.svg')}}" alt="Maintenance Status" class="me-2">
                             <p class="m-0">Customer Registrations</p>
                         </form>
+
+                        <form action="{{ route('customer_vehicles_view') }}" method="GET" class="d-flex align-items-center {{ request()->routeIs('customer_vehicles_view') ? 'active' : '' }}" id="customer_vehicles" onclick="adminCustomerVehicles()">
+                            <img src="{{asset('icons/car.svg')}}" alt="Customer Vehicles" class="me-2">
+                            <p class="m-0">Customer Vehicles</p>
+                        </form>
                     </div>
                 <!--end-->
 
@@ -144,6 +149,10 @@
 
         function adminAppointment(){
             document.getElementById('appointment').submit();
+        }
+
+        function adminCustomerVehicles(){
+            document.getElementById('customer_vehicles').submit();
         }
 
         function adminNotifications(){
