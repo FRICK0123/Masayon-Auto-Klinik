@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\MaintenanceHistory;
 use App\Models\Vehicle;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -60,6 +61,53 @@ class ReportController extends Controller
                 'interval' => $interval,
             ]
         );
+    }
+
+    public function exportTransactionPdf(Request $request)
+    {
+        // Retrieve filtering parameters
+        $interval = $request->input('interval', 'daily');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Apply filtering based on the date range and interval
+        if ($startDate && $endDate) {
+            $startDate = Carbon::parse($startDate);
+            $endDate = Carbon::parse($endDate);
+            $transaction = MaintenanceHistory::whereBetween('date_performed', [$startDate, $endDate])
+            ->orderBy('date_performed', 'desc')
+            ->get();
+            $interval = "From " . $startDate->format('F j, Y') . " to " . $endDate->format('F j, Y');
+        } else {
+            switch ($interval) {
+                case 'weekly':
+                    $transaction = MaintenanceHistory::whereBetween('date_performed', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('date_performed', 'desc')->get();
+                    break;
+                case 'monthly':
+                    $transaction = MaintenanceHistory::whereBetween('date_performed', [
+                            Carbon::now()->startOfMonth(),
+                            Carbon::now()->endOfMonth()
+                        ])->orderBy('date_performed', 'desc')->get();
+                    break;
+                case 'yearly':
+                    $transaction = MaintenanceHistory::whereBetween('date_performed', [
+                            Carbon::now()->startOfYear(),
+                            Carbon::now()->endOfYear()
+                        ])->orderBy('date_performed', 'desc')->get();
+                    break;
+                default:
+                    $transaction = MaintenanceHistory::where('date_performed', Carbon::today()->toDateString())->orderBy('date_performed', 'desc')->get();
+            }
+        }
+
+        // Generate the PDF with the filtered transactions
+        $pdf = PDF::loadView('pages.admin_pages.pdf_reports.pdf_transactions', [
+            'transaction' => $transaction,
+            'interval' => $interval,
+        ]);
+
+        // Stream the PDF to the browser
+        return $pdf->stream('transaction_report.pdf');
     }
 
     public function reportsTransactionByDateRange(Request $request)
@@ -177,5 +225,5 @@ class ReportController extends Controller
             'models' => $models,
             'years' => $years,
         ]);
-    }   
+    }
 }

@@ -10,7 +10,15 @@
                 <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
                 <input type="text" class="input-search" placeholder="Search Customer">
             </form>
-            <button class="btn btn-success rounded-pill">Export PDF</button>
+            <form action="{{ route('export.transaction.pdf') }}" method="GET">
+                @csrf
+                <!-- Include selected filters as hidden inputs -->
+                <input type="hidden" name="interval" value="{{ $interval }}">
+                <input type="hidden" name="start_date" value="{{ request()->input('start_date') }}">
+                <input type="hidden" name="end_date" value="{{ request()->input('end_date') }}">
+                
+                <button type="submit" class="btn btn-success rounded-pill">Export PDF</button>
+            </form>
         </div>
     </div>
 

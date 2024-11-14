@@ -191,6 +191,8 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/customer_reports/transaction_filter','customerReportsFilter')->name('customer_reports_filter');
         Route::get('/customer_reports/customer_by_date_range', 'customerReportsByDateRange')->name('customer_reports_date_range');
         Route::get('/customer_vehicles','customerVehiclesView')->name('customer_vehicles_view');
+        Route::get('/generate_customer_vehicles_pdf', 'generateCustomerVehiclesPdf')->name('generate_customer_vehicles_pdf');
+        Route::get('/export-transaction-pdf', 'exportTransactionPdf')->name('export.transaction.pdf');
     });
 //end
 

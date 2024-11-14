@@ -62,6 +62,13 @@
                             <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
                             <input type="text" class="input-search" placeholder="Search Vehicle">
                         </form>
+
+                        <form action="{{ route('generate_customer_vehicles_pdf') }}" method="GET">
+                            <input type="hidden" name="make" value="{{ request('make') }}">
+                            <input type="hidden" name="model" value="{{ request('model') }}">
+                            <input type="hidden" name="year" value="{{ request('year') }}">
+                            <button type="submit" class="btn btn-dark">Download PDF</button>
+                        </form>
                     </div>
                 </div>
 
