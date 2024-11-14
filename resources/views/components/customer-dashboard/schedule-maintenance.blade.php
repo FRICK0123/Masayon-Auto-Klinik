@@ -201,9 +201,9 @@
         <!--end-->
 
         <label for="maintenance_date" class="fw-bold">
-            Maintenance Date: (current date or last maintenance date)
+            Maintenance Date:
         </label>
-        <input type="date" name="maintenance_date" id="maintenance_date" class="form-control" min="{{ date('Y-m-d') }}">
+        <input type="datetime-local" name="maintenance_date" id="maintenance_date" class="form-control" min="{{ date('Y-m-d\TH:i') }}">
         <br>
 
         <div class="container_fluid" id="oil_type_container" style="display: none">

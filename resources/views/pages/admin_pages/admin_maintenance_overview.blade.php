@@ -309,34 +309,34 @@
 
             <!--Send Regards Modal-->
             <div class="modal fade" id="sendRegardsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Send Regards to <span id="regCustomer"></span></h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h5>Content: </h5><br>
-                        <p class="content">"Hi <span id="regCustomerContent"></span>, we hope your <span id="regVehicle"></span> is running smoothly after the recent <span id="regServiceType"></span> on <span id="regServiceDate"></span>. If you have any questions or need further assistance, please reach out. Safe travels! - Masayon Auto Klinik"</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <form action="{{ route('send_regards') }}" method="POST">
-                            @csrf
-                            <input type="hidden" id="reg_customerID" name="customerID">
-                            <input type="hidden" id="reg_vehicleID" name="vehicleID">
-                            <input type="hidden" id="reg_maintenanceID" name="maintenanceID">
-                            <input type="hidden" id="reg_owner" name="owner">
-                            <input type="hidden" id="reg_vehicle" name="vehicle">
-                            <input type="hidden" id="reg_maintenance_type" name="maintenance_type">
-                            <input type="hidden" id="reg_scheduled_date" name="scheduled_date">
-                            <input type="hidden" id="reg_scheduled_date_orig" name="scheduled_date_orig">
-                            <input type="hidden" id="reg_last_maintenance_date" name="last_maintenance_date">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Send Regards to <span id="regCustomer"></span></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Content: </h5><br>
+                            <p class="content">"Hi <span id="regCustomerContent"></span>, we hope your <span id="regVehicle"></span> is running smoothly after the recent <span id="regServiceType"></span> on <span id="regServiceDate"></span>. If you have any questions or need further assistance, please reach out. Safe travels! - Masayon Auto Klinik"</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <form action="{{ route('send_regards') }}" method="POST">
+                                @csrf
+                                <input type="hidden" id="reg_customerID" name="customerID">
+                                <input type="hidden" id="reg_vehicleID" name="vehicleID">
+                                <input type="hidden" id="reg_maintenanceID" name="maintenanceID">
+                                <input type="hidden" id="reg_owner" name="owner">
+                                <input type="hidden" id="reg_vehicle" name="vehicle">
+                                <input type="hidden" id="reg_maintenance_type" name="maintenance_type">
+                                <input type="hidden" id="reg_scheduled_date" name="scheduled_date">
+                                <input type="hidden" id="reg_scheduled_date_orig" name="scheduled_date_orig">
+                                <input type="hidden" id="reg_last_maintenance_date" name="last_maintenance_date">
 
-                            <button type="submit" class="btn btn-warning">Send Regards</button>
+                                <button type="submit" class="btn btn-warning">Send Regards</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         </x-admin-dashboard.admin-content>
     </main>

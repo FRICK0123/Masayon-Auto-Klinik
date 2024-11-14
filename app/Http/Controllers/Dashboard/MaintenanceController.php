@@ -130,4 +130,12 @@ class MaintenanceController extends Controller
             return to_route('appointment_view');
         }
     }
+
+    //Cancel Appointment
+    public function cancelAppointment($maintenanceID){
+        $schedule=MaintenanceSchedule::where('maintenanceID',$maintenanceID)->first();
+        $schedule->delete();
+
+        return to_route('appointment_view')->with('success','Appointment Successfully Removed');
+    }
 }

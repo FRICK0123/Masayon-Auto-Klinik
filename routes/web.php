@@ -83,6 +83,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:customer','update.last_seen'])->controller(MaintenanceController::class)->group(function(){
         Route::get('/schedule_form/{vehicleID}', 'scheduleMaintenanceView')->name('schedule_maintenance_form');
         Route::post('/schedule_maintenance_store', 'scheduleMaintenance')->name('schedule_maintenance_store');
+        Route::delete('/cancel/{maintenanceID}','cancelAppointment');
     });
 //end
 
