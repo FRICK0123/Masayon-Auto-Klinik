@@ -14,13 +14,13 @@
 
         <!-- Input fields for car details -->
         <label for="car_make" class="fw-bold">Car Make:</label>
-        <input type="text" id="car_make" name="car_make" class="form-control"><br>
+        <input type="text" id="car_make" name="car_make" class="form-control" required><br>
 
         <label for="car_model" class="fw-bold">Car Model:</label>
-        <input type="text" id="car_model" name="car_model" class="form-control"><br>
+        <input type="text" id="car_model" name="car_model" class="form-control" required><br>
 
         <label for="carYear" class="form-label">Select Year of Manufacture</label>
-        <select name="car_year" id="carYear" class="form-select">
+        <select name="car_year" id="carYear" class="form-select" required>
             <option value="" disabled selected>Choose year</option>
             @php
                 // Get the current year and set a range of 50 years in the past
@@ -33,7 +33,7 @@
         </select><br>
 
         <label for="engine_type" class="fw-bold">Engine Type:</label>
-        <input type="text" id="engine_type" name="engine_type" class="form-control"><br>
+        <input type="text" id="engine_type" name="engine_type" class="form-control" required><br>
 
         <button class="btn btn-dark" type="submit">Submit</button>
     </form>

@@ -51,28 +51,24 @@
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
                     <h5 class="pt-2">MAINTENANCE OVERVIEW</h5>
+
+                    <form action="{{ route('maintenance_overview') }}" method="GET" class="search-box me-2">
+                        @csrf
+                        <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Appointment" width="30"></button>
+                        <input type="text" class="input-search" placeholder="Search Schedule" name="search_schedule">
+                    </form>
                 </div>
 
                 <!--Functionalities-->
-                    <div class="d-flex justify-content-between">
-                        <div class="dropdown">
-                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
-                            </button>
-                            {{-- <form id="carFilterForm" action="{{ route('car_filter') }}" method="GET" class="dropdown-menu p-2">
-                                <input type="radio" id="by_make" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_make">
-                                <label for="by_make" class="ms-2">By Make</label><br><br>
-
-                                <input type="radio" id="by_model" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_model">
-                                <label for="by_model" class="ms-2">By Model</label><br><br>
-
-                                <input type="radio" id="by_year" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_year">
-                                <label for="by_year" class="ms-2">By Year</label><br><br>
-
-                                <button type="submit" class="btn btn-dark">Filter</button>
-                            </form> --}}
-                        </div>
-                    </div>
+                <div class="d-flex justify-content-between mt-2 mb-2">
+                    <form action="{{ route('maintenance_date_range') }}" method="GET" class="d-flex">
+                        <label for="start_date" class="me-2">Start Date:</label>
+                        <input type="date" class="me-2" name="start_date" required>
+                        <label for="end_date" class="me-2">End Date:</label>
+                        <input type="date" class="me-2" name="end_date" required>
+                        <button class="btn btn-dark">Filter</button>
+                    </form>
+                </div>
                 <!--end-->
 
                 <!--Cars table-->
@@ -244,8 +240,7 @@
                     <p id="next_milage_schedule"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
                 </div>
                 </div>
             </div>
@@ -335,6 +330,58 @@
 
                                 <button type="submit" class="btn btn-warning">Send Regards</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Appointment Confirmed Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="scheduleAdded" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('scheduled') }}
+                    </div>
+                </div>
+            </div>
+
+            <!--Deleted Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="scheduleDeleted" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('schedule_deleted') }}
+                    </div>
+                </div>
+            </div>
+
+            <!--Customer Notified Toast -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="notifyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('notify') }}
+                    </div>
+                </div>
+            </div>
+
+            <!--Customer Regards Toast -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="regardsToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('regards') }}
                     </div>
                 </div>
             </div>
@@ -429,6 +476,30 @@
 
             document.getElementById('delete_maintenance_form').action=`/delete_maintenance/${maintenanceID}`;
         }
+
+    @if (session('scheduled'))
+        // Show the toast
+        var toastEl = new bootstrap.Toast(document.getElementById('scheduleAdded'));
+        toastEl.show();
+    @endif
+
+    @if (session('schedule_deleted'))
+        // Show the toast
+        var toastEl = new bootstrap.Toast(document.getElementById('scheduleDeleted'));
+        toastEl.show();
+    @endif
+
+    @if (session('notify'))
+        // Show the toast
+        var toastEl = new bootstrap.Toast(document.getElementById('notifyToast'));
+        toastEl.show();
+    @endif
+
+    @if (session('regards'))
+        // Show the toast
+        var toastEl = new bootstrap.Toast(document.getElementById('regardsToast'));
+        toastEl.show();
+    @endif
     </script>
 </body>
 

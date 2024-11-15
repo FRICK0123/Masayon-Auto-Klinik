@@ -12,7 +12,7 @@
         h1 { text-align: center; }
 
         th,td{
-            font-size: 10px;
+            font-size: 9px;
         }
     </style>
 </head>

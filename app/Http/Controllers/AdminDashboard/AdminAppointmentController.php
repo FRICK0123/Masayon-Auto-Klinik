@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminDashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\MaintenanceSchedule;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminAppointmentController extends Controller
@@ -33,6 +34,25 @@ class AdminAppointmentController extends Controller
 
         // Execute the query to get the results
         $schedules = $query->get();
+
+        return view('pages.admin_pages.admin_appointment', [
+            'schedules' => $schedules,
+        ]);
+    }
+
+    public function appointmentsByDateRange(Request $request)
+    {
+        // Parse and validate the dates
+        $startDate = Carbon::parse($request->input('start_date'))->startOfDay();
+        $endDate = Carbon::parse($request->input('end_date'))->endOfDay();
+
+        // Fetch schedules based on the date range
+        $schedules = MaintenanceSchedule::join('vehicles', 'maintenance_schedules.vehicleID', '=', 'vehicles.vehicleID')
+        ->join('customers', 'vehicles.customerID', '=', 'customers.customerID')
+        ->whereBetween('maintenance_schedules.appointment_date', [$startDate, $endDate])
+            ->where('maintenance_schedules.isAppointed', false)
+            ->select('maintenance_schedules.*', 'vehicles.*', 'customers.fullname as customer_name')
+            ->get();
 
         return view('pages.admin_pages.admin_appointment', [
             'schedules' => $schedules,

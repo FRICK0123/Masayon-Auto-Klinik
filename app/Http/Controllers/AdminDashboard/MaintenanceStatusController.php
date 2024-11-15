@@ -83,6 +83,47 @@ class MaintenanceStatusController extends Controller
         return view('pages.admin_pages.admin_maintenance_status',['schedules' => $schedules]);
     }
 
+    public function searchMaintenanceStatus(Request $request)
+    {
+        $query = MaintenanceSchedule::with(['vehicle.customer'])
+            ->where('isDeactivated', false);
+
+        // Check if the search query exists
+        if ($request->has('search_schedule') && $request->input('search_schedule') != '') {
+            $searchTerm = $request->input('search_schedule');
+
+            // Apply search filters
+            $query->where(function ($query) use ($searchTerm) {
+                $query->whereHas('vehicle', function ($vehicleQuery) use ($searchTerm) {
+                    $vehicleQuery->where('make', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('model', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('year_of_manufacture', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('plate_number', 'like', '%' . $searchTerm . '%');
+                })
+                    ->orWhere('maintenance_type', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('scheduled_date', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Execute the query and get results
+        $schedules = $query->orderByRaw("CASE 
+        WHEN maintenance_type = 'Oil Change' THEN
+            CASE
+                WHEN current_milage >= next_milage_schedule THEN 0
+                WHEN scheduled_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) THEN 1
+                ELSE 2
+            END
+        ELSE 
+            CASE
+                WHEN scheduled_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) THEN 1 
+                ELSE 2
+            END
+    END, scheduled_date ASC")->get();
+
+        // Return the view with the filtered results
+        return view('pages.admin_pages.admin_maintenance_status', ['schedules' => $schedules]);
+    }
+
     //Maintenance Status Update
     public function MaintenanceStatusUpdate(Request $request){
         $maintenanceID = $request->input('maintenance_id');
@@ -130,7 +171,9 @@ class MaintenanceStatusController extends Controller
                 'date_performed' => $date_performed
             ]);
 
-            echo "Database Updated!";
+            session()->flash('scheduled',"Maintenance/Repair for $vehicle completed");
+
+            return to_route('maintenance_overview');
         } else if(($maintenance_type == "Oil Change" && $oil_type == "Mobil Delvac 15W-40 Semi Synthetic Diesel Oil") || ($maintenance_type == "Oil Change" && $oil_type == "Mobil Special 20w-50 Ordinary Gasoline Oil")){
             Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
             $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
@@ -160,7 +203,9 @@ class MaintenanceStatusController extends Controller
                 'date_performed' => $date_performed
             ]);
 
-            echo "Database Updated!";
+            session()->flash('scheduled', "Maintenance/Repair for $vehicle completed");
+
+            return to_route('maintenance_overview');
         } else if($maintenance_type == "EGR Cleaning"){
             Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
             $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
@@ -190,7 +235,9 @@ class MaintenanceStatusController extends Controller
                 'date_performed' => $date_performed
             ]);
 
-            echo "Database Updated!";
+            session()->flash('scheduled', "Maintenance/Repair for $vehicle completed");
+
+            return to_route('maintenance_overview');
         } else if($maintenance_type == "Basic PMS"){
             $oil_maintenance = MaintenanceSchedule::where('vehicleID', $vehicleID)->where('maintenance_type',"Oil Change")->first();
             if($oil_maintenance){
@@ -215,8 +262,6 @@ class MaintenanceStatusController extends Controller
                         'isRegarded' => false,
                     ]);
                 }
-            } else {
-                echo "Empty Oil Type!!!";
             }
 
             $brakes_maintenance = MaintenanceSchedule::where('vehicleID', $vehicleID)->where('maintenance_type', "Check Brake")->first();
@@ -228,8 +273,6 @@ class MaintenanceStatusController extends Controller
                 'isAppointed' => true,
                 'isRegarded' => false,
                 ]);
-            } else {
-                echo "Empty Check Brakes";
             }
 
             $concerns_maintenance = MaintenanceSchedule::where('vehicleID', $vehicleID)->where('maintenance_type', "Check Concerns")->first();
@@ -241,8 +284,6 @@ class MaintenanceStatusController extends Controller
                     'isAppointed' => true,
                     'isRegarded' => false,
                 ]);
-            } else {
-                echo "Empty Check Concerns";
             }
 
             Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
@@ -272,7 +313,9 @@ class MaintenanceStatusController extends Controller
                 'maintenance_status' => $maintenance_status,
                 'date_performed' => $date_performed
             ]);
-            echo "Database Updated!";
+            session()->flash('scheduled', "Maintenance/Repair for $vehicle completed");
+
+            return to_route('maintenance_overview');
 
         } else if($maintenance_type == "Heavy PMS"){
             $oil_maintenance = MaintenanceSchedule::where('vehicleID', $vehicleID)->where('maintenance_type', "Oil Change")->first();
@@ -298,8 +341,6 @@ class MaintenanceStatusController extends Controller
                         'isRegarded' => false,
                     ]);
                 }
-            } else {
-                echo "Empty Oil Type!!!";
             }
             Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
             $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
@@ -328,7 +369,9 @@ class MaintenanceStatusController extends Controller
                 'maintenance_status' => $maintenance_status,
                 'date_performed' => $date_performed
             ]);
-            echo "Database Updated!";
+            session()->flash('scheduled', "Maintenance/Repair for $vehicle completed");
+
+            return to_route('maintenance_overview');
         } else {
             Vehicle::where('vehicleID', $vehicleID)->update(['milage' => $current_milage]);
             $maintenance = DB::table('maintenance_schedules')->where('maintenanceID', $maintenanceID)->first();
@@ -357,7 +400,9 @@ class MaintenanceStatusController extends Controller
                 'date_performed' => $date_performed
             ]);
 
-            echo "Database Updated!";
+            session()->flash('scheduled', "Maintenance/Repair for $vehicle completed");
+
+            return to_route('maintenance_overview');
         }
     }
 }

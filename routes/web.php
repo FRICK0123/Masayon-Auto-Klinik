@@ -168,6 +168,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(MaintenanceOverviewController::class)->group(function (){
         Route::get('/maintenance_overview', 'maintenanceOverview')->name('maintenance_overview');
         Route::delete('/delete_maintenance/{maintenanceID}','deleteMaintenance');
+        Route::get('/maintenance_date_range','maintenanceByDateRange')->name('maintenance_date_range');
     });
 //end
 
@@ -181,6 +182,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(MaintenanceStatusController::class)->group(function () {
         Route::get('/maintenance_status', 'maintenanceStatusView')->name('maintenance_status_view');
         Route::post('/maintenance_status/update', 'MaintenanceStatusUpdate')->name('maintenance_status_update');
+        Route::get('/maintenance_search', 'searchMaintenanceStatus')->name('search_maintenance_status');
     });
 //end
 
@@ -210,6 +212,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //Routes for Admin Appointment
     Route::middleware(['auth:admin'])->controller(AdminAppointmentController::class)->group(function () {
         Route::get('/customer_appointements', 'adminAppointmentView')->name('admin_appointment_view');
+        Route::get('/appointments_by_date_range', 'appointmentsByDateRange')->name('appointments_by_date_range');
     });
 //end
 

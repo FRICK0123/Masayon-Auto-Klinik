@@ -10,7 +10,7 @@
     </div>
 
     <!--Functionalities-->
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between mt-2 mb-2">
             <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
@@ -28,6 +28,12 @@
                     <button type="submit" class="btn btn-dark">Filter</button>
                 </form>
             </div>
+
+            <form action="{{ route('admin_cars') }}" method="GET" class="search-box">
+                 @csrf
+                <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Cars" width="30"></button>
+                <input type="text" class="input-search" placeholder="Search Cars" name="search_cars">
+            </form>
         </div>
     <!--end-->
 
@@ -162,6 +168,45 @@
     </div>
 <!--end-->
 
+<!-- Car Added Toast Notification -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="carAddedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success">
+            <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ session('car_added') }}
+        </div>
+    </div>
+</div>
+
+<!-- Car Details Edit Toast Notification -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="carEditedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success">
+            <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ session('car_edited') }}
+        </div>
+    </div>
+</div>
+
+<!-- Car Delete Toast Notification -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="carDeletedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success">
+            <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ session('car_deleted') }}
+        </div>
+    </div>
+</div>
+
 <script>
     //Edit Option
     function populateModal(element) {
@@ -188,4 +233,22 @@
         const carId = element.getAttribute('data-car-id-delete');
         document.getElementById('deleteCarForm').action = `/delete_car/${carId}`;
     }
+
+        @if (session('car_added'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('carAddedToast'));
+            toastEl.show();
+        @endif
+
+        @if (session('car_edited'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('carEditedToast'));
+            toastEl.show();
+        @endif
+
+        @if (session('car_deleted'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('carDeletedToast'));
+            toastEl.show();
+        @endif
 </script>

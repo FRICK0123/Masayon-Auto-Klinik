@@ -53,6 +53,8 @@ class AdminNotificationController extends Controller
                 'isConfirmed' => false,
             ]);
 
+            session()->flash('notify', "$owner has been notified successfully");
+
             return to_route('maintenance_overview');
     }
 
@@ -111,6 +113,8 @@ class AdminNotificationController extends Controller
         MaintenanceSchedule::where('maintenanceID',$maintenanceID)->update([
             'isRegarded' => true,
         ]);
+
+        session()->flash('regards',"Regards Sent Successfully for $owner");
 
         return to_route('maintenance_overview');
     }

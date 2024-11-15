@@ -3,29 +3,15 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
         <h5 class="pt-2">MAINTENANCE STATUS</h5>
+
+        <form action="{{ route('search_maintenance_status') }}" method="GET" class="search-box me-2">
+            @csrf
+            <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Appointment" width="30"></button>
+            <input type="text" class="input-search" placeholder="Search" name="search_schedule">
+        </form>
     </div>
-    <!--Functionalities-->
-        <div class="d-flex justify-content-between">
-            <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
-                </button>
-                {{-- <form id="carFilterForm" action="{{ route('car_filter') }}" method="GET" class="dropdown-menu p-2">
-                    <input type="radio" id="by_make" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_make">
-                    <label for="by_make" class="ms-2">By Make</label><br><br>
 
-                    <input type="radio" id="by_model" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_model">
-                    <label for="by_model" class="ms-2">By Model</label><br><br>
-
-                    <input type="radio" id="by_year" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_year">
-                    <label for="by_year" class="ms-2">By Year</label><br><br>
-
-                    <button type="submit" class="btn btn-dark">Filter</button>
-                </form> --}}
-            </div>
-        </div>
-    <!--end-->
-    <div class="container">
+    <div class="container mt-3">
     <!--Cars table-->
             <table class="table table-striped table-responsive">
                 <tr>
@@ -45,12 +31,25 @@
                     <td>{{ $schedule->maintenance_type }}</td>
                     <td>{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}</td>
                     <td>{{ $schedule->next_milage_schedule }}</td>
-                    <td class="bg-warning">Pending...</td>
+                    <td><span class="badge text-bg-warning">Pending...</span></td>
                     <td>
                         <div class="dropdown">
                             <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">View</a></li>
+                                <li><a class="dropdown-item" href="#"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#view_schedule"
+                                        data-view-owner="{{ $schedule->vehicle->customer->fullname }}"
+                                        data-view-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
+                                        data-view-maintenance-type="{{ $schedule->maintenance_type }}"
+                                        data-view-pms-services="{{ $schedule->PMS_services }}"
+                                        data-view-scheduled-date="{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}"
+                                        data-view-last-maintenance-date="{{ \Carbon\Carbon::parse($schedule->last_maintenance_date)->format('F j, Y') }}"
+                                        data-view-scheduled-interval="{{ $schedule->scheduled_interval }}"
+                                        data-view-oil-type="{{ $schedule->oil_type }}"
+                                        data-view-current-milage="{{ $schedule->vehicle->milage }}"
+                                        data-view-next-milage-schedule="{{ $schedule->next_milage_schedule }}"
+                                        onclick="populateModal(this)">View</a></li>
                                 <li><a class="dropdown-item" href="#" 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#update"
@@ -118,6 +117,52 @@
   </div>
 </div>
 
+<!-- View Maintenance Schedule Modal -->
+<div class="modal fade" id="view_schedule" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Maintenance Schedule</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <label class="fw-bold">Owner:</label>
+            <p id="view_owner"></p>
+                        
+            <label class="fw-bold">Vehicle:</label>
+            <p id="view_vehicle"></p>
+
+            <label class="fw-bold">Maintenance Type:</label>
+            <p id="view_maintenance_type"></p>
+
+            <label class="fw-bold">PMS Services:</label>
+            <p id="view_pms_services"></p>
+
+            <label class="fw-bold">Scheduled Date:</label>
+            <p id="view_scheduled_date"></p>
+
+            <label class="fw-bold">Last Maintenance Date:</label>
+            <p id="view_last_maintenance_date"></p>
+
+            <label class="fw-bold">Schedule Interval:</label>
+            <p id="view_schedule_interval"></p>
+
+            <label class="fw-bold">Oil Type:</label>
+            <p id="view_oil_type"></p>
+
+            <label class="fw-bold">Current Mileage:</label>
+            <p id="view_current_milage"></p>
+
+            <label class="fw-bold">Next Mileage Schedule:</label>
+            <p id="view_next_milage_schedule"></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
+
 <!--Maintenance Task Added Toast Notification -->
 <div class="toast-container position-fixed top-0 end-0 p-3">
     <div id="appointmentAdded" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -155,6 +200,31 @@
             document.getElementById('maintenance_type').value = maintenance_type;
             document.getElementById('scheduled_interval').value = scheduled_interval;
             document.getElementById('oil_type').value = oil_type;
+        }
+
+        function populateModal(element){
+            const owner = element.getAttribute('data-view-owner');
+            const vehicle = element.getAttribute('data-view-vehicle');
+            const maintenance_type = element.getAttribute('data-view-maintenance-type');
+            const pms_services = element.getAttribute('data-view-pms-services');
+            const scheduled_date = element.getAttribute('data-view-scheduled-date');
+            const last_maintenance_date = element.getAttribute('data-view-last-maintenance-date');
+            const schedule_interval = element.getAttribute('data-view-scheduled-interval');
+            const oil_type = element.getAttribute('data-view-oil-type');
+            const current_milage = element.getAttribute('data-view-current-milage');
+            const next_milage_schedule = element.getAttribute('data-view-next-milage-schedule');
+
+            document.getElementById('view_owner').innerHTML = owner;
+            document.getElementById('view_vehicle').innerHTML = vehicle;
+            document.getElementById('view_maintenance_type').innerHTML = maintenance_type;
+            document.getElementById('view_pms_services').innerHTML = pms_services;
+            document.getElementById('view_scheduled_date').innerHTML = scheduled_date;
+            document.getElementById('view_last_maintenance_date').innerHTML = last_maintenance_date;
+            document.getElementById('view_schedule_interval').innerHTML = schedule_interval;
+            document.getElementById('view_oil_type').innerHTML = oil_type;
+            document.getElementById('view_current_milage').innerHTML = current_milage;
+            document.getElementById('view_next_milage_schedule').innerHTML = next_milage_schedule;
+
         }
 
     // Check if there's an appointment added message in session

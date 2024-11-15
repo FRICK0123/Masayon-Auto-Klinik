@@ -55,8 +55,6 @@
     
                     <form action="{{ route('users_view') }}" method="GET" class="search-box">
                         @csrf
-                        {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
-
                         <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
                         <input type="text" class="input-search" placeholder="Search Customer" name="search_customers">
                     </form>

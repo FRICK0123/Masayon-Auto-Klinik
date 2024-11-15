@@ -9,10 +9,23 @@ use Symfony\Component\Console\Input\Input;
 
 class CarsController extends Controller
 {
-    //Cars Page View
-    public function adminCarsView(){
-        $cars = Car::orderBy('car_make','asc')->get();
-        return view('pages.admin_pages.admin_cars',['cars'=>$cars]);
+    // Cars Page View
+    public function adminCarsView(Request $request)
+    {
+        $cars = Car::orderBy('car_make', 'asc')->get(); // Default retrieval of all cars
+
+        if ($request->has('search_cars') && $request->input('search_cars') !== '') {
+            $searchTerm = $request->input('search_cars');
+
+            // Execute the query to filter results based on the search term
+            $cars = Car::where('car_make', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('car_model', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('year_of_manufacture', 'LIKE', "%{$searchTerm}%")
+                ->orderBy('car_make', 'asc')
+                ->get();
+        }
+
+        return view('pages.admin_pages.admin_cars', ['cars' => $cars]);
     }
 
     //Cars Form
@@ -51,6 +64,7 @@ class CarsController extends Controller
             'engine_type' => $engine_type,
         ]);
 
+        session()->flash('car_added',"$car_make $car_model $car_year Added Successfully");
         return to_route('admin_cars');
     }
 
@@ -85,13 +99,18 @@ class CarsController extends Controller
             'engine_type' => $request->input('engine_type')
         ]);
 
-        return redirect()->route('admin_cars')->with('success', 'Car updated successfully.');
+        session()->flash('car_edited',"Car Details Edited Successfully");
+
+        return redirect()->route('admin_cars');
     }
 
     //Delete car
     public function carDelete($id){
         $car = Car::where('id',$id)->first();
         $car->delete();
+
+        session()->flash('car_deleted', "Car Deleted Successfully");
+
         return to_route('admin_cars');
     }
 }
