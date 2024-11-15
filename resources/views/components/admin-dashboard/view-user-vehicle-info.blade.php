@@ -138,7 +138,27 @@
   </div>
 </div>
 
+<!-- Toast Notification -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="vehicleAddedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success">
+            <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ session('vehicle_added') }}
+        </div>
+    </div>
+</div>
+
 <script>
+
+    // Check if there's a vehicle added message in session
+    @if (session('vehicle_added'))
+        // Show the toast
+        var toastEl = new bootstrap.Toast(document.getElementById('vehicleAddedToast'));
+        toastEl.show();
+    @endif
     function populateModal(element){
         //Get Data from clicked link
         const car_image = element.getAttribute('data-vehicle-image');

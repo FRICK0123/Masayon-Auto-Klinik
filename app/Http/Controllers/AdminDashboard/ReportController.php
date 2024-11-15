@@ -179,6 +179,52 @@ class ReportController extends Controller
         );
     }
 
+    public function exportCustomerPdf(Request $request)
+    {
+        // Retrieve filtering parameters
+        $interval = $request->input('interval', 'daily');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $today = Carbon::parse(Carbon::today()->toDateString());
+
+        // Apply filtering based on the date range and interval
+        if ($startDate && $endDate) {
+            $startDate = Carbon::parse($startDate);
+            $endDate = Carbon::parse($endDate);
+            $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [$startDate,$endDate])->orderBy('created_at','desc')->get();
+            $interval = "From " . $startDate->format('F j, Y') . " to " . $endDate->format('F j, Y');
+        } else {
+            switch ($interval) {
+                case 'weekly':
+                    $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('created_at', 'desc')->get();
+                    break;
+                case 'monthly':
+                    $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [
+                        Carbon::now()->startOfMonth(),
+                        Carbon::now()->endOfMonth()
+                    ])->orderBy('created_at', 'desc')->get();
+                    break;
+                case 'yearly':
+                    $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [
+                        Carbon::now()->startOfYear(),
+                        Carbon::now()->endOfYear()
+                    ])->orderBy('created_at', 'desc')->get();
+                    break;
+                default:
+                    $customers = Customer::where('usertype', 'customer')->whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
+            }
+        }
+
+        // Generate the PDF with the filtered transactions
+        $pdf = PDF::loadView('pages.admin_pages.pdf_reports.pdf_customer_registrations', [
+            'customers' => $customers,
+            'interval' => $interval,
+        ]);
+
+        // Stream the PDF to the browser
+        return $pdf->stream('customer_registration_report.pdf');
+    }
+
     public function customerReportsByDateRange(Request $request)
     {
         $startDate = Carbon::parse($request->input('start_date'));
@@ -225,5 +271,40 @@ class ReportController extends Controller
             'models' => $models,
             'years' => $years,
         ]);
+    }
+
+    public function generateCustomerVehiclesPdf(Request $request)
+    {
+        // Retrieve the filtered data using the same logic as customerVehiclesView
+        $query = Vehicle::with('customer')->orderBy('created_at', 'desc');
+
+        // Apply filters based on the dropdown selections
+        if ($request->filled('make')) {
+            $query->where('make', $request->make);
+        }
+        if ($request->filled('model')) {
+            $query->where('model', $request->model);
+        }
+        if ($request->filled('year')) {
+            $query->where('year_of_manufacture', $request->year);
+        }
+
+        $vehicles = $query->get();
+        $vehicleCount = $vehicles->count();
+
+        // Prepare the data for the PDF
+        $data = [
+            'vehicles' => $vehicles,
+            'vehicleCount' => $vehicleCount,
+            'makes' => Vehicle::select('make')->distinct()->pluck('make'),
+            'models' => Vehicle::select('model')->distinct()->pluck('model'),
+            'years' => Vehicle::select('year_of_manufacture')->distinct()->pluck('year_of_manufacture'),
+        ];
+
+        // Generate the PDF using the pdf_customer_vehicles view
+        $pdf = PDF::loadView('pages.admin_pages.pdf_reports.pdf_customer_vehicles', $data);
+
+        // Stream the generated PDF
+        return $pdf->stream('customer_vehicles_report.pdf');
     }
 }

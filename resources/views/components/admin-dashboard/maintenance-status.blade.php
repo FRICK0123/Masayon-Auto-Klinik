@@ -118,6 +118,19 @@
   </div>
 </div>
 
+<!--Maintenance Task Added Toast Notification -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="appointmentAdded" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success">
+            <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ session('appointment') }}
+        </div>
+    </div>
+</div>
+
 <!--Javascript-->
     <script>
         function fillData(element){
@@ -143,5 +156,12 @@
             document.getElementById('scheduled_interval').value = scheduled_interval;
             document.getElementById('oil_type').value = oil_type;
         }
+
+    // Check if there's an appointment added message in session
+    @if (session('appointment'))
+        // Show the toast
+        var toastEl = new bootstrap.Toast(document.getElementById('appointmentAdded'));
+        toastEl.show();
+    @endif
     </script>
 <!--end-->

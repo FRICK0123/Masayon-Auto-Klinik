@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-
+    <img src="{{ public_path('Images/Masayon Auto Klinik Logo.png') }}" alt="Masayon Logo" width="100">
     <h1>Customer Vehicles Report</h1>
     <p>Date: {{Carbon\Carbon::parse(now())->format('F j, Y')}}</p>
 

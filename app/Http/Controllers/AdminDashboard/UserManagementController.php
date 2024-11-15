@@ -97,27 +97,11 @@ class UserManagementController extends Controller
             'usertype' => 'customer',
             'last_seen' => Carbon::now(),
         ]);
+        session()->flash('customer_added', $request->input('register_fullname') . " Successfully Registered!");
 
         // Redirect to the users view page
         return to_route('users_view');
     }
-
-
-    //Users Filter
-    // public function userFilter(Request $request)
-    // {
-    //     $filter_value = $request->input('filter_users');
-
-    //     if ($filter_value == "by_fullname") {
-    //         $customer=Customer::where('usertype','customer')->orderBy('fullname', 'asc')->paginate(10);
-    //     } elseif ($filter_value == "by_username") {
-    //         $customer = Customer::where('usertype','customer')->orderBy('username', 'asc')->paginate(10);
-    //     } elseif ($filter_value == "by_creation") {
-    //         $customer = Customer::where('usertype','customer')->orderBy('created_at', 'desc')->paginate(10);
-    //     }
-
-    //     return view('pages.admin_pages.admin_user_management', ["users" => $customer]);
-    // }
 
     //View Users page
     public function viewUserInfo($customerID){
@@ -191,7 +175,9 @@ class UserManagementController extends Controller
             'plate_number' => $plate_number,
             'isDeactivated' => false,
         ]);
-
+        
+        // Set a session flash message
+        session()->flash('vehicle_added', "$car_make $car_model $year_of_manufacture Successfully Added!");
         $vehicles = Vehicle::where('customerID', $customerID)->get();
         $customer = Customer::where('customerID', $customerID)->first();
         return view('pages.admin_pages.admin_users.admin_view_user_vehicles', ['vehicles' => $vehicles, 'customer' => $customer]);
@@ -313,7 +299,9 @@ class UserManagementController extends Controller
                 ]);
             }
 
-            return to_route('users_view');
+            session()->flash('schedule',"Maintenance Schedule Added");
+
+            return to_route('admin_appointment_view');
         }
     }
 
@@ -432,8 +420,8 @@ class UserManagementController extends Controller
                     'isRegarded' => false,
                 ]);
             }
-
-            return to_route('users_view');
+            session()->flash('appointment',"Maintenance Task Added");
+            return to_route('maintenance_status_view');
         }
     }
 
@@ -448,6 +436,7 @@ class UserManagementController extends Controller
         $newPassword = Hash::make($request->input('new_password'));
 
         Customer::where('customerID',$customerID)->update(['password'=>$newPassword]);
+        session()->flash('password_changed', "Password Successfully Changed");
         return to_route('users_view');
     }
 
@@ -464,7 +453,7 @@ class UserManagementController extends Controller
             'phone_number' => $phone_number,
             'username' => $username,
         ]);
-
+        session()->flash('details_edited', "Customer Details Successfully Updated");
         return to_route('users_view');
     }
 
@@ -515,6 +504,7 @@ class UserManagementController extends Controller
         MaintenanceSchedule::where('customerID', $customerID)->update([
             'isDeactivated' => true
         ]);
+        session()->flash('deactivate',"Customer Successfully Deactivated");
 
         return to_route('users_view');
     }
@@ -534,6 +524,7 @@ class UserManagementController extends Controller
             'isDeactivated' => false
         ]);
 
+        session()->flash('activate', "Customer Successfully Activated");
         return to_route('users_view');
     }
 
@@ -554,17 +545,42 @@ class UserManagementController extends Controller
             $customer->delete();
         }
 
+        session()->flash('customer_deleted',"Customer Successfully Deleted!");
+
         return to_route('users_view');
     }
 
     public function deleteVehicle($vehicleID){
         $vehicle = Vehicle::where('vehicleID', $vehicleID)->first();
+        $make = $vehicle['make'];
+        $model = $vehicle['model'];
+        $year_of_manufacture = $vehicle['year_of_manufacture'];
 
-        if($vehicle){
-            MaintenanceSchedule::where('vehicleID',$vehicleID)->delete();
+        if ($vehicle) {
+            // Delete related maintenance schedules for this vehicle
+            MaintenanceSchedule::where('vehicleID', $vehicleID)->delete();
+
+            // Delete only the specific vehicle
             $vehicle->delete();
+
+            session()->flash('vehicle_deleted', "$make $model $year_of_manufacture Successfully Deleted!");
         }
 
+        return to_route('users_view');
+    }
+
+    public function unverifyCustomer($customerID){
+        $customer = Customer::where('customerID', $customerID)->update(['isVerified'=>false]);
+
+        session()->flash('unverify',"Customer Successfully Unverified");
+        return to_route('users_view');
+    }
+
+    public function verifyCustomer($customerID)
+    {
+        $customer = Customer::where('customerID', $customerID)->update(['isVerified' => true]);
+
+        session()->flash('verify', "Customer Successfully Verified");
         return to_route('users_view');
     }
 }

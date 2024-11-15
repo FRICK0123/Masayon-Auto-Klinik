@@ -150,6 +150,8 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/activate_customer/{customerID}', 'activateCustomer')->name('activate_customer');
         Route::delete('/delete_user/{customerID}','deleteUser');
         Route::delete('/delete_vehicle/{vehicleID}','deleteVehicle');
+        Route::get('/unverify-customer/{customerID}','unverifyCustomer')->name('unverify_customer');
+        Route::get('/verify-customer/{customerID}', 'verifyCustomer')->name('verify_customer');
     });
 //end
 
@@ -193,6 +195,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/customer_vehicles','customerVehiclesView')->name('customer_vehicles_view');
         Route::get('/generate_customer_vehicles_pdf', 'generateCustomerVehiclesPdf')->name('generate_customer_vehicles_pdf');
         Route::get('/export-transaction-pdf', 'exportTransactionPdf')->name('export.transaction.pdf');
+        Route::get('/export-customer-pdf', 'exportCustomerPdf')->name('export.customer_pdf');
     });
 //end
 

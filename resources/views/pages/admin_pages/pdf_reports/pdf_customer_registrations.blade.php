@@ -37,34 +37,28 @@
 <body>
     <img src="{{ public_path('Images/Masayon Auto Klinik Logo.png') }}" alt="Masayon Logo" width="100">
     <div class="header">
-        <h1>Maintenance Transactions Report ({{ $interval }})</h1>
+        <h1>Customer Registration Report ({{ $interval }})</h1>
         <p>Date Generated: {{ \Carbon\Carbon::now()->format('F j, Y') }}</p>
     </div>
 
     <table width="100%">
         <thead>
             <tr>
-                <th>Vehicle</th>
-                <th>Owner</th>
-                <th>Maintenance Type</th>
-                <th>Oil type</th>
-                <th>PMS Services</th>
-                <th>Cost</th>
-                <th>Description</th>
-                <th>Date Performed</th>
+                <th>Fullname</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Username</th>
+                <th>Date Registered</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($transaction as $item)
+            @foreach ($customers as $customer)
             <tr>
-                <td>{{ $item->vehicle }}</td>
-                <td>{{ $item->owner }}</td>
-                <td>{{ $item->maintenance_type }}</td>
-                <td>{{ $item->oil_type }}</td>
-                <td>{{ $item->pms_services }}</td>
-                <td>₱{{ number_format($item->cost, 2) }}</td>
-                <td>{{ $item->maintenance_description }}</td>
-                <td>{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}</td>
+                <td>{{ $customer->fullname }}</td>
+                <td>{{ $customer->email }}</td>
+                <td>+63{{ $customer->phone_number }}</td>
+                <td>{{ $customer->username }}</td>
+                <td>{{ $customer->created_at }}</td>
             </tr>
             @endforeach
         </tbody>

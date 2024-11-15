@@ -9,7 +9,7 @@ class Vehicle extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = "customerID";
+    protected $primaryKey = "vehicleID";
     protected $fillable = [
         'customerID',
         'vehicle_image',

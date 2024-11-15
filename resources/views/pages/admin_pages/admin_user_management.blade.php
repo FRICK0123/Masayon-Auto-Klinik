@@ -160,9 +160,9 @@
 
                                                 <li>
                                                     @if ($user['isVerified'] == false)
-                                                        <a class="dropdown-item" href="#">Verify</a>
+                                                        <a class="dropdown-item" href="{{ route('verify_customer',$user['customerID']) }}">Verify</a>
                                                     @else
-                                                        <a class="dropdown-item" href="#">Unverify</a>
+                                                        <a class="dropdown-item" href="{{ route('unverify_customer',$user['customerID']) }}">Unverify</a>
                                                     @endif
                                                 </li>
 
@@ -321,6 +321,123 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Car Deleted Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="vehicleDeletedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-danger">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('vehicle_deleted') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Password Changed Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="passwordChanged" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('password_changed') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Details Update Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="detailsChanged" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('details_edited') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Unverify Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="unverifyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('unverify') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer verify Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="verifyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('verify') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Deactivate Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="deactivateToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('deactivate') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer activate Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="activateToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('activate') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Deleted Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="customerDeleteToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('customer_deleted') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Added Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="customerAddedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('customer_added') }}
+                    </div>
+                </div>
+            </div>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->
@@ -400,6 +517,64 @@
 
             document.getElementById('userDeleteForm').action = `/delete_user/${customerID}`;
         }
+
+        // Check if there's a vehicle deleted message in session
+        @if (session('vehicle_deleted'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('vehicleDeletedToast'));
+            toastEl.show();
+        @endif
+
+        // Check if there's a password changed message in session
+        @if (session('password_changed'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('passwordChanged'));
+            toastEl.show();
+        @endif
+
+        // Check if there's a details changed message in session
+        @if (session('details_edited'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('detailsChanged'));
+            toastEl.show();
+        @endif
+
+        // Check if there's a details changed message in session
+        @if (session('unverify'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('unverifyToast'));
+            toastEl.show();
+        @endif
+
+        @if (session('verify'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('verifyToast'));
+            toastEl.show();
+        @endif
+
+        @if (session('deactivate'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('deactivateToast'));
+            toastEl.show();
+        @endif
+
+        @if (session('activate'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('activateToast'));
+            toastEl.show();
+        @endif
+
+        @if (session('customer_deleted'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('customerDeleteToast'));
+            toastEl.show();
+        @endif
+
+        @if (session('customer_added'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('customerAddedToast'));
+            toastEl.show();
+        @endif
     </script>
 </body>
 
