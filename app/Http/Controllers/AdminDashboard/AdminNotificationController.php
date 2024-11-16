@@ -21,7 +21,7 @@ class AdminNotificationController extends Controller
         $maintenance_type = $request->input('maintenance_type');
         $scheduled_date = $request->input('scheduled_date');
         $scheduled_date_orig = $request->input('scheduled_date_orig');
-        $content = "Good Day Sir/Ma'am ". $owner. ", we would like to inform you that your ". $vehicle. " is due for ". $maintenance_type. " on ". $scheduled_date. ". PLease arrive within the scheduled date to keep your vehicle on top condition";
+        $content = "Good Day Sir/Ma'am ". $owner. ", we would like to inform you that your ". $vehicle. " is due for ". $maintenance_type. " on ". $scheduled_date. ". Please arrive within the scheduled date to keep your vehicle on top condition";
 
         $customer = Customer::where('customerID',$customerID)->first();
         $customerNum = "+63".$customer['phone_number'];

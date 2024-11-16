@@ -122,7 +122,23 @@
                                         <td>{{ $vehicle->customer->fullname }}</td>
                                         <td>{{ $vehicle->milage }}</td>
                                         <td>{{Carbon\Carbon::parse($vehicle->created_at)->format('F j, Y')}}</td>
-                                        <td><button class="btn btn-dark btn-sm rounded-pill">View</button></td>
+                                        <td>
+                                            <button class="btn btn-dark btn-sm rounded-pill"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#vehicleModal"
+                                            data-owner="{{ $vehicle->customer->fullname }}"
+                                            data-vehicle-image="{{ asset('Images/car_images/'.$vehicle->vehicle_image) }}"
+                                            data-make="{{ $vehicle->make }}"
+                                            data-model="{{ $vehicle->model }}"
+                                            data-year="{{ $vehicle->year_of_manufacture }}"
+                                            data-milage="{{ $vehicle->milage }}"
+                                            data-engine-number="{{ $vehicle->engine_number }}"
+                                            data-vin="{{ $vehicle->vehicle_identification_number }}"
+                                            data-chassis-number="{{ $vehicle->chassis_number }}"
+                                            data-plate-number="{{ $vehicle->plate_number }}"
+                                            data-engine-type="{{ $vehicle->engine_type }}"
+                                            onclick="viewVehicle(this)">View</button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -130,9 +146,67 @@
                     </div>
                 </div>
             </div>
+
+            <!-- View Vehicle Modal -->
+            <div class="modal fade" id="vehicleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel"><span id="owner"></span> Vehicle</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <a href="" id="vehicle_image_link" target="_blank"><img src="" alt="Vehicle Image" width="200" height="200" id="vehicle_image"></a><br><br>
+
+                    <p><strong>Make: </strong><span id="make"></span></p>
+                    <p><strong>Model: </strong><span id="model"></span></p>
+                    <p><strong>Year of Manufacture: </strong><span id="year_of_manufacture"></span></p>
+                    <p><strong>Mileage: </strong><span id="milage"></span></p>
+                    <p><strong>Engine Number: </strong><span id="engine_number"></span></p>
+                    <p><strong>VIN: </strong><span id="vin"></span></p>
+                    <p><strong>Chassis Number: </strong><span id="chassis_number"></span></p>
+                    <p><strong>Plate Number: </strong><span id="plate_number"></span></p>
+                    <p><strong>Engine Type: </strong><span id="engine_type"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+            </div>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->
+
+    <script>
+        function viewVehicle(element){
+            const owner = element.getAttribute('data-owner');
+            const vehicle_image = element.getAttribute('data-vehicle-image');
+            const make = element.getAttribute('data-make');
+            const model = element.getAttribute('data-model');
+            const year_of_manufacture = element.getAttribute('data-year');
+            const milage = element.getAttribute('data-milage');
+            const engine_number = element.getAttribute('data-engine-number');
+            const vin = element.getAttribute('data-vin');
+            const chassis_number = element.getAttribute('data-chassis-number');
+            const plate_number = element.getAttribute('data-plate-number');
+            const engine_type = element.getAttribute('data-engine-type');
+
+            document.getElementById('owner').innerHTML = owner;
+            document.getElementById('vehicle_image').src = vehicle_image;
+            document.getElementById('vehicle_image_link').href = vehicle_image;
+            document.getElementById('make').innerHTML = make;
+            document.getElementById('model').innerHTML = model;
+            document.getElementById('year_of_manufacture').innerHTML = year_of_manufacture;
+            document.getElementById('milage').innerHTML = milage;
+            document.getElementById('engine_number').innerHTML = engine_number;
+            document.getElementById('vin').innerHTML = vin;
+            document.getElementById('chassis_number').innerHTML = chassis_number;
+            document.getElementById('plate_number').innerHTML = plate_number;
+            document.getElementById('engine_type').innerHTML = engine_type;
+
+        }
+    </script>
 </body>
 
 </html>
