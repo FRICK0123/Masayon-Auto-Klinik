@@ -88,7 +88,7 @@ class ManagerReportsController extends Controller
 
     public function customerReportsView(){
         $today = Carbon::parse(Carbon::today()->toDateString());
-        $customers = Customer::where('created_at', $today)
+        $customers = Customer::whereDate('created_at', $today)
             ->orderBy('created_at', 'desc')
             ->where('usertype','customer')
             ->paginate(6); // Paginate with 6 records per page
@@ -126,7 +126,7 @@ class ManagerReportsController extends Controller
                 ])->where('usertype', 'customer')->orderBy('created_at', 'desc')->paginate(6)->appends(['interval' => $interval]);
                 break;
             default:
-                $customers = Customer::where('created_at', $today)
+                $customers = Customer::whereDate('created_at', $today)
                 ->where('usertype','customer')
                 ->orderBy('created_at', 'desc')
                 ->paginate(6)

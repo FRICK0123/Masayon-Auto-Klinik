@@ -5,6 +5,7 @@ use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\AdminDashboard\AdminAppointmentController;
 use App\Http\Controllers\AdminDashboard\AdminController;
 use App\Http\Controllers\AdminDashboard\AdminNotificationController;
+use App\Http\Controllers\AdminDashboard\AdminProfileController;
 use App\Http\Controllers\AdminDashboard\CarsController;
 use App\Http\Controllers\AdminDashboard\MaintenanceHistoryController;
 use App\Http\Controllers\AdminDashboard\MaintenanceOverviewController;
@@ -213,6 +214,13 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(AdminAppointmentController::class)->group(function () {
         Route::get('/customer_appointements', 'adminAppointmentView')->name('admin_appointment_view');
         Route::get('/appointments_by_date_range', 'appointmentsByDateRange')->name('appointments_by_date_range');
+    });
+//end
+
+//Routes for Admin Profile
+    Route::middleware(['auth:admin'])->controller(AdminProfileController::class)->group(function () {
+        Route::get('/admin-profile','adminProfileView')->name('admin_profile');
+        Route::post('/admin-change-password/{adminID}','changePassword');
     });
 //end
 

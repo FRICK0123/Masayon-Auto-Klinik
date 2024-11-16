@@ -21,6 +21,7 @@ class CarsController extends Controller
             $cars = Car::where('car_make', 'LIKE', "%{$searchTerm}%")
                 ->orWhere('car_model', 'LIKE', "%{$searchTerm}%")
                 ->orWhere('year_of_manufacture', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('engine_type', 'LIKE', "%{$searchTerm}%")
                 ->orderBy('car_make', 'asc')
                 ->get();
         }

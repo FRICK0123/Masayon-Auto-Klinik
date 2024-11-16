@@ -17,7 +17,10 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
-            'username' => 'admin',
+            'admin_logo' => 'Masayon Auto Klinik Logo.png',
+            'email' => 'Makdiagnostic01@gmail.com',
+            'phone_number' => '9171462724',
+            'username' => 'Admin',
             'password' => bcrypt('admin123'),
             'usertype' => 'admin',
         ];

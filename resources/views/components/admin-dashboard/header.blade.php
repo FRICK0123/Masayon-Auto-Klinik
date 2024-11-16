@@ -7,7 +7,7 @@
             Admin
         </button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('admin_profile') }}">Profile</a></li>
             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Logout</a></li>
         </ul>
     </div>

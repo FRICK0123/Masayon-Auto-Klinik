@@ -58,6 +58,8 @@ class ManagerManagementController extends Controller
             'last_seen' => Carbon::now(),
         ]);
 
+        session()->flash('manager_created', "Manager Successfully Registered");
+
         return to_route('managers_view');
     }
 

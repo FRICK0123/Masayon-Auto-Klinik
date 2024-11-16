@@ -45,7 +45,7 @@
 
                 <!--Password-->
                 <label for="register_password" class="fw-bold mt-4">Password:</label>
-                <input type="password" class="form-control mt-1 border border-1 border-dark" name="register_password" id="register_password" placeholder="********" autocomplete="off" required>
+                <input type="password" class="form-control mt-1 border border-1 border-dark" name="register_password" id="register_password" placeholder="********" autocomplete="off" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$" title="Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 8 characters long.">
                 <div class="container d-flex mt-2">
                     <input type="checkbox" id="showPassword" class="me-2" onclick="showP()">
                     <label for="showPassword">Show Password</label>
@@ -56,7 +56,7 @@
 
                 <!--Confirm Password-->
                 <label for="confirm_password" class="fw-bold mt-4">Confirm Password:</label>
-                <input type="password" class="form-control mt-1 border border-1 border-dark" name="confirm_password" id="confirm_password" placeholder="********" autocomplete="off" required>
+                <input type="password" class="form-control mt-1 border border-1 border-dark" name="confirm_password" id="confirm_password" placeholder="********" autocomplete="off" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$" title="Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 8 characters long.">
                 <div class="container d-flex mt-2">
                     <input type="checkbox" id="showConfirmPassword" class="me-2" onclick="showConfirm()">
                     <label for="showConfirmPassword">Show Password</label>

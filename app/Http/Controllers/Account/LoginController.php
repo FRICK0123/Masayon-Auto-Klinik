@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -58,6 +59,14 @@ class LoginController extends Controller
                     return to_route('manager_dashboard');
                 }
         } else if(Auth::guard('admin')->attempt($validate)){
+            $admin = Admin::where('adminID',Auth::guard('admin')->id())->first();
+            Session::put([
+                'adminID' => $admin['adminID'],
+                'admin_logo' => $admin['admin_logo'],
+                'email' => $admin['email'],
+                'phone_number' => $admin['phone_number'],
+                'username' => $admin['username'],
+            ]);
             return to_route('admin_dashboard');
         } else {
             echo "not logged in";

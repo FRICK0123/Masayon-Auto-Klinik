@@ -57,7 +57,7 @@
                         {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
 
                         <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
-                        <input type="text" class="input-search" placeholder="Search Customer" name="search_customers">
+                        <input type="text" class="input-search" placeholder="Search Manager" name="search_customers">
                     </form>
                 </div><br>
 
@@ -257,6 +257,18 @@
                     </div>
                 </div>
             <!--end-->
+            <!-- Manager Added Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="managerAddedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('manager_created') }}
+                    </div>
+                </div>
+            </div>
         </x-admin-dashboard.admin-content>
     </main>
     <!--End-->
@@ -322,6 +334,12 @@
             document.getElementById('fullname').innerHTML = fullname;
             document.getElementById('changePassForm').action = `/change_password/${customerID}`;
         }
+
+        @if (session('manager_created'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('managerAddedToast'));
+            toastEl.show();
+        @endif
     </script>
 </body>
 
