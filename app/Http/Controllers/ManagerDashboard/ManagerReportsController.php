@@ -11,19 +11,31 @@ use Illuminate\Http\Request;
 class ManagerReportsController extends Controller
 {
     //Manager Reports View
-    public function reportsView(){
+    public function reportsView(Request $request)
+    {
         $today = Carbon::parse(Carbon::today()->toDateString());
-        $transaction = MaintenanceHistory::where('date_performed', $today)
-            ->orderBy('date_performed', 'desc')
-            ->paginate(6); // Paginate with 6 records per page
-
         $interval = 'daily';
+
+        // Get the search query from the form
+        $searchQuery = $request->input('search_report');
+
+        // Modify the query to filter by search term if provided
+        $transaction = MaintenanceHistory::where('date_performed', $today)
+        ->when($searchQuery, function ($query, $searchQuery) {
+            return $query->where('vehicle', 'like', '%' . $searchQuery . '%')
+            ->orWhere('vehicle', 'like', '%' . $searchQuery . '%')
+            ->orWhere('owner', 'like', '%' . $searchQuery . '%')
+            ->orWhere('maintenance_type', 'like', '%' . $searchQuery . '%');
+        })
+        ->orderBy('date_performed', 'desc')
+        ->paginate(6); // Paginate with 6 records per page
 
         return view('pages.manager_pages.manager_reports', [
             'transaction' => $transaction,
             'interval' => $interval,
         ]);
     }
+    
 
     public function managerReportsTransactionFilter(Request $request)
     {

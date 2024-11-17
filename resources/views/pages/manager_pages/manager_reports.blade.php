@@ -31,11 +31,10 @@
                 <div class="d-flex flex-column flex-lg-row justify-content-between align-items-center pb-2 bg-white p-3 rounded-3 shadow-sm mt-5 mt-lg-0">
                     <h5 class="pt-2">REPORTS</h5>
 
-                        <form action="#" method="GET" class="search-box me-2">
+                        <form action="{{ route('manager_reports_view') }}" method="GET" class="search-box me-2">
                             @csrf
-                            {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
-                            <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
-                            <input type="text" class="input-search" placeholder="Search Report">
+                            <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Report" width="30"></button>
+                            <input type="text" class="input-search" placeholder="Search Report" name="search_report">
                         </form>
                 </div>
             </div>
@@ -84,8 +83,21 @@
                                     <h5 class="card-title">Vehicle: {{ $item['vehicle'] }}</h5>
                                     <p class="card-text">Owner: {{ $item['owner'] }}</p>
                                     <p class="card-text">Maintenance Type: {{ $item['maintenance_type'] }}</p>
-                                    <p class="card-text">Date Performed: {{ $item['date_performed'] }}</p>
-                                    <a href="#" class="btn btn-primary mt-auto">View Details</a>
+                                    <p class="card-text">Date Performed: {{ \Carbon\Carbon::parse($item['date_performed'])->format('F j, Y') }}</p>
+                                    <a href="#" class="btn btn-dark mt-auto"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#view_transaction"
+                                    data-owner="{{ $item['owner'] }}"
+                                    data-vehicle="{{ $item['vehicle'] }}"
+                                    data-previous-milage="{{ $item['previous_milage'] }}"
+                                    data-current-milage="{{ $item['current_milage'] }}"
+                                    data-maintenance-type="{{ $item['maintenance_type'] }}"
+                                    data-oil-type="{{ $item['oil_type'] }}"
+                                    data-pms-services="{{ $item['pms_services'] }}"
+                                    data-cost="{{ $item['cost'] }}"
+                                    data-date-performed="{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}"
+                                    data-maintenance-description="{{ $item['maintenance_description'] }}"
+                                    onclick="populateModal(this)">View Details</a>
                                 </div>
                             </div>
                         </div>
@@ -93,11 +105,94 @@
                 </div>
                 <!-- Pagination Links -->
                 <div class="d-flex justify-content-center mt-4">
-                    {{ $transaction->appends(['interval' => $interval])->links() }}
+                    {{ $transaction->appends(['interval' => $interval, 'search_report' => request()->input('search_report')])->links() }}
                 </div>
+            </div>
+            <!--View Transaction-->
+            <div class="modal fade" id="view_transaction" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h1 class="modal-title fs-5">Transaction Information</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="fw-bold">Owner:</label>
+                    <p id="owner"></p>
+
+                    <label class="fw-bold">Vehicle:</label>
+                    <p id="vehicle"></p>
+
+                    <label class="fw-bold">Previous Mileage:</label>
+                    <p id="previous_milage"></p>
+
+                    <label class="fw-bold">Current Mileage:</label>
+                    <p id="current_milage"></p>
+
+                    <label class="fw-bold">Maintenance Type:</label>
+                    <p id="maintenance_type"></p>
+
+                    <label class="fw-bold" id="oil_type_label">Oil Type:</label>
+                    <p id="oil_type"></p>
+
+                    <label class="fw-bold" id="pms_label">PMS Services:</label>
+                    <p id="pms_services"></p>
+
+
+                    <label class="fw-bold">Cost:</label>
+                    <p id="cost"></p>
+
+                    <label class="fw-bold">Date Performed:</label>
+                    <p id="date_performed"></p>
+
+                    <label class="fw-bold">Maintenance Description:</label>
+                    <p id="maintenance_description"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
             </div>
         </x-manager-dashboard.manager-content>
     </main>
     <!--End-->
+
+    <script>
+        function populateModal(element){
+            const owner = element.getAttribute('data-owner');
+            const vehicle = element.getAttribute('data-vehicle');
+            const previous_milage = element.getAttribute('data-previous-milage');
+            const current_milage = element.getAttribute('data-current-milage');
+            const maintenance_type = element.getAttribute('data-maintenance-type');
+            const oil_type = element.getAttribute('data-oil-type');
+            const pms_services = element.getAttribute('data-pms-services');
+            const cost = element.getAttribute('data-cost');
+            const date_performed = element.getAttribute('data-date-performed');
+            const maintenance_description = element.getAttribute('data-maintenance-description');
+
+            document.getElementById('owner').innerHTML = owner;
+            document.getElementById('vehicle').innerHTML = vehicle;
+            document.getElementById('previous_milage').innerHTML = previous_milage;
+            document.getElementById('current_milage').innerHTML = current_milage;
+            document.getElementById('maintenance_type').innerHTML = maintenance_type;
+            if(oil_type == ""){
+                document.getElementById('oil_type_label').style.display = "none";
+            }else{
+                document.getElementById('oil_type_label').style.display = "block";
+            }
+
+            if(pms_services == ""){
+                document.getElementById('pms_label').style.display = "none";
+            }else{
+                document.getElementById('pms_label').style.display = "block";
+            }
+            document.getElementById('oil_type').innerHTML = oil_type;
+            document.getElementById('pms_services').innerHTML = pms_services;
+            document.getElementById('cost').innerHTML = `₱ ${cost}`;
+            document.getElementById('date_performed').innerHTML = date_performed;
+            document.getElementById('maintenance_description').innerHTML = maintenance_description;
+        }
+    </script>
 </body>
 </html>

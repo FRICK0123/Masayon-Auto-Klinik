@@ -40,25 +40,17 @@
                     </div>
 
                     <!--Functionalities-->
-                        <div class="d-flex justify-content-between">
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="{{asset('icons/funnel.svg')}}" alt="Filter">
-                                </button>
-                                {{-- <form id="carFilterForm" action="{{ route('car_filter') }}" method="GET" class="dropdown-menu p-2">
-                                    <input type="radio" id="by_make" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_make">
-                                    <label for="by_make" class="ms-2">By Make</label><br><br>
+                    <div class="mb-3">
+                        <form action="{{ route('manager_appointments_date_range') }}" method="GET" class="d-flex flex-column flex-md-row align-items-center gap-2">
+                            <label for="start_date" class="form-label mb-0">Start Date:</label>
+                            <input type="date" class="form-control me-2" name="start_date" required>
 
-                                    <input type="radio" id="by_model" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_model">
-                                    <label for="by_model" class="ms-2">By Model</label><br><br>
+                            <label for="end_date" class="form-label mb-0">End Date:</label>
+                            <input type="date" class="form-control me-2" name="end_date" required>
 
-                                    <input type="radio" id="by_year" name="filter_cars" class="form-check-input border border-1 border-dark" value="by_year">
-                                    <label for="by_year" class="ms-2">By Year</label><br><br>
-
-                                    <button type="submit" class="btn btn-dark">Filter</button>
-                                </form> --}}
-                            </div>
-                        </div>
+                            <button class="btn btn-dark">Filter</button>
+                        </form>
+                    </div>
                     <!--end-->
 
                     <!--Cars table-->
@@ -88,7 +80,21 @@
                                         <div class="dropdown" style="position: static;">
                                             <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">View</a></li>
+                                                <li><a class="dropdown-item" href="#"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#view_schedule"
+                                                data-view-owner="{{ $schedule->vehicle->customer->fullname }}"
+                                                data-view-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
+                                                data-view-maintenance-type="{{ $schedule->maintenance_type }}"
+                                                data-view-pms-services="{{ $schedule->PMS_services }}"
+                                                data-view-scheduled-date="{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}"
+                                                data-view-last-maintenance-date="{{ \Carbon\Carbon::parse($schedule->last_maintenance_date)->format('F j, Y') }}"
+                                                data-view-scheduled-interval="{{ $schedule->scheduled_interval }}"
+                                                data-view-oil-type="{{ $schedule->oil_type }}"
+                                                data-view-current-milage="{{ $schedule->vehicle->milage }}"
+                                                data-view-next-milage-schedule="{{ $schedule->next_milage_schedule }}"
+                                                onclick="populateModal(this)">View</a></li>
+
                                                 <li><a class="dropdown-item" href="#" 
                                                     data-bs-toggle="modal" 
                                                     data-bs-target="#update"
@@ -105,7 +111,11 @@
                                                         Confirm Appointment
                                                     </a>
                                                 </li>
-                                                <li><a class="dropdown-item" href="#">Delete Appointment</a></li>
+                                                <li><a class="dropdown-item" href="#" 
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#cancelModal"
+                                                data-maintenance-id="{{ $schedule->maintenanceID }}"
+                                                onclick="cancelFunc(this)">Delete Appointment</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -156,6 +166,115 @@
                 </div>
             </div>
             </div>
+
+            <!-- View Maintenance Schedule Modal -->
+            <div class="modal fade" id="view_schedule" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Maintenance Schedule</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="fw-bold">Owner:</label>
+                        <p id="view_owner"></p>
+                                    
+                        <label class="fw-bold">Vehicle:</label>
+                        <p id="view_vehicle"></p>
+
+                        <label class="fw-bold">Maintenance Type:</label>
+                        <p id="view_maintenance_type"></p>
+
+                        <label class="fw-bold">PMS Services:</label>
+                        <p id="view_pms_services"></p>
+
+                        <label class="fw-bold">Scheduled Date:</label>
+                        <p id="view_scheduled_date"></p>
+
+                        <label class="fw-bold">Last Maintenance Date:</label>
+                        <p id="view_last_maintenance_date"></p>
+
+                        <label class="fw-bold">Schedule Interval:</label>
+                        <p id="view_schedule_interval"></p>
+
+                        <label class="fw-bold">Oil Type:</label>
+                        <p id="view_oil_type"></p>
+
+                        <label class="fw-bold">Current Mileage:</label>
+                        <p id="view_current_milage"></p>
+
+                        <label class="fw-bold">Next Mileage Schedule:</label>
+                        <p id="view_next_milage_schedule"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule updated Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="scheduleUpdatedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('schedule_updated') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointment Cancelled Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="cancelToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('cancel') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointment Cancel Error Toast Notification -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="cancelErrorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-danger">
+                        <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('error') }}
+                    </div>
+                </div>
+            </div>
+
+            <!--Cancel Appointment Modal -->
+            <div class="modal fade" id="cancelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h1 class="modal-title fs-5 text-light">Cancel this appointment?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to cancel this appointment?
+                    </div>
+                    <div class="modal-footer">
+                        <form action="" id="cancelForm" method="POST">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-dark">Yes</button>
+                            <button type="button" class="btn border border-dark" data-bs-dismiss="modal">No</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
             </x-manager-dashboard.manager-content>
         </main>
     <!--End-->
@@ -184,6 +303,55 @@
                 document.getElementById('scheduled_interval').value = scheduled_interval;
                 document.getElementById('oil_type').value = oil_type;
             }
+
+            function populateModal(element){
+                const owner = element.getAttribute('data-view-owner');
+                const vehicle = element.getAttribute('data-view-vehicle');
+                const maintenance_type = element.getAttribute('data-view-maintenance-type');
+                const pms_services = element.getAttribute('data-view-pms-services');
+                const scheduled_date = element.getAttribute('data-view-scheduled-date');
+                const last_maintenance_date = element.getAttribute('data-view-last-maintenance-date');
+                const schedule_interval = element.getAttribute('data-view-scheduled-interval');
+                const oil_type = element.getAttribute('data-view-oil-type');
+                const current_milage = element.getAttribute('data-view-current-milage');
+                const next_milage_schedule = element.getAttribute('data-view-next-milage-schedule');
+
+                document.getElementById('view_owner').innerHTML = owner;
+                document.getElementById('view_vehicle').innerHTML = vehicle;
+                document.getElementById('view_maintenance_type').innerHTML = maintenance_type;
+                document.getElementById('view_pms_services').innerHTML = pms_services;
+                document.getElementById('view_scheduled_date').innerHTML = scheduled_date;
+                document.getElementById('view_last_maintenance_date').innerHTML = last_maintenance_date;
+                document.getElementById('view_schedule_interval').innerHTML = schedule_interval + " months";
+                document.getElementById('view_oil_type').innerHTML = oil_type;
+                document.getElementById('view_current_milage').innerHTML = current_milage;
+                document.getElementById('view_next_milage_schedule').innerHTML = next_milage_schedule;
+
+            }
+
+            function cancelFunc(element){
+                const maintenanceID = element.getAttribute('data-maintenance-id');
+
+                document.getElementById('cancelForm').action = `/appointment_cancelled/${maintenanceID}`;
+            }
+
+            @if (session('schedule_updated'))
+                // Show the toast
+                var toastEl = new bootstrap.Toast(document.getElementById('scheduleUpdatedToast'));
+                toastEl.show();
+            @endif
+
+            @if (session('cancel'))
+                // Show the toast
+                var toastEl = new bootstrap.Toast(document.getElementById('cancelToast'));
+                toastEl.show();
+            @endif
+
+            @if (session('error'))
+                // Show the toast
+                var toastEl = new bootstrap.Toast(document.getElementById('cancelErrorToast'));
+                toastEl.show();
+            @endif
         </script>
     <!--end-->
 </body>

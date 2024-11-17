@@ -175,13 +175,13 @@
 
                                         <!--Password-->
                                         <label for="register_password" class="fw-bold mt-4">Password:</label>
-                                        <input type="password" class="form-control mt-1 border border-1 border-dark" name="register_password" id="register_password" placeholder="********" autocomplete="off" required>
+                                        <input type="password" class="form-control mt-1 border border-1 border-dark" name="register_password" id="register_password" placeholder="********" autocomplete="off" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$" title="Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 8 characters long.">
                                         <div class="container d-flex mt-2">
                                             <input type="checkbox" id="showPassword" class="me-2" onclick="showP()">
                                             <label for="showPassword">Show Password</label>
                                         </div><br>  
 
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn border border-dark" data-bs-dismiss="modal">Cancel</button>
                                         <button type="submit" class="btn btn-primary">Add User</button>
                                     </form>
                                 </div>
@@ -189,6 +189,19 @@
                             </div>
                         </div>
                     <!--end-->
+
+                    <!-- Customer Added Toast Notification -->
+                    <div class="toast-container position-fixed top-0 end-0 p-3">
+                        <div id="customerAddedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header bg-success">
+                                <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                            <div class="toast-body">
+                                {{ session('customer_added') }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </x-manager-dashboard.manager-content>
         </main>
@@ -206,6 +219,13 @@
                 password_field.type = "password"
             }
         }
+
+        @if (session('customer_added'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('customerAddedToast'));
+            toastEl.show();
+        @endif
+        
     </script>
 </body>
 </html>

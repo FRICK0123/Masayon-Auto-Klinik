@@ -88,9 +88,14 @@ class CustomerManagementController extends Controller
             'email_verified_at' => now(),
             'verification_token' => null,
             'isVerified' => true,
+            'isDeactivated' => false,
             'usertype' => 'customer',
             'last_seen' => Carbon::now(),
         ]);
+
+        $fullname = $request->input('register_fullname');
+
+        session()->flash('customer_added',"$fullname has been registered successfully");
 
         return to_route('customer_management');
     }

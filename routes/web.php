@@ -243,12 +243,15 @@ Route::middleware(['auth:customer'])->controller(CustomerManagementController::c
     Route::middleware(['auth:customer'])->controller(ManagerAppointmentController::class)->group(function(){
         Route::get('/customer_appointments','appointmentView')->name('manager_appointment');
         Route::post('/appointment_update', 'managerAppointmentUpdate')->name('appointment_update');
+        Route::delete('/appointment_cancelled/{maintenanceID}','cancelAppointment');
+        Route::get('/manager-appointment-date-range','appointmentsByDateRange')->name('manager_appointments_date_range');
     });
 //end
 
 //Routes for Manager Maintenance Tasks
 Route::middleware(['auth:customer'])->controller(MaintenanceTaskController::class)->group(function(){
     Route::get('/maintenance_task', 'maintenanceTaskView')->name('maintenance_task_view');
+    Route::get('/maintenance_task/filter_by_date','filterByDateRange')->name('maintenance_task_by_date_range');
 });
 //End
 
