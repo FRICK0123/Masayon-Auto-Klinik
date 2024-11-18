@@ -9,6 +9,7 @@ use App\Models\MaintenanceSchedule;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class CustomerDashboard extends Controller
@@ -58,6 +59,17 @@ class CustomerDashboard extends Controller
             'username' => $username
         ]);
 
+        $validate = $request->validate(
+            [
+                'username' => 'unique:customers,username',
+                'email' => 'unique:customers,email'
+            ],
+            [
+                'username.unique' => 'Username is already taken',
+                'email.unique' => 'The email address is already registered.',
+            ]
+        );
+
         Session::put([
             'fullname' => $fullname,
             'email' => $email,
@@ -65,6 +77,36 @@ class CustomerDashboard extends Controller
             'username' => $username
         ]);
 
+        return to_route('customer_profile');
+    }
+
+    //Profile Image Update
+    public function updateProfile(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'profile_image' => 'required|image|mimes:jpg,jpeg,png',
+        ]);
+        // Get the uploaded file
+        $file = $request->file('profile_image');
+
+        // Define the upload path
+        $uploadPath = 'Images/profile_images/';
+
+        // Generate a unique name for the image
+        $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+        // Move the file to the specified folder
+        $file->move(public_path($uploadPath), $fileName);
+
+        $customer = DB::table('customers')->where('username', Session::get('username'))->first();
+        $profileUpdate = Customer::find($customer->{'customerID'});
+
+        $profileUpdate->profile_img = $fileName;
+        $profileUpdate->save();
+
+        Session::put('profile_img',$fileName);
+        session()->flash('profile_image',"Profile Image Successfully Updated");
         return to_route('customer_profile');
     }
 }

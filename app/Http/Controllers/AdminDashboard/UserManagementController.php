@@ -82,6 +82,17 @@ class UserManagementController extends Controller
             $profile_image = "default_user.png";
         }
 
+        $validate = $request->validate(
+            [
+                'register_username' => 'unique:customers,username',
+                'register_email' => 'unique:customers,email'
+            ],
+            [
+                'register_username.unique' => 'Username is already taken',
+                'register_email.unique' => 'The email address is already registered.',
+            ]
+        );
+
         // Create the new customer in the database
         Customer::create([
             'fullname' => $request->input('register_fullname'),

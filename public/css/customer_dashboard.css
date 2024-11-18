@@ -132,16 +132,6 @@
     font-size: clamp(10px, 2vw, 15px);
 }
 
-/* .view_car_wrapper{
-    width: 500px;
-    height: 500px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-} */
-
 .view_car_image {
     width: 100%;
     height: 300px;
@@ -308,4 +298,22 @@
     background-color: red;
     border-radius: 50%;
     position: absolute;
+}
+
+.edit_profile_img_wrapper {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+        
+.edit_profile_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: bisque;
+    border-radius: 50%;
 }

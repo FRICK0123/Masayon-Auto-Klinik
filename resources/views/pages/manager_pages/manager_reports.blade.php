@@ -43,6 +43,7 @@
                 <div class="d-flex flex-wrap gap-2">
                     <a href="#" class="btn btn-danger btn-sm rounded-pill">Transactions</a>
                     <a href="{{ route('manager_customer_reports_view') }}" class="btn border border-dark btn-sm rounded-pill">Customer Registrations</a>
+                    <a href="{{ route('manager_customer_vehicles') }}" class="btn border border-dark btn-sm rounded-pill">Customer Vehicles</a>
                 </div>
                 <h4 class="mt-3">Repair/Maintenance Transactions ({{ $interval }})</h4><br>
 

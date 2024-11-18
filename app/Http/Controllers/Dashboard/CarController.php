@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\MaintenanceHistory;
+use App\Models\MaintenanceSchedule;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -74,5 +75,26 @@ class CarController extends Controller
         $query = MaintenanceHistory::where('vehicleID', $vehicleID);
         $transactions = $query->paginate(3)->appends($request->except('page'));
         return view('pages.customer_pages.view_car',['vehicle'=>$vehicle,'transactions'=>$transactions]);
+    }
+
+    public function deleteVehicle($vehicleID)
+    {
+        $vehicle = Vehicle::where('vehicleID', $vehicleID)->first();
+        $make = $vehicle['make'];
+        $model = $vehicle['model'];
+        $year_of_manufacture = $vehicle['year_of_manufacture'];
+
+        if ($vehicle) {
+            // Delete related maintenance schedules for this vehicle
+            MaintenanceSchedule::where('vehicleID', $vehicleID)->delete();
+            MaintenanceHistory::where('vehicleID',$vehicleID)->delete();
+
+            // Delete only the specific vehicle
+            $vehicle->delete();
+
+            session()->flash('vehicle_deleted', "$make $model $year_of_manufacture Successfully Deleted!");
+        }
+
+        return to_route('customer_dashboard');
     }
 }

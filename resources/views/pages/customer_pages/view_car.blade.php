@@ -75,10 +75,12 @@
                                         <button class="btn btn-dark w-100">Appointment</button>
                                     </form>
 
-                                    <form action="#" method="POST" class="col-md-6 mt-3">
-                                        @csrf
-                                        <button class="btn btn-danger w-100">Delete Car</button>
-                                    </form>
+                                    <div class="col-md-6 mt-3">
+                                        <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteVehicleModal"
+                                        data-vehicleID="{{ $vehicle['vehicleID'] }}"
+                                        data-vehicle="{{ $vehicle['make'] }} {{ $vehicle['model'] }} {{ $vehicle['year_of_manufacture'] }}"
+                                        onclick="deleteModal(this)">Delete Car</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -177,6 +179,29 @@
         </div>  
     </div>
 
+    <!-- Delete Vehicle Modal -->
+    <div class="modal fade" id="deleteVehicleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h1 class="modal-title fs-5 text-light">Are you sure you want to delete <span id="vehicle"></span> ?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Any existing appointments and schedules related with this vehicle will also be deleted! </p>
+            </div>
+            <div class="modal-footer">
+                <form action="" method="post" id="deleteVehicleForm">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
     <script>
         function populateModal(element){
             const owner = element.getAttribute('data-owner');
@@ -211,6 +236,14 @@
             document.getElementById('cost').innerHTML = `₱ ${cost}`;
             document.getElementById('date_performed').innerHTML = date_performed;
             document.getElementById('maintenance_description').innerHTML = maintenance_description;
+        }
+
+        function deleteModal(element){
+            const vehicleID = element.getAttribute('data-vehicleID');
+            const vehicle = element.getAttribute('data-vehicle');
+
+            document.getElementById('deleteVehicleForm').action = `/delete_car/${vehicleID}`;
+            document.getElementById('vehicle').innerHTML = vehicle;
         }
     </script>
 </body>

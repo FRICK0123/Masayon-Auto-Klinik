@@ -30,11 +30,10 @@
             <div class="container">
                 <div class="d-flex flex-column flex-lg-row justify-content-between align-items-center pb-2 bg-white p-3 rounded-3 shadow-sm mt-5 mt-lg-0">
                     <h5 class="pt-2">REPORTS</h5>
-                        <form action="#" method="GET" class="search-box me-2">
+                        <form action="{{ route('manager_customer_reports_view') }}" method="GET" class="search-box me-2">
                             @csrf
-                            {{-- <input type="text" class="form-control rounded-5" placeholder="Search Customers" name="search_customers" autocomplete="off"> --}}
                             <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
-                            <input type="text" class="input-search" placeholder="Search Report">
+                            <input type="text" class="input-search" placeholder="Search Customer" name="search_customer">
                         </form>
                 </div>
             </div>
@@ -43,6 +42,7 @@
                 <div class="d-flex flex-wrap gap-2 mb-3">
                     <a href="{{ route('manager_reports_view') }}" class="btn border border-dark btn-sm rounded-pill">Transactions</a>
                     <a href="#" class="btn btn-danger btn-sm rounded-pill">Customer Registrations</a>
+                    <a href="{{ route('manager_customer_vehicles') }}" class="btn border border-dark btn-sm rounded-pill">Customer Vehicles</a>
                 </div>
                 <h4>Repair/Maintenance Transactions ({{ $interval }})</h4><br>
 
@@ -83,8 +83,8 @@
                                     <h5 class="card-title">Fullname: {{ $item['fullname'] }}</h5>
                                     <p class="card-text">Email: {{ $item['email'] }}</p>
                                     <p class="card-text">Phone Number: {{ $item['phone_number'] }}</p>
-                                    <p class="card-text">Date Registered: {{ $item['created_at'] }}</p>
-                                    <a href="#" class="btn btn-primary mt-auto">View Details</a>
+                                    <p class="card-text">Date Registered: {{ \Carbon\Carbon::parse($item['created_at'])->format('F j, Y') }}</p>
+                                    <a href="{{ route('manager_view_customer_info',$item['customerID']) }}" class="btn btn-dark mt-auto">View Customer</a>
                                 </div>
                             </div>
                         </div>

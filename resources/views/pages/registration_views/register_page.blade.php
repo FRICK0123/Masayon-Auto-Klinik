@@ -31,6 +31,9 @@
                 <!--Email Address-->
                 <label for="register_email" class="fw-bold mt-4">Email Address:</label>
                 <input type="email" class="form-control mt-1 border border-1 border-dark" name="register_email" id="register_email" placeholder="Enter Email Address" autocomplete="on" required>
+                @error('register_email')
+                    <span class="text-danger">{{ $message }}</span><br>
+                @enderror
 
                 <!--Phone Number-->
                 <label for="register_phone" class="fw-bold mt-4">Phone Number:</label>
@@ -42,6 +45,9 @@
                 <!--Username-->
                 <label for="register_username" class="fw-bold">Username:</label>
                 <input type="text" class="form-control mt-1 border border-1 border-dark" name="register_username" id="register_username" placeholder="Enter Username" autocomplete="on" required>
+                @error('register_username')
+                    <span class="text-danger">{{ $message }}</span><br>
+                @enderror
 
                 <!--Password-->
                 <label for="register_password" class="fw-bold mt-4">Password:</label>

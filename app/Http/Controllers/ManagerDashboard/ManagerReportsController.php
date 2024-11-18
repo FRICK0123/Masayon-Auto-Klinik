@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ManagerDashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\MaintenanceHistory;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -98,12 +99,23 @@ class ManagerReportsController extends Controller
         ]);
     }
 
-    public function customerReportsView(){
+    public function customerReportsView(Request $request)
+    {
         $today = Carbon::parse(Carbon::today()->toDateString());
-        $customers = Customer::whereDate('created_at', $today)
-            ->orderBy('created_at', 'desc')
-            ->where('usertype','customer')
-            ->paginate(6); // Paginate with 6 records per page
+
+        // Get the search query if it exists
+        $searchQuery = $request->input('search_customer');
+
+        // Modify the query to filter by search term if provided
+        $customers = Customer::where('created_at', $today)->where('usertype','customer')
+        ->when($searchQuery, function ($query, $searchQuery) {
+            return $query->where('fullname', 'LIKE', '%' . $searchQuery . '%')
+                ->orWhere('email', 'LIKE', '%' . $searchQuery . '%')
+                ->orWhere('phone_number', 'LIKE', '%' . $searchQuery . '%')
+                ->orWhere('username', 'LIKE', '%' . $searchQuery . '%');
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(6); // Paginate with 6 records per page
 
         $interval = 'daily';
 
@@ -172,6 +184,40 @@ class ManagerReportsController extends Controller
             'interval' => "From " . $startDate->format('F j, Y') . " to " . $endDate->format('F j, Y'),
             'start_date' => $startDate->toDateString(),
             'end_date' => $endDate->toDateString(),
+        ]);
+    }
+
+    //Customer Vehicles
+    public function customerVehiclesView(Request $request)
+    {
+        // Retrieve unique values for dropdowns from the database
+        $makes = Vehicle::select('make')->distinct()->pluck('make');
+        $models = Vehicle::select('model')->distinct()->pluck('model');
+        $years = Vehicle::select('year_of_manufacture')->distinct()->pluck('year_of_manufacture');
+
+        // Query builder for vehicle data
+        $query = Vehicle::with('customer')->orderBy('created_at', 'desc');
+
+        // Apply filters based on the dropdown selections
+        if ($request->filled('make')) {
+            $query->where('make', $request->make);
+        }
+        if ($request->filled('model')) {
+            $query->where('model', $request->model);
+        }
+        if ($request->filled('year')) {
+            $query->where('year_of_manufacture', $request->year);
+        }
+
+        $vehicles = $query->get();
+        $vehicleCount = $vehicles->count();
+
+        return view('pages.manager_pages.manager_customer_vehicles_reports', [
+            'vehicles' => $vehicles,
+            'vehicleCount' => $vehicleCount,
+            'makes' => $makes,
+            'models' => $models,
+            'years' => $years,
         ]);
     }
 }

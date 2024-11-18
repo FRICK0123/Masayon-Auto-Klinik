@@ -77,6 +77,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/car_view','addCarView')->name('car_view');
         Route::post('/add_car', 'addCar')->name('add_car');
         Route::get('/view_car/{vehicleID}', 'viewCarDetails')->name('view_car_details');
+        Route::delete('/delete_car/{vehicleID}','deleteVehicle')->name('delete_vehicle');
     });
 //end
 
@@ -100,6 +101,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/profile', 'customerProfileView')->name('customer_profile');
         Route::get('/maintenance_schedule', 'scheduleView')->name('customer_maintenance_schedule');
         Route::post('/edit_details','editCustomerDetails')->name('edit_customer_details');
+        Route::post('/profile_image/update', 'updateProfile')->name('update_profile_image');
     });
 //end
 
@@ -263,5 +265,6 @@ Route::middleware(['auth:customer'])->controller(ManagerReportsController::class
     Route::get('/customer_reports/manager','customerReportsView')->name('manager_customer_reports_view');
     Route::get('/customer_reports/filter', 'managerCustomerRegistrationsFilter')->name('customer_filters');
     Route::get('/customer_reports/by_date_range', 'reportCustomersByDateRange')->name('customers_by_date_range');
+    Route::get('/customer_reports/vehicle','customerVehiclesView')->name('manager_customer_vehicles');
 });
 //end

@@ -30,12 +30,14 @@ class RegisterController extends Controller
             [
                 'register_password' => 'min:8',
                 'confirm_password' => 'same:register_password',
-                'register_username' => 'unique:customers,username'
+                'register_username' => 'unique:customers,username',
+                'register_email' =>'unique:customers,email'
             ],
             [
                 'register_password.min' => 'The password must be at least 8 characters long',
                 'confirm_password.same' => 'Password does not match', 
                 'register_username.unique' => 'Username is already taken',
+                'register_email.unique' => 'The email address is already registered.',
             ]
         );
 

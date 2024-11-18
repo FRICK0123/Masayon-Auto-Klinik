@@ -24,7 +24,7 @@
                 @props(['vehicles'])
                 @foreach ($vehicles as $item)
                     <div class="col-md-4 mt-3">
-                        <form action="{{ route('view_car_details',$item['vehicleID']) }}" method="GET" class="card shadow border border-dark" style="height: 400px; width: 100%; overflow: hidden;" id="card">
+                        <form action="{{ route('view_car_details',$item['vehicleID']) }}" method="GET" class="card shadow border border-dark" style="height: 435px; width: 100%; overflow: hidden;" id="card">
                             @csrf
                             <img src="{{asset('Images/car_images/'.$item['vehicle_image'])}}" alt="Car Photo" style="height: 200px; width: 100%; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
@@ -43,3 +43,24 @@
             </div>
         </div>
     <!--End-->
+
+    <!-- Vehicle Deleted Toast Notification -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="vehicleDeletedToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success">
+                <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ session('vehicle_deleted') }}
+            </div>
+        </div>
+    </div>
+
+<script>
+        @if (session('vehicle_deleted'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('vehicleDeletedToast'));
+            toastEl.show();
+        @endif
+</script>
