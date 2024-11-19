@@ -48,34 +48,22 @@ class CustomerDashboard extends Controller
     //Edit Customer Profile Details
     public function editCustomerDetails(Request $request){
         $fullname = $request->input('fullname');
-        $email = $request->input('email');
         $phone = $request->input('phone');
         $username = $request->input('username');
 
         Customer::where('customerID',Auth::guard('customer')->id())->update([
             'fullname' => $fullname,
-            'email' => $email,
             'phone_number' => $phone,
             'username' => $username
         ]);
-
-        $validate = $request->validate(
-            [
-                'username' => 'unique:customers,username',
-                'email' => 'unique:customers,email'
-            ],
-            [
-                'username.unique' => 'Username is already taken',
-                'email.unique' => 'The email address is already registered.',
-            ]
-        );
 
         Session::put([
             'fullname' => $fullname,
-            'email' => $email,
             'phone_number' => $phone,
             'username' => $username
         ]);
+
+        session()->flash('details_updated',"Profile details updated successfully");
 
         return to_route('customer_profile');
     }

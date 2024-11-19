@@ -184,7 +184,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-danger">
-                <h1 class="modal-title fs-5 text-light">Are you sure you want to delete <span id="vehicle"></span> ?</h1>
+                <h1 class="modal-title fs-5 text-light">Are you sure you want to delete <span id="vehicleModal"></span> ?</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -243,7 +243,7 @@
             const vehicle = element.getAttribute('data-vehicle');
 
             document.getElementById('deleteVehicleForm').action = `/delete_car/${vehicleID}`;
-            document.getElementById('vehicle').innerHTML = vehicle;
+            document.getElementById('vehicleModal').innerHTML = vehicle;
         }
     </script>
 </body>

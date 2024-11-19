@@ -20,7 +20,7 @@
     <!--End-->
 
     <!--Header-->
-        <header>
+        <header style="z-index: 1000">
             <x-homepage.navbar/>
         </header>
     <!--Header end-->

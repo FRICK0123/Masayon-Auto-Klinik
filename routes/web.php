@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
+use App\Http\Controllers\Account\ResetPasswordController;
 use App\Http\Controllers\AdminDashboard\AdminAppointmentController;
 use App\Http\Controllers\AdminDashboard\AdminController;
 use App\Http\Controllers\AdminDashboard\AdminNotificationController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\ManagerDashboard\ManagerDashboardController;
 use App\Http\Controllers\ManagerDashboard\ManagerReportsController;
 use App\View\Components\AdminDashboard\MaintenanceOverviewContent;
 use App\View\Components\AdminDashboard\UserManagementContent;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Foundation\MaintenanceMode;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +55,13 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/login','loginView')->name('login_view');
         Route::post('/login_auth', 'loginAuth')->name('login');
         Route::post('/logout', 'logout')->name('logout');
+    });
+//end
+
+//Routes for user reset password
+    Route::controller(ResetPasswordController::class)->group(function(){
+        Route::get('/reset_password','resetPasswordView')->name('reset_password_view');
+        Route::post('reset_password/validation','resetPassword')->name('reset_password');
     });
 //end
 

@@ -115,3 +115,14 @@
         }
     }
 /*About Us Section End*/
+
+.about_heading{
+    width: 20%;
+    border-bottom: 1px solid red;
+}
+
+@media only screen and (max-width: 800px) {
+    .about_heading {
+        width: 40%;
+    }
+}

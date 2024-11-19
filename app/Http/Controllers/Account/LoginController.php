@@ -25,7 +25,7 @@ class LoginController extends Controller
 
         if(Auth::guard('customer')->attempt($validate)){
                 $customer = DB::table('customers')->where('customerID',Auth::guard('customer')->id())->first();
-                if($customer->{'email_verified_at'} === null){
+                if($customer->{'email_verified_at'} === null || $customer->{'isVerified'} === 0){
                     Session::flush();
                     return to_route('pending_view');
                 } else if($customer->{'usertype'}=="customer"){
@@ -69,7 +69,8 @@ class LoginController extends Controller
             ]);
             return to_route('admin_dashboard');
         } else {
-            echo "not logged in";
+            session()->flash('no_account',"Username and Password doesn't match!");
+            return to_route('login_view');
         }
     }
 

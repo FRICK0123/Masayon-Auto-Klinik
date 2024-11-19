@@ -52,7 +52,6 @@
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#editProfileDetails"
                             data-fullname="{{ Session::get('fullname') }}"
-                            data-email="{{ Session::get('email') }}"
                             data-phone="{{ Session::get('phone_number') }}"
                             data-username="{{ Session::get('username') }}"
                             onclick="populateEditDetails(this)">
@@ -120,12 +119,6 @@
                         <label for="fullname">Fullname:</label>
                         <input type="text" class="form-control" name="fullname" id="fullname"><br>
 
-                        <label for="email">Email Address:</label>
-                        <input type="text" class="form-control" name="email" id="email">
-                        @error('email')
-                            <span class="text-danger">{{ $message }}</span><br>
-                        @enderror
-
                         <label for="phone">Phone Number:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text">+63</span>
@@ -134,9 +127,6 @@
 
                         <label for="username">Username:</label>
                         <input type="text" class="form-control" name="username" id="username">
-                        @error('username')
-                            <span class="text-danger">{{ $message }}</span><br>
-                        @enderror
 
                         <button type="button" class="btn btn-danger mt-2" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-dark mt-2">Edit</button>
@@ -187,7 +177,7 @@
             <p id="maintenance_description"></p>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
         </div>
         </div>
     </div>
@@ -238,15 +228,26 @@
             </div>
         </div>
     </div>
+
+    <!-- Profile Details Updated Toast Notification -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="profileDetailsToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success">
+                <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ session('details_updated') }}
+            </div>
+        </div>
+    </div>
     <script>
         function populateEditDetails(element){
             const fullname = element.getAttribute('data-fullname');
-            const email = element.getAttribute('data-email');
             const phone_number = element.getAttribute('data-phone');
             const username = element.getAttribute('data-username');
 
             document.getElementById('fullname').value=fullname;
-            document.getElementById('email').value=email;
             document.getElementById('phone').value=phone_number;
             document.getElementById('username').value=username;
         }
@@ -310,17 +311,12 @@
             var toastEl = new bootstrap.Toast(document.getElementById('profileImgToast'));
             toastEl.show();
         @endif
-    </script>
 
-    @if ($errors->any())
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                let errorMessages = @json($errors->all());
-                errorMessages.forEach(message => {
-                    alert(message);
-                });
-            });
-        </script>
-    @endif
+        @if (session('details_updated'))
+            // Show the toast
+            var toastEl = new bootstrap.Toast(document.getElementById('profileDetailsToast'));
+            toastEl.show();
+        @endif
+    </script>
 </body>
 </html>

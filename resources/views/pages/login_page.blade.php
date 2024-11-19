@@ -25,9 +25,23 @@
         </div>
     @endif
 
+    @if (session('password_changed'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('password_changed') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     @if (session('error'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session('no_account'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('no_account') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
@@ -65,7 +79,7 @@
                 </div>
 
                 <div class="container mt-3 text-center">
-                    <p>Don't remember password? <a href="#">Reset Password</a></p>
+                    <p>Don't remember password? <a href="{{ route('reset_password_view') }}">Reset Password</a></p>
                     <p>Don't have an account? <a href="{{route('register_view')}}">Sign up</a></p>
                 </div>
             </form>
