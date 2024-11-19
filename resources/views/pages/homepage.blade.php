@@ -41,6 +41,12 @@
         </section>
     <!--About Us Section-->
 
+    <!--Services Section-->
+        <section class="text-center mt-5" id="services">
+            <x-homepage.services/>
+        </section>
+    <!--end-->
+
     <script src="{{asset('js/homepage.js')}}"></script>
 </body>
 </html>

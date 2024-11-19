@@ -7,7 +7,7 @@
         <div class="links d-none d-lg-flex" id="nav_links">
             <a href="#home" id="home_link">HOME</a>
             <a href="#about" id="about_link">ABOUT US</a>
-            <a href="#" id="services_link">SERVICES</a>
+            <a href="#services" id="services_link">SERVICES</a>
             <a href="#" id="maintenance_link">MAINTENANCE GUIDE</a>
             <a href="#" id="contact_link">CONTACT US</a>
         </div>

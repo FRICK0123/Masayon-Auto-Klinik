@@ -4,8 +4,8 @@
     </div>
 
     <div class="row mt-3">
-        <div class="col-md-6">
-            <div class="card mt-3" style="width: 100%; height: 100%;">
+        <div class="col-md-6 mt-3">
+            <div class="card" style="width: 100%; height: 100%;">
                 <div class="d-flex justify-content-center">
                     <img src="{{ asset('Images/mission.png') }}" alt="Mission" width="150">
                 </div>
@@ -22,8 +22,8 @@
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="card mt-3" style="width: 100%; height: 100%;">
+        <div class="col-md-6 mt-3">
+            <div class="card" style="width: 100%; height: 100%;">
                 <div class="d-flex justify-content-center">
                     <img src="{{ asset('Images/Masayon Auto Klinik Logo.png') }}" alt="Masayon Logo" width="300">
                 </div>
@@ -43,8 +43,8 @@
     </div>
 
     <div class="row mt-3">
-        <div class="col-md-6">
-            <div class="card mt-3" style="width: 100%; height: 100%;">
+        <div class="col-md-6 mt-3">
+            <div class="card" style="width: 100%; height: 100%;">
                 <div class="d-flex justify-content-center">
                     <img src="{{ asset('Images/What we do.png') }}" alt="What we do" width="200" class="img-fluid">
                 </div>
@@ -64,8 +64,8 @@
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="card mt-3" style="width: 100%; height: 100%;">
+        <div class="col-md-6 mt-3">
+            <div class="card" style="width: 100%; height: 100%;">
                 <div class="d-flex justify-content-center">
                     <img src="{{ asset('Images/car values.png') }}" alt="Values" width="250" class="img-fluid">
                 </div>
