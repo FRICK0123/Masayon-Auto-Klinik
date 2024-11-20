@@ -28,6 +28,9 @@ class LoginController extends Controller
                 if($customer->{'email_verified_at'} === null || $customer->{'isVerified'} === 0){
                     Session::flush();
                     return to_route('pending_view');
+                }else if($customer->{'isDeactivated'} === 1){
+                    Session::flush();
+                    return view('pages.deactivated_page');
                 } else if($customer->{'usertype'}=="customer"){
                     //Sessions
                         Session::put([

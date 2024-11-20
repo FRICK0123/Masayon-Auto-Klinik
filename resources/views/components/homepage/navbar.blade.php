@@ -48,9 +48,9 @@
                     <div class="homepage_sidebar container d-flex flex-column">
                         <a href="#home" onclick="navigateAndClose('homepage_sidebar');">HOME</a>
                         <a href="#about" onclick="navigateAndClose('homepage_sidebar');">ABOUT US</a>
-                        <a href="#" onclick="navigateAndClose('homepage_sidebar');">SERVICES</a>
-                        <a href="#" onclick="navigateAndClose('homepage_sidebar');">MAINTENANCE GUIDE</a>
-                        <a href="#" onclick="navigateAndClose('homepage_sidebar');">CONTACT US</a>
+                        <a href="#services" onclick="navigateAndClose('homepage_sidebar');">SERVICES</a>
+                        <a href="#maintenance_guide" onclick="navigateAndClose('homepage_sidebar');">MAINTENANCE GUIDE</a>
+                        <a href="#contact_us" onclick="navigateAndClose('homepage_sidebar');">CONTACT US</a>
 
 
                         @guest('customer')
