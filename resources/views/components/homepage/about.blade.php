@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="d-flex justify-content-center">
-        <h1 class="about_heading">About Us</h1>
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">About us</h2>
     </div>
 
     <div class="row mt-3">

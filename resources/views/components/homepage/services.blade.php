@@ -1,6 +1,7 @@
 <div class="container">
-    <div class="d-flex justify-content-center">
-        <h1 class="about_heading">Services</h1>
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Services</h2>
+      <p class="text-muted">We offer high quality services tailored for your car needs</p>
     </div>
 
     <div class="row mt-3">

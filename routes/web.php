@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminDashboard\MaintenanceStatusController;
 use App\Http\Controllers\AdminDashboard\ManagerManagementController;
 use App\Http\Controllers\AdminDashboard\ReportController;
 use App\Http\Controllers\AdminDashboard\UserManagementController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Dashboard\AppointmentController;
 use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\CustomerDashboard;
@@ -46,6 +47,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.homepage');
 })->name('homepage');
+
+Route::post('/contact', [ContactController::class, 'sendMail'])->name('contact.send');
 
 //Verify Email
 Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify'])->name('verify.email');
