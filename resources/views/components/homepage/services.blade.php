@@ -6,7 +6,7 @@
 
     <div class="row mt-3">
         <div class="col-md-4 mt-3">
-            <div class="card" style="width: 100%; height: 100%;">
+            <div class="card border border-dark" style="width: 100%; height: 100%;">
                 <div class="card-body">
                     <h5 class="card-title">Individual Services</h5>
 
@@ -28,7 +28,7 @@
         </div>
 
         <div class="col-md-4 mt-3">
-            <div class="card" style="width: 100%; height: 100%;">
+            <div class="card border border-dark" style="width: 100%; height: 100%;">
                 <div class="card-body">
                     <h5 class="card-title">Under Basic PMS</h5>
 
@@ -46,7 +46,7 @@
         </div>
 
         <div class="col-md-4 mt-3">
-            <div class="card" style="width: 100%; height: 100%;">
+            <div class="card border border-dark" style="width: 100%; height: 100%;">
                 <div class="card-body">
                     <h5 class="card-title">Under Heavy PMS</h5>
 

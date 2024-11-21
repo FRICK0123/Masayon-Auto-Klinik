@@ -33,7 +33,7 @@
             <section class="home_section container-fluid d-flex justify-content-center align-items-center flex-column" id="home">
                 <h1 class="text-light text-center">WE'LL KEEP AN EYE ON YOUR CAR'S <br> MAINTENANCE FOR YOU</h1>
                 <form action="{{ route('register_view') }}" method="GET">
-                    <button class="btn btn-dark mt-5 car_register_btn">REGISTER YOUR CAR NOW!</button>
+                    <button class="btn btn-danger mt-5 car_register_btn">REGISTER YOUR CAR NOW!</button>
                 </form>
             </section>
         <!--Home Section Ends-->

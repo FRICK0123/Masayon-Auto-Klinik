@@ -48,6 +48,10 @@
     <!--Main Content-->
     <main>
         <x-admin-dashboard.admin-content>
+            <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin_mobile_canvas">
+                <img src="{{ asset('icons/list.svg') }}" alt="Sidebar">
+            </button>
+            <x-admin-dashboard.mobile-canvas/>
             <div class="container w-75 border border-2 shadow pt-3 pb-3">
                 <h2 class="text-center">Schedule Maintenance for {{ $vehicle['make'] }} {{ $vehicle['model'] }}</h2>
                 <p class="text-secondary">Note: you cannot change the details of this car once submitted</p>

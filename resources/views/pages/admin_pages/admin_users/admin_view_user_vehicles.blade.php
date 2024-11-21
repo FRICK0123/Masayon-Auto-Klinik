@@ -49,6 +49,10 @@
     <!--Main Content-->
     <main>
         <x-admin-dashboard.admin-content>
+            <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin_mobile_canvas">
+                <img src="{{ asset('icons/list.svg') }}" alt="Sidebar">
+            </button>
+            <x-admin-dashboard.mobile-canvas/>
             <x-admin-dashboard.view-user-vehicle-info :vehicles="$vehicles" :customer="$customer"/>
         </x-admin-dashboard.admin-content>
     </main>

@@ -48,6 +48,10 @@
     <!--Main Content-->
         <main>
             <x-admin-dashboard.admin-content>
+            <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin_mobile_canvas">
+                <img src="{{ asset('icons/list.svg') }}" alt="Sidebar">
+            </button>
+            <x-admin-dashboard.mobile-canvas/>
                 <div class="container">
                     <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm">
                         <h5 class="pt-2">Admin Profile</h5>

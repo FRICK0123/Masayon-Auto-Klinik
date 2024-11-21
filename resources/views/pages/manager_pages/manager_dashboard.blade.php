@@ -264,26 +264,73 @@
                     </div>
                 </div>
 
-            <!--Customer Transactions-->
-            <div class="container table-responsive">
-                <div class="d-flex justify-content-between">
-                    @php
-                        $customer_transaction_daily_count = $customer_daily_transaction->count();
-                        $customer_transaction_weekly_count = $customer_weekly_transaction->count();      
-                    @endphp
-                    <h5 id="customer_daily_transaction_count" style="display: block;">Customer Transactions: {{ $customer_transaction_daily_count }}</h5>
-                    <h5 id="customer_weekly_transaction_count" style="display: none;">Customer Transactions: {{ $customer_transaction_weekly_count }}</h5>
+                <!--Customer Transactions-->
+                <div class="container table-responsive">
+                    <div class="d-flex justify-content-between">
+                        @php
+                            $customer_transaction_daily_count = $customer_daily_transaction->count();
+                            $customer_transaction_weekly_count = $customer_weekly_transaction->count();      
+                        @endphp
+                        <h5 id="customer_daily_transaction_count" style="display: block;">Customer Transactions: {{ $customer_transaction_daily_count }}</h5>
+                        <h5 id="customer_weekly_transaction_count" style="display: none;">Customer Transactions: {{ $customer_transaction_weekly_count }}</h5>
 
-                    <div>
-                        <button class="btn btn-sm rounded-pill me-2 btn_active" id="day_transaction_btn" style="background-color: rgb(214, 1, 1); color: white;">This Day</button>
-                        <button class="btn btn-sm rounded-pill btn_inactive" id="week_transaction_btn" style="border: 1px solid black">This Week</button>
+                        <div>
+                            <button class="btn btn-sm rounded-pill me-2 btn_active" id="day_transaction_btn" style="background-color: rgb(214, 1, 1); color: white;">This Day</button>
+                            <button class="btn btn-sm rounded-pill btn_inactive" id="week_transaction_btn" style="border: 1px solid black">This Week</button>
+                        </div>
                     </div>
-                </div>
-                    <table class="table mt-2" id="customer_daily_transaction_table" style="display: table">
-                        @if($customer_daily_transaction->isEmpty())
-                            <div class="container-fluid" style="width: 100%; height:270px; opacity: 60%; display:flex; flex-direction:column; justify-content:center; align-items:center;" id="customer_daily_transaction_empty">
-                                <img src="{{ asset('icons/gear-fine.svg') }}" alt="No Customer Transaction for today" width="100">
-                                <h6>No customer transaction for today</h6>
+                        <table class="table mt-2" id="customer_daily_transaction_table" style="display: table">
+                            @if($customer_daily_transaction->isEmpty())
+                                <div class="container-fluid" style="width: 100%; height:270px; opacity: 60%; display:flex; flex-direction:column; justify-content:center; align-items:center;" id="customer_daily_transaction_empty">
+                                    <img src="{{ asset('icons/gear-fine.svg') }}" alt="No Customer Transaction for today" width="100">
+                                    <h6>No customer transaction for today</h6>
+                                </div>
+                            @else
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>VEHICLE</th>
+                                        <th>OWNER</th>
+                                        <th>MAINTENANCE TYPE</th>
+                                        <th>COST</th>
+                                        <th>DATE PERFORMED</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($customer_daily_transaction as $item)
+                                        <tr>
+                                            <td>{{ $item->vehicle }}</td>
+                                            <td>{{ $item->owner }}</td>
+                                            <td>{{ $item->maintenance_type }}</td>
+                                            <td>₱{{ number_format($item->cost, 2) }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}</td>
+                                            <td>
+                                                <button class="btn btn-dark btn-sm rounded-pill" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#view_transaction"
+                                                data-owner="{{ $item['owner'] }}"
+                                                data-vehicle="{{ $item['vehicle'] }}"
+                                                data-previous-milage="{{ $item['previous_milage'] }}"
+                                                data-current-milage="{{ $item['current_milage'] }}"
+                                                data-maintenance-type="{{ $item['maintenance_type'] }}"
+                                                data-oil-type="{{ $item['oil_type'] }}"
+                                                data-pms-services="{{ $item['pms_services'] }}"
+                                                data-cost="{{ $item['cost'] }}"
+                                                data-date-performed="{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}"
+                                                data-maintenance-description="{{ $item['maintenance_description'] }}"
+                                                onclick="populateModal(this)">View</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            @endif
+                        </table>   
+
+                    <table class="table mt-2" id="customer_weekly_transaction_table" style="display: none">
+                        @if ($customer_weekly_transaction->isEmpty())
+                            <div class="container-fluid" style="width: 100%; height:270px; opacity: 60%; display:none; flex-direction:column; justify-content:center; align-items:center;" id="customer_weekly_transaction_empty">
+                                <img src="{{ asset('icons/gear-fine.svg') }}" alt="No Customer Transaction This Week" width="100">
+                                <h6>No customer transaction for this week</h6>
                             </div>
                         @else
                             <thead class="table-dark">
@@ -296,130 +343,83 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($customer_daily_transaction as $item)
-                                    <tr>
-                                        <td>{{ $item->vehicle }}</td>
-                                        <td>{{ $item->owner }}</td>
-                                        <td>{{ $item->maintenance_type }}</td>
-                                        <td>₱{{ number_format($item->cost, 2) }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}</td>
-                                        <td>
-                                            <button class="btn btn-dark btn-sm rounded-pill" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#view_transaction"
-                                            data-owner="{{ $item['owner'] }}"
-                                            data-vehicle="{{ $item['vehicle'] }}"
-                                            data-previous-milage="{{ $item['previous_milage'] }}"
-                                            data-current-milage="{{ $item['current_milage'] }}"
-                                            data-maintenance-type="{{ $item['maintenance_type'] }}"
-                                            data-oil-type="{{ $item['oil_type'] }}"
-                                            data-pms-services="{{ $item['pms_services'] }}"
-                                            data-cost="{{ $item['cost'] }}"
-                                            data-date-performed="{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}"
-                                            data-maintenance-description="{{ $item['maintenance_description'] }}"
-                                            onclick="populateModal(this)">View</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        @endif
-                    </table>   
+                                <tbody>
+                                    @foreach ($customer_weekly_transaction as $item)
+                                        <tr>
+                                            <td>{{ $item->vehicle }}</td>
+                                            <td>{{ $item->owner }}</td>
+                                            <td>{{ $item->maintenance_type }}</td>
+                                            <td>₱{{ number_format($item->cost, 2) }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}</td>
+                                            <td>
+                                                <button class="btn btn-dark btn-sm rounded-pill" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#view_transaction"
+                                                data-owner="{{ $item['owner'] }}"
+                                                data-vehicle="{{ $item['vehicle'] }}"
+                                                data-previous-milage="{{ $item['previous_milage'] }}"
+                                                data-current-milage="{{ $item['current_milage'] }}"
+                                                data-maintenance-type="{{ $item['maintenance_type'] }}"
+                                                data-oil-type="{{ $item['oil_type'] }}"
+                                                data-pms-services="{{ $item['pms_services'] }}"
+                                                data-cost="{{ $item['cost'] }}"
+                                                data-date-performed="{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}"
+                                                data-maintenance-description="{{ $item['maintenance_description'] }}"
+                                                onclick="populateModal(this)">View</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                        @endif 
+                    </table>
+                </div>
 
-                <table class="table mt-2" id="customer_weekly_transaction_table" style="display: none">
-                    @if ($customer_weekly_transaction->isEmpty())
-                         <div class="container-fluid" style="width: 100%; height:270px; opacity: 60%; display:none; flex-direction:column; justify-content:center; align-items:center;" id="customer_weekly_transaction_empty">
-                            <img src="{{ asset('icons/gear-fine.svg') }}" alt="No Customer Transaction This Week" width="100">
-                            <h6>No customer transaction for this week</h6>
+                <!--View Transactions Modal-->
+                <div class="modal fade" id="view_transaction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header bg-dark text-white">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Transaction Information</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                    @else
-                        <thead class="table-dark">
-                            <tr>
-                                <th>VEHICLE</th>
-                                <th>OWNER</th>
-                                <th>MAINTENANCE TYPE</th>
-                                <th>COST</th>
-                                <th>DATE PERFORMED</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                            <tbody>
-                                @foreach ($customer_weekly_transaction as $item)
-                                    <tr>
-                                        <td>{{ $item->vehicle }}</td>
-                                        <td>{{ $item->owner }}</td>
-                                        <td>{{ $item->maintenance_type }}</td>
-                                        <td>₱{{ number_format($item->cost, 2) }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}</td>
-                                        <td>
-                                            <button class="btn btn-dark btn-sm rounded-pill" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#view_transaction"
-                                            data-owner="{{ $item['owner'] }}"
-                                            data-vehicle="{{ $item['vehicle'] }}"
-                                            data-previous-milage="{{ $item['previous_milage'] }}"
-                                            data-current-milage="{{ $item['current_milage'] }}"
-                                            data-maintenance-type="{{ $item['maintenance_type'] }}"
-                                            data-oil-type="{{ $item['oil_type'] }}"
-                                            data-pms-services="{{ $item['pms_services'] }}"
-                                            data-cost="{{ $item['cost'] }}"
-                                            data-date-performed="{{ \Carbon\Carbon::parse($item->date_performed)->format('F j, Y') }}"
-                                            data-maintenance-description="{{ $item['maintenance_description'] }}"
-                                            onclick="populateModal(this)">View</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                    @endif 
-                </table>
-            </div>
+                        <div class="modal-body">
+                            <label class="fw-bold">Owner:</label>
+                            <p id="owner"></p>
 
-    <!--View Transactions Modal-->
-    <div class="modal fade" id="view_transaction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Transaction Information</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <label class="fw-bold">Owner:</label>
-                <p id="owner"></p>
+                            <label class="fw-bold">Vehicle:</label>
+                            <p id="vehicle"></p>
 
-                <label class="fw-bold">Vehicle:</label>
-                <p id="vehicle"></p>
+                            <label class="fw-bold">Previous Mileage:</label>
+                            <p id="previous_milage"></p>
 
-                <label class="fw-bold">Previous Mileage:</label>
-                <p id="previous_milage"></p>
+                            <label class="fw-bold">Current Mileage:</label>
+                            <p id="current_milage"></p>
 
-                <label class="fw-bold">Current Mileage:</label>
-                <p id="current_milage"></p>
+                            <label class="fw-bold">Maintenance Type:</label>
+                            <p id="maintenance_type"></p>
 
-                <label class="fw-bold">Maintenance Type:</label>
-                <p id="maintenance_type"></p>
+                            <label class="fw-bold" id="oil_type_label">Oil Type:</label>
+                            <p id="oil_type"></p>
 
-                <label class="fw-bold" id="oil_type_label">Oil Type:</label>
-                <p id="oil_type"></p>
-
-                <label class="fw-bold" id="pms_label">PMS Services:</label>
-                <p id="pms_services"></p>
+                            <label class="fw-bold" id="pms_label">PMS Services:</label>
+                            <p id="pms_services"></p>
 
 
-                <label class="fw-bold">Cost:</label>
-                <p id="cost"></p>
+                            <label class="fw-bold">Cost:</label>
+                            <p id="cost"></p>
 
-                <label class="fw-bold">Date Performed:</label>
-                <p id="date_performed"></p>
+                            <label class="fw-bold">Date Performed:</label>
+                            <p id="date_performed"></p>
 
-                <label class="fw-bold">Maintenance Description:</label>
-                <p id="maintenance_description"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-            </div>
-        </div>
-    </div>
+                            <label class="fw-bold">Maintenance Description:</label>
+                            <p id="maintenance_description"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
 
             </x-manager-dashboard.manager-content>
         </main>

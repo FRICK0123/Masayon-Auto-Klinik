@@ -65,10 +65,10 @@
                 <div class="mb-3">
                     <form action="{{ route('customers_by_date_range') }}" method="GET" class="d-flex flex-column flex-md-row align-items-center gap-2">
                         <label for="start_date" class="form-label mb-0">Start Date:</label>
-                        <input type="date" class="form-control me-2" name="start_date" required>
+                        <input type="date" class="form-control me-2 border border-dark" name="start_date" required>
 
                         <label for="end_date" class="form-label mb-0">End Date:</label>
-                        <input type="date" class="form-control me-2" name="end_date" required>
+                        <input type="date" class="form-control me-2 border border-dark" name="end_date" required>
 
                         <button class="btn btn-dark">Filter</button>
                     </form>

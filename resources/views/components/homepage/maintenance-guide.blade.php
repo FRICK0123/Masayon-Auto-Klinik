@@ -9,7 +9,7 @@
     <div class="row">
       <!-- Basic PMS -->
       <div class="col-md-3 mb-4">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm border border-dark">
           <div class="card-body text-center">
             <i class="bi bi-wrench-adjustable-circle fs-2 text-danger"></i>
             <h5 class="card-title mt-3">EGR Cleaning</h5>
@@ -19,7 +19,7 @@
       </div>
       <!-- Basic PMS -->
       <div class="col-md-3 mb-4">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm border border-dark">
           <div class="card-body text-center">
             <i class="bi bi-wrench-adjustable-circle fs-2 text-danger"></i>
             <h5 class="card-title mt-3">Basic PMS</h5>
@@ -45,7 +45,7 @@
 
       <!-- Heavy PMS -->
       <div class="col-md-3 mb-4">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm border border-dark">
           <div class="card-body text-center">
             <i class="bi bi-tools fs-2 text-danger"></i>
             <h5 class="card-title mt-3">Heavy PMS</h5>
@@ -80,7 +80,7 @@
 
      <!-- Oil Change -->
       <div class="col-md-3 mb-4">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm border border-dark">
           <div class="card-body text-center">
             <i class="bi bi-droplet-half fs-2 text-danger"></i>
             <h5 class="card-title mt-3">Oil Change</h5>

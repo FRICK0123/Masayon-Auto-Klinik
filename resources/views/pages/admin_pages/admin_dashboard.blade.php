@@ -49,63 +49,69 @@
     <!--Main Content-->
     <main>
         <x-admin-dashboard.admin-content>
-            <div class="container row">
-                <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm border">
+            <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin_mobile_canvas">
+                <img src="{{ asset('icons/list.svg') }}" alt="Sidebar">
+            </button>
+            <x-admin-dashboard.mobile-canvas/>
+
+            <div class="container-fluid row">
+                <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm border mt-4 mt-lg-0">
                     <h5 class="pt-2">DASHBOARD</h5>
                 </div>
 
+                <!-- CUSTOMER COUNT CARD -->
                 <div class="col-md-3">
-                    <div class="border border-success rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+                    <div class="border border-success rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 100%;">
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('icons/users.svg') }}" alt="Customers" width="30" height="30">
-                            <h5 class=" boxes_label ms-2 fw-bold">CUSTOMERS</h5>
+                            <h5 class="boxes_label ms-2 fw-bold">CUSTOMERS</h5>
                         </div><br>
-
-                        <div class="d-flex justify-content-between">
+                        <!-- Adjusted flexbox to handle large customer count -->
+                        <div class="d-flex justify-content-between align-items-center">
                             <h2 id="customerCount">{{ $customerCount }}</h2>
-                            <img src="{{ asset('chart.png') }}" alt="Customers" width="100">
+                            <img src="{{ asset('chart.png') }}" alt="Customers" class="box_chart">
                         </div>
                     </div>
                 </div>
 
+                <!-- VEHICLE COUNT CARD -->
                 <div class="col-md-3">
-                    <div class="border border-secondary rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+                    <div class="border border-secondary rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 100%;">
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('icons/car.svg') }}" alt="Customers" width="30" height="30">
-                            <h5 class=" boxes_label ms-2 fw-bold">CUSTOMER CARS</h5>
+                            <h6 class="boxes_label ms-2 fw-bold">CUSTOMER CARS</h6>
                         </div><br>
-
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <h2 id="vehicleCount">{{ $vehicleCount }}</h2>
-                            <img src="{{ asset('chart.png') }}" alt="Vehicle Count" width="100">
+                            <img src="{{ asset('chart.png') }}" alt="Vehicle Count" class="box_chart">
                         </div>
                     </div>
                 </div>
 
+                <!-- MAINTENANCE TASKS CARD -->
                 <div class="col-md-3">
-                    <div class="border border-danger rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+                    <div class="border border-danger rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 100%;">
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('icons/gear-fine.svg') }}" alt="Maintenance Tasks" width="30" height="30">
-                            <h5 class=" boxes_label ms-2 fw-bold">MAINTENANCE TASKS</h5>
+                            <h5 class="boxes_label ms-2 fw-bold">MAINTENANCE TASKS</h5>
                         </div><br>
-
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <h2 id="scheduleCount">{{ $scheduleCount }}</h2>
-                            <img src="{{ asset('chart.png') }}" alt="Vehicle Count" width="100">
+                            <img src="{{ asset('chart.png') }}" alt="Vehicle Count" class="box_chart">
                         </div>
                     </div>
                 </div>
 
+                <!-- NOTIFICATIONS SENT CARD -->
                 <div class="col-md-3">
-                    <div class="border border-warning rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 90%;">
+                    <div class="border border-warning rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 100%;">
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notifications Sent" width="30" height="30">
-                            <h5 class=" boxes_label ms-2 fw-bold">NOTIFICATIONS SENT</h5>
+                            <h5 class="boxes_label ms-2 fw-bold">NOTIFICATIONS SENT</h5>
                         </div><br>
-
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <h2 id="notificationCount">{{ $notificationCount }}</h2>
-                            <img src="{{ asset('chart.png') }}" alt="Vehicle Count" width="100">
+                            <img src="{{ asset('chart.png') }}" alt="Notifications Sent" class="box_chart">
                         </div>
                     </div>
                 </div>
