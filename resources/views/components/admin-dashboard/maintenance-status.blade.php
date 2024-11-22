@@ -11,9 +11,9 @@
         </form>
     </div>
 
-    <div class="container mt-3">
+    <div class="container mt-3 table-responsive">
     <!--Cars table-->
-            <table class="table table-striped table-responsive">
+            <table class="table table-striped">
                 <tr>
                     <th>VEHICLE</th>
                     <th>OWNER</th>
@@ -34,7 +34,7 @@
                     <td><span class="badge text-bg-warning">Pending...</span></td>
                     <td>
                         <div class="dropdown">
-                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                            <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#"
                                         data-bs-toggle="modal"

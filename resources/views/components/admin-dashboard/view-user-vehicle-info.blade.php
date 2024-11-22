@@ -2,52 +2,54 @@
 <div class="container">
     <h2 class="pb-2 border-bottom">{{ $customer['fullname'] }} VEHICLES</h2>
 
-    <table class="table table-striped">
-        <tr>
-            <th>IMAGE</th>
-            <th>MAKE</th>
-            <th>MODEL</th>
-            <th>YEAR OF MANUFACTURE</th>
-            <th>ENGINE TYPE</th>
-            <th></th>
-        </tr>
-
-        @foreach ($vehicles as $vehicle)
+    <div class="table-responsive">
+        <table class="table table-striped">
             <tr>
-                <td><img src="{{asset('Images/car_images/'.$vehicle['vehicle_image'])}}" alt="Vehicle Image" width="100" height="100" style="border-radius: 50%"></td>
-                <td>{{ $vehicle['make'] }}</td>
-                <td>{{ $vehicle['model'] }}</td>
-                <td>{{ $vehicle['year_of_manufacture'] }}</td>
-                <td>{{ $vehicle['engine_type'] }}</td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="#" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#view_vehicle"
-                                data-vehicle-image="{{ asset('Images/car_images/'.$vehicle['vehicle_image']) }}"
-                                data-make="{{ $vehicle['make'] }}"
-                                data-model="{{ $vehicle['model'] }}"
-                                data-year="{{ $vehicle['year_of_manufacture'] }}"
-                                data-milage="{{ $vehicle['milage'] }}"
-                                data-engine-number="{{ $vehicle['engine_number'] }}"
-                                data-vin="{{ $vehicle['vehicle_identification_number'] }}"
-                                data-chassis="{{ $vehicle['chassis_number'] }}"
-                                data-plate-number="{{ $vehicle['plate_number'] }}"
-                                data-engine-type="{{ $vehicle['engine_type'] }}"
-                                onclick="populateModal(this)">View</a>
-                            </li>
-                            <li><a class="dropdown-item" href="{{ route('walkin_maintenance_view',$vehicle['vehicleID']) }}">Walk In</a></li>
-                            <li><a class="dropdown-item" href="{{ route('add_user_vehicle_maintenance_schedule_view',$vehicle['vehicleID']) }}">Schedule a Maintenance</a></li>
-                            <li><a class="dropdown-item bg-danger text-light" href="#" data-bs-toggle="modal" data-bs-target="#delete_car" data-vehicleID="{{ $vehicle['vehicleID'] }}" onclick="deleteVehicle(this)">Delete</a></li>
-                        </ul>
-                    </div>
-                </td>
+                <th>IMAGE</th>
+                <th>MAKE</th>
+                <th>MODEL</th>
+                <th>YEAR OF MANUFACTURE</th>
+                <th>ENGINE TYPE</th>
+                <th></th>
             </tr>
-        @endforeach
-    </table>
+
+            @foreach ($vehicles as $vehicle)
+                <tr>
+                    <td><img src="{{asset('Images/car_images/'.$vehicle['vehicle_image'])}}" alt="Vehicle Image" width="100" height="100" style="border-radius: 50%"></td>
+                    <td>{{ $vehicle['make'] }}</td>
+                    <td>{{ $vehicle['model'] }}</td>
+                    <td>{{ $vehicle['year_of_manufacture'] }}</td>
+                    <td>{{ $vehicle['engine_type'] }}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#view_vehicle"
+                                    data-vehicle-image="{{ asset('Images/car_images/'.$vehicle['vehicle_image']) }}"
+                                    data-make="{{ $vehicle['make'] }}"
+                                    data-model="{{ $vehicle['model'] }}"
+                                    data-year="{{ $vehicle['year_of_manufacture'] }}"
+                                    data-milage="{{ $vehicle['milage'] }}"
+                                    data-engine-number="{{ $vehicle['engine_number'] }}"
+                                    data-vin="{{ $vehicle['vehicle_identification_number'] }}"
+                                    data-chassis="{{ $vehicle['chassis_number'] }}"
+                                    data-plate-number="{{ $vehicle['plate_number'] }}"
+                                    data-engine-type="{{ $vehicle['engine_type'] }}"
+                                    onclick="populateModal(this)">View</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{{ route('walkin_maintenance_view',$vehicle['vehicleID']) }}">Walk In</a></li>
+                                <li><a class="dropdown-item" href="{{ route('add_user_vehicle_maintenance_schedule_view',$vehicle['vehicleID']) }}">Schedule a Maintenance</a></li>
+                                <li><a class="dropdown-item bg-danger text-light" href="#" data-bs-toggle="modal" data-bs-target="#delete_car" data-vehicleID="{{ $vehicle['vehicleID'] }}" onclick="deleteVehicle(this)">Delete</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
 </div>
 
 <!--View Vehicle Modal-->
@@ -59,9 +61,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="container-fluid row">
-            <img src="" id="user_vehicle_image" width="300" height="300" style="border-radius: 50%;" class="col-md-6">
-            <div class="car_info col-md-6 d-flex flex-column align-items-md-center">
+        <div class="container-fluid">
+            <img src="" id="user_vehicle_image" width="200" height="200" style="border-radius: 50%;">
+            <div class="car_info">
                 <div>
                     <span class="d-flex">
                         <p class="fw-bold">Make: &nbsp;</p>
@@ -89,7 +91,7 @@
                     </span>
 
                     <span class="d-flex">
-                        <p class="fw-bold">Vehicle Identification Number: &nbsp;</p>
+                        <p class="fw-bold">VIN: &nbsp;</p>
                         <p id="vin"></p>
                     </span>
 

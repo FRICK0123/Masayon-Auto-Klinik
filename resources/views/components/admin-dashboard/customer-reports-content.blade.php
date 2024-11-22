@@ -44,8 +44,8 @@
                 </form>
             </div>
 
-            <div class="d-flex justify-content-between mb-2">
-                <form action="{{ route('customer_reports_date_range') }}" method="GET" class="d-flex">
+            <div class="mb-3">
+                <form action="{{ route('customer_reports_date_range') }}" method="GET" class="d-flex flex-column flex-md-row align-items-center gap-2">
                     <label for="start_date" class="me-2">Start Date:</label>
                     <input type="date" class="me-2" name="start_date" required>
 

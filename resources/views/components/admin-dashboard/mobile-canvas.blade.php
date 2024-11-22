@@ -1,6 +1,12 @@
 <div class="offcanvas offcanvas-start" tabindex="-1" id="admin_mobile_canvas">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title">Offcanvas</h5>
+        <div class="d-flex align-items-center">
+            <img src="{{ asset('Images/'.Session::get('admin_logo')) }}" alt="Masayon Auto Klinik Logo" width="100">
+            <div class="ms-3">
+                <h4 class="m-0 p-0">{{ Session::get('username') }}</h4>
+                <small class="m-0 p-0 text-success"><img src="{{ asset('icons/online_dot.png') }}" alt="Online" width="15">online</small>
+            </div>
+        </div>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">

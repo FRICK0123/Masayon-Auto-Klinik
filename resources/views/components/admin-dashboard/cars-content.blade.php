@@ -38,8 +38,8 @@
     <!--end-->
 
     <!--Cars table-->
-    <div id="carTableContainer">
-        <table class="table table-striped table-responsive">
+    <div id="carTableContainer" class="table-responsive">
+        <table class="table table-striped">
             <tr>
                 <th>CAR IMAGE</th>
                 <th>MAKE</th>

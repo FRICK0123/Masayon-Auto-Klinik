@@ -12,8 +12,8 @@
     </div>
 
     <!--Functionalities-->
-        <div class="d-flex justify-content-between mt-2 mb-2">
-            <form action="{{ route('appointments_by_date_range') }}" method="GET" class="d-flex">
+        <div class="mb-3">
+            <form action="{{ route('appointments_by_date_range') }}" method="GET" class="d-flex flex-column flex-md-row align-items-center gap-2">
                 <label for="start_date" class="me-2">Start Date:</label>
                 <input type="date" class="me-2" name="start_date" required>
                 <label for="end_date" class="me-2">End Date:</label>
@@ -24,8 +24,8 @@
     <!--end-->
 
     <!--Cars table-->
-    <div id="carTableContainer">
-        <table class="table table-striped table-responsive">
+    <div id="carTableContainer" class="table-responsive">
+        <table class="table table-striped">
             <tr>
                 <th>OWNER</th>
                 <th>VEHICLE</th>

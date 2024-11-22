@@ -57,10 +57,10 @@
                     <h5 class="pt-2">NOTIFICATIONS</h5>
                 </div>
 
-                <div id="carTableContainer">
+                <div id="carTableContainer" class="table-responsive">
                     <table class="table">
                         <tr>
-                            <th>Reciever</th>
+                            <th>Receiver</th>
                             <th>Vehicle</th>
                             <th>Maintenance Type</th>
                             <th>Confirmation Status</th>

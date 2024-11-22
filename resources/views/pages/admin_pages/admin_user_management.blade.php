@@ -103,7 +103,7 @@
                         </div>
                     <!--end-->
                 <!--end-->
-                <div class="mt-2">
+                <div class="mt-2 table-responsive">
                     <!--User Management Table-->
                         <table class="table">
                             <tr>
