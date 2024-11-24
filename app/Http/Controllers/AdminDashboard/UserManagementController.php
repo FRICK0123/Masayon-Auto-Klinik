@@ -291,7 +291,24 @@ class UserManagementController extends Controller
                     'isDeactivated' => false,
                     'isRegarded' => false,
                 ]);
-            } else {
+            } else if($maintenance_type == "other"){
+                MaintenanceSchedule::create([
+                    'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
+                    'maintenance_type' => $request->input('other'),
+                    'PMS_services' => null,
+                    'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
+                    'last_maintenance_date' => $last_maintenance_date,
+                    'scheduled_interval' => $scheduled_interval,
+                    'oil_type' => null,
+                    'current_milage' => null,
+                    'next_milage_schedule' => null,
+                    'isAppointed' => false,
+                    'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
+                    'isRegarded' => false,
+                ]);
+            }else {
                 MaintenanceSchedule::create([
                     'vehicleID' => $vehicleID,
                     'customerID' => $customerID,
@@ -408,6 +425,23 @@ class UserManagementController extends Controller
                     'oil_type' => null,
                     'current_milage' => $milage,
                     'next_milage_schedule' => $milage + 50000,
+                    'isAppointed' => false,
+                    'appointment_date' => $maintenance_date,
+                    'isDeactivated' => false,
+                    'isRegarded' => false,
+                ]);
+            } else if($maintenance_type == "other"){
+                MaintenanceSchedule::create([
+                    'vehicleID' => $vehicleID,
+                    'customerID' => $customerID,
+                    'maintenance_type' => $request->input('other'),
+                    'PMS_services' => null,
+                    'scheduled_date' => Carbon::parse($maintenance_date),
+                    'last_maintenance_date' => $last_maintenance_date,
+                    'scheduled_interval' => $scheduled_interval,
+                    'oil_type' => null,
+                    'current_milage' => null,
+                    'next_milage_schedule' => null,
                     'isAppointed' => false,
                     'appointment_date' => $maintenance_date,
                     'isDeactivated' => false,

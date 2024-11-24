@@ -21,7 +21,7 @@
                     <td>{{ $vehicle['year_of_manufacture'] }}</td>
                     <td>{{ $vehicle['engine_type'] }}</td>
                     <td>
-                        <div class="dropdown">
+                        <div class="dropdown" style="position: static">
                             <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                             <ul class="dropdown-menu">
                                 <li>

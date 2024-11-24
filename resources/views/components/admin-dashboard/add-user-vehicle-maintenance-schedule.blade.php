@@ -17,6 +17,7 @@
             <option value="Check up">Check up</option>
             <option value="Basic PMS">Basic PMS</option>
             <option value="Full PMS">Heavy PMS</option>
+            <option value="other">Other Maintenance Type</option>
         </select><br>
 
         <!--Basic PMS Service Type-->
@@ -200,6 +201,13 @@
             </div>
         <!--end-->
 
+        <div id="other_container" class="container_fluid" style="display: none;">
+            <label for="other" class="fw-bold">
+                Other Maintenance Type:
+            </label>
+            <input type="text" name="other" class="form-control" id="other" placeholder="Enter Maintenance Type"><br>
+        </div>
+
         <label for="maintenance_date" class="fw-bold">
             Maintenance Date: (current date or last maintenance date)
         </label>
@@ -224,16 +232,16 @@
             <label for="scheduled_interval" class="fw-bold">Schedule Interval:</label>
             <select name="scheduled_interval" id="scheduled_interval" class="form-select">
                 <option value="" disabled selected>Select Month Interval</option>
-                <option value="3">3 months</option>
-                <option value="4">4 months</option>
-                <option value="5">5 months</option>
-                <option value="6">6 months</option>
-                <option value="7">7 months</option>
-                <option value="8">8 months</option>
-                <option value="9">9 months</option>
-                <option value="10">10 months</option>
-                <option value="11">11 months</option>
-                <option value="12">12 months</option>
+                <option value="3">Every 3 months</option>
+                <option value="4">Every 4 months</option>
+                <option value="5">Every 5 months</option>
+                <option value="6">Every 6 months</option>
+                <option value="7">Every 7 months</option>
+                <option value="8">Every 8 months</option>
+                <option value="9">Every 9 months</option>
+                <option value="10">Every 10 months</option>
+                <option value="11">Every 11 months</option>
+                <option value="12">Every 12 months</option>
             </select>
             <br>
         </div>
@@ -242,11 +250,11 @@
             <label for="scheduled_interval" class="fw-bold">Schedule Interval:</label>
             <select name="scheduled_interval" id="scheduled_interval" class="form-select">
                 <option value="" disabled selected>Select Year Interval</option>
-                <option value="12">1 year</option>
-                <option value="24">2 years</option>
-                <option value="36">3 years</option>
-                <option value="48">4 years</option>
-                <option value="60">5 years</option>
+                <option value="12">Every 1 year</option>
+                <option value="24">Every 2 years</option>
+                <option value="36">Every 3 years</option>
+                <option value="48">Every 4 years</option>
+                <option value="60">Every 5 years</option>
             </select>
             <br>
         </div>
@@ -296,19 +304,27 @@
             document.getElementById('oil_type_container').style.display = "block";
             document.getElementById('schedule_interval_pms').style.display = "none";
             document.getElementById('schedule_interval_container').style.display = "block";
+            document.getElementById('other_container').style.display = 'none';
         } else if(maintenance_type.value === "Full PMS"){
             document.getElementById('schedule_interval_pms').style.display = "block";
             document.getElementById('schedule_interval_container').style.display = "none";
             document.getElementById('oil_type_container').style.display = "none";
+            document.getElementById('other_container').style.display = 'none';
         } else if(maintenance_type.value === "EGR Cleaning"){
             document.getElementById('oil_type_container').style.display = "none";
             document.getElementById('schedule_interval_pms').style.display = "none";
             document.getElementById('schedule_interval_container').style.display = "none";
-        }
-        else{
+            document.getElementById('other_container').style.display = 'none';
+        }else if(maintenance_type.value === "other"){
             document.getElementById('oil_type_container').style.display = "none";
             document.getElementById('schedule_interval_pms').style.display = "none";
             document.getElementById('schedule_interval_container').style.display = "block";
+            document.getElementById('other_container').style.display = 'block';
+        }else{
+            document.getElementById('oil_type_container').style.display = "none";
+            document.getElementById('schedule_interval_pms').style.display = "none";
+            document.getElementById('schedule_interval_container').style.display = "block";
+            document.getElementById('other_container').style.display = 'none';
             mileage_interval_input.value = ""; // Clear the mileage interval when hidden
         }
 

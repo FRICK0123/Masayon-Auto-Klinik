@@ -228,6 +228,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(AdminAppointmentController::class)->group(function () {
         Route::get('/customer_appointements', 'adminAppointmentView')->name('admin_appointment_view');
         Route::get('/appointments_by_date_range', 'appointmentsByDateRange')->name('appointments_by_date_range');
+        Route::delete('/cancel_appointment/{maintenanceID}','cancelAppointment');
     });
 //end
 

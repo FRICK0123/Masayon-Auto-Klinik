@@ -28,6 +28,11 @@
             loginBtn.classList.add('scrolled');
             
             home.classList.add('scrolled');
+            about.classList.add('scrolled');
+            services.classList.add('scrolled');
+            maintenance.classList.add('scrolled');
+            contact.classList.add('scrolled');
+
         } else {
             navbar.classList.remove('scrolled');
             links.classList.remove('scrolled');
@@ -35,6 +40,10 @@
             loginBtn.classList.remove('scrolled');
             
             home.classList.remove('scrolled');
+            about.classList.remove('scrolled');
+            services.classList.remove('scrolled');
+            maintenance.classList.remove('scrolled');
+            contact.classList.remove('scrolled');
         }
     });
 //end

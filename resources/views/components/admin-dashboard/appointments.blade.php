@@ -68,22 +68,26 @@
                     <td>
                         <a href="#" class="btn btn-success btn-sm"
                         data-bs-toggle="modal" 
-                                    data-bs-target="#update"
-                                    data-maintenance-id="{{ $schedule->maintenanceID }}"
-                                    data-vehicle-id="{{ $schedule->vehicle->vehicleID }}"
-                                    data-customer-id="{{ $schedule->vehicle->customer->customerID }}"
-                                    data-owner="{{ $schedule->vehicle->customer->fullname }}"
-                                    data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
-                                    data-previous-milage="{{ $schedule->vehicle->milage }}"
-                                    data-maintenance-type="{{ $schedule->maintenance_type }}"
-                                    data-oil-type="{{ $schedule->oil_type }}"
-                                    data-scheduled-interval="{{ $schedule->scheduled_interval }}"
-                                    onclick="fillData(this)">
+                        data-bs-target="#update"
+                        data-maintenance-id="{{ $schedule->maintenanceID }}"
+                        data-vehicle-id="{{ $schedule->vehicle->vehicleID }}"
+                        data-customer-id="{{ $schedule->vehicle->customer->customerID }}"
+                        data-owner="{{ $schedule->vehicle->customer->fullname }}"
+                        data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
+                        data-previous-milage="{{ $schedule->vehicle->milage }}"
+                        data-maintenance-type="{{ $schedule->maintenance_type }}"
+                        data-oil-type="{{ $schedule->oil_type }}"
+                        data-scheduled-interval="{{ $schedule->scheduled_interval }}"
+                        onclick="fillData(this)">
                             <img src="{{ asset('icons/check-circle.svg') }}" alt="View" width="20">
                         </a>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-danger btn-sm"><img src="{{ asset('icons/trash.svg') }}" alt="View" width="20"></a>
+                        <a href="#" class="btn btn-danger btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#cancel"
+                        data-maintenance-id="{{ $schedule->maintenanceID }}"
+                        onclick="cancelSchedule(this)"><img src="{{ asset('icons/trash.svg') }}" alt="View" width="20"></a>
                     </td>
                 </tr>
             @endforeach
@@ -179,6 +183,29 @@
     </div>
 </div>
 
+<!-- Cancel appointment modal -->
+<div class="modal fade" id="cancel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Do you want to cancel this appointment?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>You won't be able to recover this appointment!</p>
+      </div>
+      <div class="modal-footer">
+        <form action="" method="POST" id="cancelForm">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="btn btn-dark">yes</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!--Appointment Added Toast Notification -->
 <div class="toast-container position-fixed top-0 end-0 p-3">
     <div id="appointmentAdded" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -188,6 +215,19 @@
         </div>
         <div class="toast-body">
             {{ session('schedule') }}
+        </div>
+    </div>
+</div>
+
+<!--Appointment Cancelled Toast Notification -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="appointmentCancelled" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success">
+            <strong class="me-auto text-light">Masayon Auto Klinik</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ session('cancelled') }}
         </div>
     </div>
 </div>
@@ -245,10 +285,22 @@
 
         }
 
+        function cancelSchedule(element){
+            const maintenanceID = element.getAttribute('data-maintenance-id');
+
+            document.getElementById('cancelForm').action = `/cancel_appointment/${maintenanceID}`;
+        }
+
     // Check if there's an appointment added message in session
     @if (session('schedule'))
         // Show the toast
         var toastEl = new bootstrap.Toast(document.getElementById('appointmentAdded'));
+        toastEl.show();
+    @endif
+
+    @if (session('cancelled'))
+        // Show the toast
+        var toastEl = new bootstrap.Toast(document.getElementById('appointmentCancelled'));
         toastEl.show();
     @endif
     </script>

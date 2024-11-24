@@ -56,10 +56,9 @@
 
                         <strong>Track Maintenance:</strong> Keep detailed records of your vehicle’s maintenance 
                         history and upcoming needs. <br>
+                        <strong>Schedule Appointment:</strong> Book your vehicle’s service appointments directly, saving you time and hassle. <br>
                         <strong>Receive Notifications:</strong> Get timely reminders for essential services such as 
                         oil changes and tire rotations. <br>
-                        <strong>Access Useful Guides:</strong> Explore comprehensive maintenance guides and tips
-                        to better understand your vehicle’s requirements.
                 </div>
             </div>
         </div>

@@ -29,7 +29,7 @@
             data-view-current-milage="{{ $schedule->vehicle->milage }}"
             data-view-next-milage-schedule="{{ $schedule->next_milage_schedule }}"
             onclick="populateModal(this)">View Details</a>
-            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancel" data-maintenanceID="{{ $schedule->maintenanceID }}" onclick="populateModal(this)">Cancel</a>
+            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancel" data-maintenanceID="{{ $schedule->maintenanceID }}" onclick="cancelFunction(this)">Cancel</a>
             </div>
 
             <span class="top"></span>
@@ -135,7 +135,7 @@
             toast.show();
         }
     });
-    function populateModal(element){
+    function cancelFunction(element){
       const maintenanceID = element.getAttribute('data-maintenanceID');
 
       document.getElementById('cancelForm').action=`/cancel/${maintenanceID}`;

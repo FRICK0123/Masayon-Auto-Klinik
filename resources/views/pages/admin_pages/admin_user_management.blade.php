@@ -151,7 +151,7 @@
                                     <td><a href="{{ route('view_user_info',$user['customerID']) }}" class="btn btn-primary btn-sm"><img src="{{ asset('icons/eye.svg') }}" alt="View" width="20"></a></td>
                                     <td><a href="{{ route('edit_user_info_view',$user['customerID']) }}" class="btn btn-warning btn-sm"><img src="{{ asset('icons/pencil-line.svg') }}" alt="Edit" width="20"></a></td>
                                     <td>
-                                        <div class="dropdown">
+                                        <div class="dropdown" style="position: static">
                                             <button class="btn btn-dark btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePassword" data-customerID="{{ $user['customerID'] }}" data-fullname="{{ $user['fullname'] }}" onclick="populatePass(this)">Change Password</a></li>

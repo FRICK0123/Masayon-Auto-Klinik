@@ -58,4 +58,13 @@ class AdminAppointmentController extends Controller
             'schedules' => $schedules,
         ]);
     }
+
+    //Cancel Appointment
+    public function cancelAppointment($maintenanceID)
+    {
+        $schedule = MaintenanceSchedule::where('maintenanceID', $maintenanceID)->first();
+        $schedule->delete();
+
+        return to_route('admin_appointment_view')->with('cancelled', 'Appointment Successfully Removed');
+    }
 }
