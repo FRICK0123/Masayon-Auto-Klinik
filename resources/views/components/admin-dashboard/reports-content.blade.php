@@ -10,15 +10,30 @@
                 <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
                 <input type="text" class="input-search" placeholder="Search Customer">
             </form>
-            <form action="{{ route('export.transaction.pdf') }}" method="GET">
-                @csrf
-                <!-- Include selected filters as hidden inputs -->
-                <input type="hidden" name="interval" value="{{ $interval }}">
-                <input type="hidden" name="start_date" value="{{ request()->input('start_date') }}">
-                <input type="hidden" name="end_date" value="{{ request()->input('end_date') }}">
-                
-                <button type="submit" class="btn btn-success rounded-pill">Export PDF</button>
-            </form>
+            <div class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Export
+            </button>
+            <ul class="dropdown-menu">
+                <li onclick="exportPdf()" style="cursor: pointer;">
+                    <form action="{{ route('export.transaction.pdf') }}" method="GET" class="dropdown-item" id="export_pdf">
+                        @csrf
+                        <p>Export PDF</p>
+
+                        <!-- Include selected filters as hidden inputs -->
+                        <input type="hidden" name="interval" value="{{ $interval }}">
+                        <input type="hidden" name="start_date" value="{{ request()->input('start_date') }}">
+                        <input type="hidden" name="end_date" value="{{ request()->input('end_date') }}">                        
+                    </form>
+                </li>
+                <li style="cursor: pointer;" onclick="exportExcel()">
+                    <form action="{{ route('export_transaction_excel') }}" method="GET" class="dropdown-item" id="export_excel">
+                        @csrf
+                        <p>Export Excel</p>                      
+                    </form>
+                </li>
+            </ul>
+            </div>
         </div>
     </div>
 
@@ -183,5 +198,13 @@
         document.getElementById('cost').innerHTML = `₱ ${cost}`;
         document.getElementById('date_performed').innerHTML = date_performed;
         document.getElementById('maintenance_description').innerHTML = maintenance_description;
+    }
+
+    function exportPdf(){
+        document.getElementById('export_pdf').submit();
+    }
+
+    function exportExcel(){
+        document.getElementById('export_excel').submit();
     }
 </script>

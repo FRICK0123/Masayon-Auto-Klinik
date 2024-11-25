@@ -213,6 +213,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/generate_customer_vehicles_pdf', 'generateCustomerVehiclesPdf')->name('generate_customer_vehicles_pdf');
         Route::get('/export-transaction-pdf', 'exportTransactionPdf')->name('export.transaction.pdf');
         Route::get('/export-customer-pdf', 'exportCustomerPdf')->name('export.customer_pdf');
+        Route::get('/export-transactions-excel', 'exportTransactionExcel')->name('export_transaction_excel');
     });
 //end
 

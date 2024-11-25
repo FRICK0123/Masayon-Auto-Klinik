@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AdminDashboard;
 
 use App\Charts\TransactionChart;
+use App\Exports\HistoryExport;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\MaintenanceHistory;
@@ -10,6 +11,7 @@ use App\Models\Vehicle;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
@@ -63,6 +65,7 @@ class ReportController extends Controller
         );
     }
 
+    //Export Transactions PDF
     public function exportTransactionPdf(Request $request)
     {
         // Retrieve filtering parameters
@@ -108,6 +111,11 @@ class ReportController extends Controller
 
         // Stream the PDF to the browser
         return $pdf->stream('transaction_report.pdf');
+    }
+
+    //Export Transactions Excel
+    public function exportTransactionExcel(){
+        return Excel::download(new HistoryExport, 'customer_transactions.xlsx');
     }
 
     public function reportsTransactionByDateRange(Request $request)
