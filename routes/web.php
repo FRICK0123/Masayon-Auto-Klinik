@@ -114,6 +114,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/maintenance_schedule', 'scheduleView')->name('customer_maintenance_schedule');
         Route::post('/edit_details','editCustomerDetails')->name('edit_customer_details');
         Route::post('/profile_image/update', 'updateProfile')->name('update_profile_image');
+        Route::post('/update_mileage', 'updateMilage')->name('update_milage');
     });
 //end
 

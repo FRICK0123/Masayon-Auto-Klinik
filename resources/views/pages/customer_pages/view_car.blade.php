@@ -40,7 +40,7 @@
                             <h2>{{$vehicle['make']}} {{$vehicle['model']}} {{$vehicle['year_of_manufacture']}}</h2>
                             <div class="d-flex">
                                 <label class="fw-bold">Current Mileage: &nbsp;</label>
-                                <p>{{ $vehicle['milage'] }} mi</p>
+                                <p>{{ $vehicle['milage'] }} km</p>
                             </div>
 
                             <div class="d-flex">

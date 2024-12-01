@@ -24,9 +24,11 @@ class CustomerDashboard extends Controller
     //Profile View
     public function customerProfileView(Request $request)
     {
+        $customerID = Auth::guard('customer')->id();
+        $vehicles = Vehicle::where('customerID', $customerID)->get();
         $query = MaintenanceHistory::where('customerID',Auth::guard('customer')->id());
         $transactions = $query->paginate(2)->appends($request->except('page'));
-        return view('pages.customer_pages.customer_profile',['transactions'=>$transactions]);
+        return view('pages.customer_pages.customer_profile',['transactions'=>$transactions, 'vehicles' => $vehicles]);
     }
 
     //Maintenance Schedule View
@@ -95,6 +97,16 @@ class CustomerDashboard extends Controller
 
         Session::put('profile_img',$fileName);
         session()->flash('profile_image',"Profile Image Successfully Updated");
+        return to_route('customer_profile');
+    }
+
+    public function updateMilage(Request $request){
+        $vehicleID = $request->input('milage_update');
+
+        Vehicle::where('vehicleID',$vehicleID)->update([
+            'milage' => $request->input('current_mileage'),
+        ]);
+
         return to_route('customer_profile');
     }
 }

@@ -49,7 +49,7 @@
                             <p><b>Username:</b> {{Session::get('username')}}</p>
                         </div>
 
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-evenly">
                             <button class="btn btn-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#editProfileDetails"
                             data-fullname="{{ Session::get('fullname') }}"
                             data-phone="{{ Session::get('phone_number') }}"
@@ -57,6 +57,8 @@
                             onclick="populateEditDetails(this)">
                                 Edit Profile Details
                             </button>
+
+                            <button class="btn btn-outline-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#milageModal">Update Mileage</button>
                         </div>
                     </div>
 
@@ -241,7 +243,60 @@
             </div>
         </div>
     </div>
+
+    <!-- Update Mileage Modal -->
+    <div class="modal fade" id="milageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update your Current Mileage</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <form action="{{ route('update_milage') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="vehicle">Select Vehicle:</label>
+                        <select name="milage_update" id="vehicle" class="form-select" required>
+                            <option value="" disabled selected>Select a vehicle</option>
+                            @foreach($vehicles as $vehicle)
+                                <option value="{{ $vehicle->vehicleID }}">
+                                    {{ $vehicle->make }} {{ $vehicle->model }} ({{ $vehicle->year_of_manufacture }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="current_mileage">Enter Current Mileage:</label>
+                        <input type="number" name="current_mileage" id="current_mileage" placeholder="Enter Current Mileage" class="form-control" required>
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Skip for now</button>
+                    <button type="submit" class="btn btn-dark">Update</button>
+                </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var modalElement = document.getElementById('milageModal');
+            var modal = new bootstrap.Modal(modalElement);
+
+            // Check session storage
+            if (!sessionStorage.getItem('milageModalDismissed')) {
+                modal.show();
+            }
+
+            // Handle modal dismissal
+            modalElement.addEventListener('hidden.bs.modal', function () {
+                sessionStorage.setItem('milageModalDismissed', true);
+            });
+        });
+
         function populateEditDetails(element){
             const fullname = element.getAttribute('data-fullname');
             const phone_number = element.getAttribute('data-phone');
