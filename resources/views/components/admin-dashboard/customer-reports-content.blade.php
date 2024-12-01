@@ -10,15 +10,31 @@
                 <button class="btn-search" type="button"><img src="{{ asset('icons/magnifying-glass-white.svg') }}" alt="Search Customer" width="30"></button>
                 <input type="text" class="input-search" placeholder="Search Customer">
             </form>
-            <form action="{{ route('export.customer_pdf') }}" method="GET">
-                @csrf
-                <!-- Include selected filters as hidden inputs -->
-                <input type="hidden" name="interval" value="{{ $interval }}">
-                <input type="hidden" name="start_date" value="{{ request()->input('start_date') }}">
-                <input type="hidden" name="end_date" value="{{ request()->input('end_date') }}">
-                
-                <button type="submit" class="btn btn-success rounded-pill">Export PDF</button>
-            </form>
+
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Export
+                </button>
+                <ul class="dropdown-menu">
+                    <li onclick="exportCustomerPdf()" style="cursor: pointer;">
+                        <form action="{{ route('export.customer_pdf') }}" method="GET" class="dropdown-item" id="export_customer_pdf">
+                            @csrf
+                            <p>Export PDF</p>
+
+                            <!-- Include selected filters as hidden inputs -->
+                            <input type="hidden" name="interval" value="{{ $interval }}">
+                            <input type="hidden" name="start_date" value="{{ request()->input('start_date') }}">
+                            <input type="hidden" name="end_date" value="{{ request()->input('end_date') }}">                        
+                        </form>
+                    </li>
+                    <li style="cursor: pointer;" onclick="exportCustomerExcel()">
+                        <form action="{{ route('export_customer_excel') }}" method="GET" class="dropdown-item" id="export_customer_excel">
+                            @csrf
+                            <p>Export Excel</p>                      
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -121,86 +137,12 @@
     </div>
 </div>
 
-{{-- <!--View Transaction-->
-<div class="modal fade" id="view_transaction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Transaction Information</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <label class="fw-bold">Owner:</label>
-        <p id="owner"></p>
-
-        <label class="fw-bold">Vehicle:</label>
-        <p id="vehicle"></p>
-
-        <label class="fw-bold">Previous Mileage:</label>
-        <p id="previous_milage"></p>
-
-        <label class="fw-bold">Current Mileage:</label>
-        <p id="current_milage"></p>
-
-        <label class="fw-bold">Maintenance Type:</label>
-        <p id="maintenance_type"></p>
-
-        <label class="fw-bold" id="oil_type_label">Oil Type:</label>
-        <p id="oil_type"></p>
-
-        <label class="fw-bold" id="pms_label">PMS Services:</label>
-        <p id="pms_services"></p>
-
-
-        <label class="fw-bold">Cost:</label>
-        <p id="cost"></p>
-
-        <label class="fw-bold">Date Performed:</label>
-        <p id="date_performed"></p>
-
-        <label class="fw-bold">Maintenance Description:</label>
-        <p id="maintenance_description"></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div> --}}
-
-{{-- <script>
-    function populateModal(element){
-        const owner = element.getAttribute('data-owner');
-        const vehicle = element.getAttribute('data-vehicle');
-        const previous_milage = element.getAttribute('data-previous-milage');
-        const current_milage = element.getAttribute('data-current-milage');
-        const maintenance_type = element.getAttribute('data-maintenance-type');
-        const oil_type = element.getAttribute('data-oil-type');
-        const pms_services = element.getAttribute('data-pms-services');
-        const cost = element.getAttribute('data-cost');
-        const date_performed = element.getAttribute('data-date-performed');
-        const maintenance_description = element.getAttribute('data-maintenance-description');
-
-        document.getElementById('owner').innerHTML = owner;
-        document.getElementById('vehicle').innerHTML = vehicle;
-        document.getElementById('previous_milage').innerHTML = previous_milage;
-        document.getElementById('current_milage').innerHTML = current_milage;
-        document.getElementById('maintenance_type').innerHTML = maintenance_type;
-        if(oil_type == ""){
-            document.getElementById('oil_type_label').style.display = "none";
-        }else{
-            document.getElementById('oil_type_label').style.display = "block";
-        }
-
-        if(pms_services == ""){
-            document.getElementById('pms_label').style.display = "none";
-        }else{
-            document.getElementById('pms_label').style.display = "block";
-        }
-        document.getElementById('oil_type').innerHTML = oil_type;
-        document.getElementById('pms_services').innerHTML = pms_services;
-        document.getElementById('cost').innerHTML = `₱ ${cost}`;
-        document.getElementById('date_performed').innerHTML = date_performed;
-        document.getElementById('maintenance_description').innerHTML = maintenance_description;
+<script>
+    function exportCustomerPdf(){
+        document.getElementById('export_customer_pdf').submit();
     }
-</script> --}}
+
+    function exportCustomerExcel(){
+        document.getElementById('export_customer_excel').submit();
+    }
+</script>

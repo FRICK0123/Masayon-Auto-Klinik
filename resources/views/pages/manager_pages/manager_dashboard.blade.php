@@ -30,7 +30,7 @@
                 <div class="container-fluid">
                     <div class="container-fluid row">
                         <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm border mt-4 mt-lg-0">
-                            <h5 class="pt-2">DASHBOARD</h5>
+                            <h5 class="pt-2">OVERVIEW</h5>
                         </div>
 
                         <!-- CUSTOMER COUNT CARD -->

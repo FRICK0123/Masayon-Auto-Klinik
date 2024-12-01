@@ -11,28 +11,28 @@
                 <input type="text" class="input-search" placeholder="Search Customer">
             </form>
             <div class="dropdown">
-            <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Export
-            </button>
-            <ul class="dropdown-menu">
-                <li onclick="exportPdf()" style="cursor: pointer;">
-                    <form action="{{ route('export.transaction.pdf') }}" method="GET" class="dropdown-item" id="export_pdf">
-                        @csrf
-                        <p>Export PDF</p>
+                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Export
+                </button>
+                <ul class="dropdown-menu">
+                    <li onclick="exportPdf()" style="cursor: pointer;">
+                        <form action="{{ route('export.transaction.pdf') }}" method="GET" class="dropdown-item" id="export_pdf">
+                            @csrf
+                            <p>Export PDF</p>
 
-                        <!-- Include selected filters as hidden inputs -->
-                        <input type="hidden" name="interval" value="{{ $interval }}">
-                        <input type="hidden" name="start_date" value="{{ request()->input('start_date') }}">
-                        <input type="hidden" name="end_date" value="{{ request()->input('end_date') }}">                        
-                    </form>
-                </li>
-                <li style="cursor: pointer;" onclick="exportExcel()">
-                    <form action="{{ route('export_transaction_excel') }}" method="GET" class="dropdown-item" id="export_excel">
-                        @csrf
-                        <p>Export Excel</p>                      
-                    </form>
-                </li>
-            </ul>
+                            <!-- Include selected filters as hidden inputs -->
+                            <input type="hidden" name="interval" value="{{ $interval }}">
+                            <input type="hidden" name="start_date" value="{{ request()->input('start_date') }}">
+                            <input type="hidden" name="end_date" value="{{ request()->input('end_date') }}">                        
+                        </form>
+                    </li>
+                    <li style="cursor: pointer;" onclick="exportExcel()">
+                        <form action="{{ route('export_transaction_excel') }}" method="GET" class="dropdown-item" id="export_excel">
+                            @csrf
+                            <p>Export Excel</p>                      
+                        </form>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

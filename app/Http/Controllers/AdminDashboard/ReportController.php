@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AdminDashboard;
 
 use App\Charts\TransactionChart;
+use App\Exports\CustomerExport;
 use App\Exports\HistoryExport;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
@@ -231,6 +232,12 @@ class ReportController extends Controller
 
         // Stream the PDF to the browser
         return $pdf->stream('customer_registration_report.pdf');
+    }
+
+    //Export Transactions Excel
+    public function exportCustomerExcel()
+    {
+        return Excel::download(new CustomerExport, 'registered_customers.xlsx');
     }
 
     public function customerReportsByDateRange(Request $request)

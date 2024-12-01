@@ -214,6 +214,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/export-transaction-pdf', 'exportTransactionPdf')->name('export.transaction.pdf');
         Route::get('/export-customer-pdf', 'exportCustomerPdf')->name('export.customer_pdf');
         Route::get('/export-transactions-excel', 'exportTransactionExcel')->name('export_transaction_excel');
+        Route::get('/export-customer-excel', 'exportCustomerExcel')->name('export_customer_excel');
     });
 //end
 
@@ -252,6 +253,7 @@ Route::middleware(['auth:customer'])->controller(CustomerManagementController::c
     Route::get('/customer_management', 'customersView')->name('customer_management');
     Route::post('/store_customer','storeUser')->name('store_customer');
     Route::get('/customer_info/{customerID}','viewUserInfo')->name('manager_view_customer_info');
+    Route::get('/customer_vehicle_info/{customerID}/{vehicleID}', 'viewCustomerVehicleInfo')->name('manager_view_customer_vehicle_info');
 });
 //end
 

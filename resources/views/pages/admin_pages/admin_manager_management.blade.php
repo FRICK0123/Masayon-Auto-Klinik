@@ -134,17 +134,17 @@
                                     </td>
                                     <td>0{{ $user['phone_number'] }}</td>
                                     <td>{{ $user['username'] }}</td>
-                                    @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
-                                        <td><span class="badge bg-success p-2">verified</span></td>
-                                    @elseif($user['isVerified'] == 0 && $user['email_verified_at'] == null)
-                                        <td><span class="badge bg-danger p-2">deactivated</span></td>
+                                    @if ($user['isDeactivated'] == true)
+                                        <td><span class="badge bg-danger p-2">Deactivated</span></td>
+                                    @elseif($user['isDeactivated'] == false && $user['isVerified'] == true)
+                                        <td><span class="badge bg-success p-2">Verified</span></td>
                                     @else
-                                        <td>not verified</td>
+                                        <td>Not Verified</td>
                                     @endif
                                     <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('F j, Y') }}</td>
 
                                     <td>
-                                        <div class="dropdown">
+                                        <div class="dropdown" style="position: static;">
                                             <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="{{ route('view_manager_info',$user['customerID']) }}">View</a></li>
@@ -154,12 +154,21 @@
                                                 <li><a class="dropdown-item" href="{{ route('edit_user_info_view',$user['customerID']) }}">Edit</a></li>
 
                                                 <li>
-                                                    @if ($user['isVerified'] == 1 && $user['email_verified_at'] !== null)
-                                                        <a class="dropdown-item bg-danger text-light" href="#">Deactivate</a>
+                                                    @if ($user['isVerified'] == false)
+                                                        <a class="dropdown-item" href="{{ route('verify_customer',$user['customerID']) }}">Verify</a>
                                                     @else
-                                                        <a class="dropdown-item bg-success text-light" href="#">Activate</a>
+                                                        <a class="dropdown-item" href="{{ route('unverify_customer',$user['customerID']) }}">Unverify</a>
                                                     @endif
                                                 </li>
+
+                                                <li>
+                                                    @if ($user['isDeactivated'] == false)
+                                                        <a class="dropdown-item bg-danger-subtle" href="#" data-bs-toggle="modal" data-bs-target="#deactivate" data-customerID="{{ $user['customerID'] }}" onclick="deactivateLink(this)">Deactivate</a>
+                                                    @else
+                                                        <a class="dropdown-item bg-success text-light" href="{{ route('activate_customer', $user['customerID']) }}">Activate</a>
+                                                    @endif
+                                                </li>
+                                                <li><a class="dropdown-item bg-danger text-light" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-customerID="{{ $user['customerID'] }}" onclick="deleteCustomerLink(this)">Delete</a></li></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -277,6 +286,51 @@
     </main>
     <!--End-->
 
+            <!-- Customer Deactivation Modal -->
+            <div class="modal fade" id="deactivate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you sure you want to deactivate this user?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>This will disable the account for the time being until activated by the admin.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="" method="post" id="deactivateForm">
+                            @csrf
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Deactivate</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Deletion Modal -->
+            <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you sure you want to delete this user account?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>This will remove the account for eternity!!!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="" method="post" id="userDeleteForm">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
     <script>
         let password_field = document.getElementById('register_password');
         let confirm_password_field = document.getElementById('confirm_password');
@@ -338,6 +392,21 @@
             document.getElementById('fullname').innerHTML = fullname;
             document.getElementById('changePassForm').action = `/change_password/${customerID}`;
         }
+
+        //Deactivation function
+        function deactivateLink(element){
+            const customerID = element.getAttribute('data-customerID');
+            
+            document.getElementById('deactivateForm').action = `/deactivate_customer/${customerID}`;
+        }
+
+        //Delete Customer Account
+        function deleteCustomerLink(element){
+            const customerID = element.getAttribute('data-customerID');
+
+            document.getElementById('userDeleteForm').action = `/delete_user/${customerID}`;
+        }
+
 
         @if (session('manager_created'))
             // Show the toast

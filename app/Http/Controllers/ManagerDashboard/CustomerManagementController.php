@@ -120,4 +120,19 @@ class CustomerManagementController extends Controller
         return view('pages.manager_pages.manager_view_customer_info', ['customer' => $customer, 'vehicles' => $vehicles, 'previous_maintenance' => $previous_maintenance]);
     }
 
+    public function viewCustomerVehicleInfo(Request $request, $customerID, $vehicleID)
+    {
+        $customer = Customer::where('customerID', $customerID)->first();
+        $vehicle = Vehicle::where('vehicleID', $vehicleID)->first();
+        $allVehicles = Vehicle::where('customerID', $customerID)->get();
+        $query = MaintenanceHistory::where('vehicleID', $vehicleID)->orderBy('date_performed', 'desc');
+        $previous_maintenance = $query->paginate(2)->appends($request->except('page'));
+
+        return view('pages.manager_pages.manager_view_customer_vehicle_info', [
+            'customer' => $customer,
+            'vehicle' => $vehicle,  // Changed from $vehicles to $vehicle
+            'previous_maintenance' => $previous_maintenance,
+            'allVehicles' => $allVehicles
+        ]);
+    }
 }
