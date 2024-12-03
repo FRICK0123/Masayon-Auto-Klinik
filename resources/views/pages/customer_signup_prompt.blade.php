@@ -19,8 +19,8 @@
 <body>
     <section class="container-fluid">
         <div class="container d-flex flex-column align-items-center">
-            <img src="{{ asset('Images/pending_art.png') }}" alt="Pending Image" class="img-fluid" width="500">
-            <h3 class="text-center">Your Request is Pending. Please check your gmail inbox or spam</h3>
+            <img src="{{ asset('Images/What we do.png') }}" alt="Pending Image" class="img-fluid" width="300">
+            <h3 class="text-center">"Please reach out to the Administrator or Manager to request the creation of your account."</h3>
 
             <form action="/" method="get">
                 @csrf

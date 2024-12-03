@@ -17,7 +17,7 @@ class RegisterController extends Controller
 {
     //Registration View
     public function registerView(){
-        return view('pages.registration_views.register_page');
+        return view('pages.customer_signup_prompt');
     }
 
     //Registration Details Session to be passed to the Regisration review details

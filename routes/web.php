@@ -64,7 +64,11 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
 //Routes for user reset password
     Route::controller(ResetPasswordController::class)->group(function(){
         Route::get('/reset_password','resetPasswordView')->name('reset_password_view');
-        Route::post('reset_password/validation','resetPassword')->name('reset_password');
+        Route::post('/email_exist/validation','emailExist')->name('email_exist');
+        Route::get('/verify-otp-view', 'verifyOtpView')->name('verify_otp_view');
+        Route::post('/verify-otp','verifyOtp')->name('verify_otp');
+        Route::get('/reset-password-page/{email}','resetPasswordPage')->name('reset_password_page');
+        Route::post('/reset-password', 'resetPassword')->name('reset_password');
     });
 //end
 

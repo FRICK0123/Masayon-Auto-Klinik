@@ -74,8 +74,9 @@
                     <p class="text-danger">{{$message}}</p>
                 @enderror
 
-                <div class="container-fluid d-flex justify-content-center mt-4">
-                    <button class="btn btn-dark w-100">Login</button>
+                <div class="container-fluid mt-4">
+                    <button class="btn btn-dark w-100" type="submit">Login</button>
+                    <button class="btn btn-outline-dark w-100 mt-3" type="button" id="returnHome">Go Back to Homepage</button>
                 </div>
 
                 <div class="container mt-3 text-center">
@@ -97,6 +98,10 @@
                 password_field.type = "password"
             }
         }
+
+    document.getElementById('returnHome').addEventListener('click',function(){
+        window.history.back();
+    });
     </script>
 </body>
 </html>
