@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -16,12 +18,13 @@ class ResetPasswordController extends Controller
         return view('pages.reset_password.reset_password_view');
     }
 
-    public function emailExist(Request $request){
+    public function emailExist(Request $request)
+    {
         $email = $request->input('email');
         $otp = Str::random(6);
 
-        $customer = Customer::where('email',$email)->first();
-        if($customer){
+        $customer = Customer::where('email', $email)->first();
+        if ($customer) {
             // Store OTP and its creation time in session
             session([
                 'otp' => $otp,
@@ -29,15 +32,27 @@ class ResetPasswordController extends Controller
                 'otp_sent_at' => now(),
             ]);
 
-            // Send the OTP email
-            Mail::send('emails.otp', ['otp' => $otp], function ($message) use ($customer) {
-                $message->to($customer->email)
-                ->subject('Your OTP for Password Reset');
-            });
-            // Redirect to the OTP verification page
-            return redirect()->route('verify_otp_view');
+            try {
+                // Attempt to send the OTP email
+                Mail::send('emails.otp', ['otp' => $otp], function ($message) use ($customer) {
+                    $message->to($customer->email)
+                        ->subject('Your OTP for Password Reset');
+                });
+
+                // Redirect to the OTP verification page
+                return redirect()->route('verify_otp_view');
+            } catch (Exception $e) {
+                // Log the error for debugging
+                Log::error('Email failed to send: ' . $e->getMessage());
+
+                // Clear session variables if email fails
+                session()->forget(['otp', 'otp_email', 'otp_sent_at']);
+
+                // Redirect with an error message
+                return redirect()->route('reset_password_view')->with('error', 'Failed to send email due to slow connection. Please check your internet connection and try again.');
+            }
         } else {
-            return redirect()->route('reset_password_view')->with('error', 'Email address does not exist.');        
+            return redirect()->route('reset_password_view')->with('error', 'Email address does not exist.');
         }
     }
 

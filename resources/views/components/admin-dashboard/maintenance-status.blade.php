@@ -25,51 +25,53 @@
                 </tr>
 
                 @foreach ($schedules as $schedule)
-                <tr>
-                    <td>{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</td>
-                    <td>{{ $schedule->vehicle->customer->fullname }}</td>
-                    <td>{{ $schedule->maintenance_type }}</td>
-                    <td>{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}</td>
-                    <td>{{ $schedule->next_milage_schedule }}</td>
-                    <td><span class="badge text-bg-warning">Pending...</span></td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#view_schedule"
-                                        data-view-owner="{{ $schedule->vehicle->customer->fullname }}"
-                                        data-view-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
-                                        data-view-maintenance-type="{{ $schedule->maintenance_type }}"
-                                        data-view-pms-services="{{ $schedule->PMS_services }}"
-                                        data-view-scheduled-date="{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}"
-                                        data-view-last-maintenance-date="{{ \Carbon\Carbon::parse($schedule->last_maintenance_date)->format('F j, Y') }}"
-                                        data-view-scheduled-interval="{{ $schedule->scheduled_interval }}"
-                                        data-view-oil-type="{{ $schedule->oil_type }}"
-                                        data-view-current-milage="{{ $schedule->vehicle->milage }}"
-                                        data-view-next-milage-schedule="{{ $schedule->next_milage_schedule }}"
-                                        onclick="populateModal(this)">View</a></li>
-                                <li><a class="dropdown-item" href="#" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#update"
-                                    data-maintenance-id="{{ $schedule->maintenanceID }}"
-                                    data-vehicle-id="{{ $schedule->vehicle->vehicleID }}"
-                                    data-customer-id="{{ $schedule->vehicle->customer->customerID }}"
-                                    data-owner="{{ $schedule->vehicle->customer->fullname }}"
-                                    data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
-                                    data-previous-milage="{{ $schedule->vehicle->milage }}"
-                                    data-maintenance-type="{{ $schedule->maintenance_type }}"
-                                    data-oil-type="{{ $schedule->oil_type }}"
-                                    data-scheduled-interval="{{ $schedule->scheduled_interval }}"
-                                    onclick="fillData(this)">
-                                        Update
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                    @if ($schedule->isAppointed == 1 && $schedule->isDeactivated == 0)
+                        <tr>
+                            <td>{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} ({{ $schedule->vehicle->year_of_manufacture }})</td>
+                            <td>{{ $schedule->vehicle->customer->fullname }}</td>
+                            <td>{{ $schedule->maintenance_type }}</td>
+                            <td>{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}</td>
+                            <td>{{ $schedule->next_milage_schedule }}</td>
+                            <td><span class="badge text-bg-warning">Pending...</span></td>
+                            <td>
+                                <div class="dropdown" style="position: static;">
+                                    <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">...</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#view_schedule"
+                                                data-view-owner="{{ $schedule->vehicle->customer->fullname }}"
+                                                data-view-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
+                                                data-view-maintenance-type="{{ $schedule->maintenance_type }}"
+                                                data-view-pms-services="{{ $schedule->PMS_services }}"
+                                                data-view-scheduled-date="{{ \Carbon\Carbon::parse($schedule->scheduled_date)->format('F j, Y') }}"
+                                                data-view-last-maintenance-date="{{ \Carbon\Carbon::parse($schedule->last_maintenance_date)->format('F j, Y') }}"
+                                                data-view-scheduled-interval="{{ $schedule->scheduled_interval }}"
+                                                data-view-oil-type="{{ $schedule->oil_type }}"
+                                                data-view-current-milage="{{ $schedule->vehicle->milage }}"
+                                                data-view-next-milage-schedule="{{ $schedule->next_milage_schedule }}"
+                                                onclick="populateModal(this)">View</a></li>
+                                        <li><a class="dropdown-item" href="#" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#update"
+                                            data-maintenance-id="{{ $schedule->maintenanceID }}"
+                                            data-vehicle-id="{{ $schedule->vehicle->vehicleID }}"
+                                            data-customer-id="{{ $schedule->vehicle->customer->customerID }}"
+                                            data-owner="{{ $schedule->vehicle->customer->fullname }}"
+                                            data-vehicle="{{ $schedule->vehicle->make }} {{ $schedule->vehicle->model }} {{ $schedule->vehicle->year_of_manufacture }}"
+                                            data-previous-milage="{{ $schedule->vehicle->milage }}"
+                                            data-maintenance-type="{{ $schedule->maintenance_type }}"
+                                            data-oil-type="{{ $schedule->oil_type }}"
+                                            data-scheduled-interval="{{ $schedule->scheduled_interval }}"
+                                            onclick="fillData(this)">
+                                                Update
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>   
+                    @endif
                 @endforeach
             </table>
         <!--End-->

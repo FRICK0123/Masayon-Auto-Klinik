@@ -105,19 +105,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="{{ route('maintenance_status_update') }}" method="post">
+        <form action="{{ route('confirm_appointment') }}" method="post">
             @csrf
-            <label for="current_milage" class="fw-bold">Enter Current Mileage:</label>
-            <input type="number" placeholder="miles" class="form-control" id="current_milage" name="current_milage"><br><br>
 
             <label for="cost" class="fw-bold">Enter Maintenance Cost:</label>
             <div class="input-group mb-3">
                 <span class="input-group-text">₱</span>
                 <input type="number" class="form-control" name="cost" id="cost">
             </div><br>
-
-            <label for="maintenance_description" class="form-label fw-bold">Enter Maintenance Description</label>
-            <textarea class="form-control" id="maintenance_description" rows="3" name="maintenance_description"></textarea><br><br>
 
             <input type="hidden" id="maintenance_id" name="maintenance_id">
             <input type="hidden" id="vehicle_id" name="vehicle_id">
@@ -158,10 +153,7 @@
             <label class="fw-bold">PMS Services:</label>
             <p id="view_pms_services"></p>
 
-            <label class="fw-bold">Scheduled Date:</label>
-            <p id="view_scheduled_date"></p>
-
-            <label class="fw-bold">Last Maintenance Date:</label>
+            <label class="fw-bold">Appointment Date:</label>
             <p id="view_last_maintenance_date"></p>
 
             <label class="fw-bold">Schedule Interval:</label>
@@ -172,9 +164,6 @@
 
             <label class="fw-bold">Current Mileage:</label>
             <p id="view_current_milage"></p>
-
-            <label class="fw-bold">Next Mileage Schedule:</label>
-            <p id="view_next_milage_schedule"></p>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
@@ -198,8 +187,8 @@
         <form action="" method="POST" id="cancelForm">
           @csrf
           @method('DELETE')
-          <button type="submit" class="btn btn-dark">yes</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cancel</button>
+          <button type="submit" class="btn btn-danger">yes</button>
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">cancel</button>
         </form>
       </div>
     </div>
@@ -265,24 +254,19 @@
             const vehicle = element.getAttribute('data-view-vehicle');
             const maintenance_type = element.getAttribute('data-view-maintenance-type');
             const pms_services = element.getAttribute('data-view-pms-services');
-            const scheduled_date = element.getAttribute('data-view-scheduled-date');
             const last_maintenance_date = element.getAttribute('data-view-last-maintenance-date');
             const schedule_interval = element.getAttribute('data-view-scheduled-interval');
             const oil_type = element.getAttribute('data-view-oil-type');
             const current_milage = element.getAttribute('data-view-current-milage');
-            const next_milage_schedule = element.getAttribute('data-view-next-milage-schedule');
 
             document.getElementById('view_owner').innerHTML = owner;
             document.getElementById('view_vehicle').innerHTML = vehicle;
             document.getElementById('view_maintenance_type').innerHTML = maintenance_type;
             document.getElementById('view_pms_services').innerHTML = pms_services;
-            document.getElementById('view_scheduled_date').innerHTML = scheduled_date;
             document.getElementById('view_last_maintenance_date').innerHTML = last_maintenance_date;
             document.getElementById('view_schedule_interval').innerHTML = schedule_interval + " months";
             document.getElementById('view_oil_type').innerHTML = oil_type;
             document.getElementById('view_current_milage').innerHTML = current_milage;
-            document.getElementById('view_next_milage_schedule').innerHTML = next_milage_schedule;
-
         }
 
         function cancelSchedule(element){

@@ -24,14 +24,23 @@
                 @props(['vehicles'])
                 @foreach ($vehicles as $item)
                     <div class="col-md-4 mt-3">
-                        <form action="{{ route('view_car_details',$item['vehicleID']) }}" method="GET" class="card shadow border border-dark" style="height: 435px; width: 100%; overflow: hidden;" id="card">
+                        <form action="{{ route('view_car_details',$item['vehicleID']) }}" method="GET" class="card shadow border border-dark" style="height: 450px; width: 100%; overflow: hidden;" id="card">
                             @csrf
                             <img src="{{asset('Images/car_images/'.$item['vehicle_image'])}}" alt="Car Photo" style="height: 200px; width: 100%; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
                                 <h4 class="text-dark">{{$item['make']}} {{$item['model']}} {{ $item['year_of_manufacture'] }}</h4>
                                 <p class="text-dark"><label class="fw-bold">Engine Type:</label> {{ $item['engine_type'] }}</p>
                                 <p class="text-dark"><label class="fw-bold">Plate Number:</label> {{$item['plate_number']}}</p>
-                                <button class="btn btn-dark align-self-end rounded-0">View</button>
+
+                                <div class="row">
+                                    <div class="col-md-6 mt-3">
+                                        <a href="{{ route('schedule_maintenance_form',$item['vehicleID']) }}" class="btn btn-outline-dark w-100">Set Appointment</a>
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <button class="btn btn-dark w-100" type="submit">View</button>
+                                    </div>
+                                </div>
                             </div>
                             <span class="top"></span>
                             <span class="bottom"></span>

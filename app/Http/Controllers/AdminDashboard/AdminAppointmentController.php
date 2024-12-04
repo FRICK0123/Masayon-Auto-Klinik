@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\AdminDashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\MaintenanceSchedule;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client as GuzzleHttpClient;
 
 class AdminAppointmentController extends Controller
 {
@@ -57,6 +60,58 @@ class AdminAppointmentController extends Controller
         return view('pages.admin_pages.admin_appointment', [
             'schedules' => $schedules,
         ]);
+    }
+
+    //Confirm Appointment
+    public function confirmAppointment(Request $request){
+        $maintenanceID = $request->input('maintenance_id');
+        $maintenance_schedule = MaintenanceSchedule::where('maintenanceID', $maintenanceID)->first();
+        $cost = $request->input('cost');
+
+        MaintenanceSchedule::where('maintenanceID',$maintenanceID)->update([
+            'isAppointed' => true,
+        ]);
+
+        $customerID = $request->input('customer_id');
+        $vehicleID = $request->input('vehicle_id');
+        $owner = $request->input('owner');
+        $vehicle = $request->input('vehicle');
+        $maintenance_type = $request->input('maintenance_type');
+        $scheduled_date = $maintenance_schedule['scheduled_date'];
+        $scheduled_date_orig = $request->input('scheduled_date_orig');
+        $content = "Good Day Sir/Ma'am " . $owner . ", we would like to inform you that your " . $vehicle . " is due for " . $maintenance_type . " on " . $scheduled_date . ". Please prepare an exact amount of ₱" . $cost . " for the service.";
+
+        $customer = Customer::where('customerID', $customerID)->first();
+        $customerNum = "+63" . $customer['phone_number'];
+
+        //Send SMS notification
+        $client = new GuzzleHttpClient();
+        $apiKey = "6txNEfdDAqAZSHw1PF18iWG0GkWHtGeBW_sAX9z8PEUS59HU3zuZAgd_h8wiLuv6";
+
+        $res = $client->request('POST', 'https://api.httpsms.com/v1/messages/send', [
+            'headers' => [
+                'x-api-key' => $apiKey,
+            ],
+            'json'    => [
+                'content' => "From Masayon Auto Klinik: \nGood Day Sir/Ma'am " . $owner . ", we would like to inform you that your " . $vehicle . " is due for " . $maintenance_type . " on " . $scheduled_date . ". Please prepare an exact amount of ₱". $cost . " for the service.",
+                'from'    => "+639999129152",
+                'to'      => $customerNum
+            ]
+        ]);
+
+        Notification::create([
+            'customerID' => $customerID,
+            'vehicleID' => $vehicleID,
+            'maintenanceID' => $maintenanceID,
+            'owner' => $owner,
+            'vehicle' => $vehicle,
+            'maintenance_type' => $maintenance_type,
+            'scheduled_date' => $scheduled_date,
+            'content' => $content,
+            'isConfirmed' => false,
+        ]);
+
+        return to_route('maintenance_status_view');
     }
 
     //Cancel Appointment
