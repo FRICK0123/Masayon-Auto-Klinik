@@ -137,17 +137,11 @@
                 <div class="modal-body">
                     <form action="{{ route('appointment_update') }}" method="post">
                         @csrf
-                        <label for="current_milage" class="fw-bold">Enter Current Mileage:</label>
-                        <input type="number" placeholder="miles" class="form-control" id="current_milage" name="current_milage"><br><br>
-
                         <label for="cost" class="fw-bold">Enter Maintenance Cost:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text">₱</span>
                             <input type="number" class="form-control" name="cost" id="cost">
                         </div><br>
-
-                        <label for="maintenance_description" class="form-label fw-bold">Enter Maintenance Description</label>
-                        <textarea class="form-control" id="maintenance_description" rows="3" name="maintenance_description"></textarea><br><br>
 
                         <input type="hidden" id="maintenance_id" name="maintenance_id">
                         <input type="hidden" id="vehicle_id" name="vehicle_id">
