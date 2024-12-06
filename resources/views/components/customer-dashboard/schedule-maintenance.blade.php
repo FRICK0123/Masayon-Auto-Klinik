@@ -354,10 +354,17 @@
     document.getElementById("maintenance_date").addEventListener("input", function() {
         let inputDate = new Date(this.value);
         let day = inputDate.getUTCDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
+        let hours = inputDate.getHours(); // Get the hours from the selected time
 
         if (day === 0) { // 0 means Sunday
             alert("You cannot book appointments on Sunday.");
             this.value = ""; // Clear the input field
+        }
+
+        if (hours < 8 || hours >= 17) { // Check if time is outside 8:00 AM - 5:00 PM
+            alert("You can only book appointments between 8:00 AM and 5:00 PM.");
+            this.value = ""; // Clear the input field
+            return;
         }
     });
 

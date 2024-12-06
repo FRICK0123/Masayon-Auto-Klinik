@@ -64,7 +64,7 @@
                                             data-oil-type="{{ $schedule->oil_type }}"
                                             data-scheduled-interval="{{ $schedule->scheduled_interval }}"
                                             onclick="fillData(this)">
-                                                Update
+                                                Add
                                             </a>
                                         </li>
                                     </ul>

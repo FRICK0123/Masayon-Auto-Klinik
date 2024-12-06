@@ -282,21 +282,6 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var modalElement = document.getElementById('milageModal');
-            var modal = new bootstrap.Modal(modalElement);
-
-            // Check session storage
-            if (!sessionStorage.getItem('milageModalDismissed')) {
-                modal.show();
-            }
-
-            // Handle modal dismissal
-            modalElement.addEventListener('hidden.bs.modal', function () {
-                sessionStorage.setItem('milageModalDismissed', true);
-            });
-        });
-
         function populateEditDetails(element){
             const fullname = element.getAttribute('data-fullname');
             const phone_number = element.getAttribute('data-phone');

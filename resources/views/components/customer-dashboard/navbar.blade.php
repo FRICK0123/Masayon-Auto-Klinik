@@ -15,9 +15,9 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container-fluid">
-        <div class="masayon_logo">
+        <a href="{{route('homepage')}}" class="masayon_logo">
             <img src="{{asset('Images/Masayon Auto Klinik Logo.png')}}" alt="Masayon Logo" width="80" height="80" class="img-fluid" id="logo">
-        </div>
+        </a>
 
         <!-- Toggle button for mobile -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,14 +61,6 @@
                             @csrf
                             <span><img src="{{ asset('icons/power.svg') }}" alt="Logout" width="20"> <strong>Logout</strong></span>
                         </form>
-                    </li>
-                </ul>
-                <!-- Right-aligned link -->
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        @auth('customer')
-                            <a class="nav-link" href="{{route('homepage')}}"><img src="{{ asset('icons/house.svg') }}" alt="Vehicles" width="20"> <strong>Homepage</strong></a>
-                        @endauth
                     </li>
                 </ul>
             </div>

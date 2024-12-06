@@ -59,7 +59,7 @@
         <input type="text" name="chassis_number" class="form-control" id="chassis_number"><br>
 
         <label for="plate_number" class="fw-bold" required>Plate Number:</label>
-        <input type="text" placeholder="ABC-123" name="plate_number" class="form-control" id="plate_number" pattern="[A-Z]{3}-[0-9]{3}" title="Please enter a valid plate number in the format ABC-123"><br>
+        <input type="text" placeholder="ABC-123" name="plate_number" class="form-control" id="plate_number"><br>
 
         <button class="btn btn-dark">Submit</button>
     </form>

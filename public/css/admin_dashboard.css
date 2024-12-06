@@ -208,3 +208,43 @@
         height: auto;
     }
 }
+
+.customer_card_link{
+    color: black;
+    transition: .5s;
+}
+
+.customer_card_link:hover{
+    background-color: rgb(2, 192, 2);
+    transition: .5s;
+}
+
+.customer_cars_card_link {
+    color: black;
+    transition: .5s;
+}
+
+.customer_cars_card_link:hover {
+    background-color: rgb(175, 175, 175);
+    transition: .5s;
+}
+
+.maintenance_task_link {
+    color: black;
+    transition: .5s;
+}
+
+.maintenance_task_link:hover {
+    background-color: rgb(255, 80, 80);
+    transition: .5s;
+}
+
+.notification_link {
+    color: black;
+    transition: .5s;
+}
+
+.notification_link:hover {
+    background-color: rgb(255, 255, 80);
+    transition: .5s;
+}

@@ -60,8 +60,8 @@
                 </div>
 
                 <!-- CUSTOMER COUNT CARD -->
-                <div class="col-md-3">
-                    <div class="border border-success rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 100%;">
+                <a href="{{ route('users_view') }}" class="col-md-3 text-dark" style="text-decoration: none;">
+                    <div class="border border-success rounded-3 mt-3 summary_cards p-3 customer_card_link" style="height: 160px; width: 100%;">
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('icons/users.svg') }}" alt="Customers" width="30" height="30">
                             <h5 class="boxes_label ms-2 fw-bold">CUSTOMERS</h5>
@@ -72,11 +72,11 @@
                             <img src="{{ asset('chart.png') }}" alt="Customers" class="box_chart">
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- VEHICLE COUNT CARD -->
-                <div class="col-md-3">
-                    <div class="border border-secondary rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 100%;">
+                <a href="{{ route('customer_vehicles_view') }}" class="col-md-3" style="text-decoration: none;">
+                    <div class="border border-secondary rounded-3 mt-3 summary_cards p-3 customer_cars_card_link" style="height: 160px; width: 100%;">
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('icons/car.svg') }}" alt="Customers" width="30" height="30">
                             <h6 class="boxes_label ms-2 fw-bold">CUSTOMER CARS</h6>
@@ -86,11 +86,11 @@
                             <img src="{{ asset('chart.png') }}" alt="Vehicle Count" class="box_chart">
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- MAINTENANCE TASKS CARD -->
-                <div class="col-md-3">
-                    <div class="border border-danger rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 100%;">
+                <a href="{{ route('maintenance_overview') }}" class="col-md-3" style="text-decoration: none;">
+                    <div class="border border-danger rounded-3 mt-3 summary_cards p-3 maintenance_task_link" style="height: 160px; width: 100%;">
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('icons/gear-fine.svg') }}" alt="Maintenance Tasks" width="30" height="30">
                             <h5 class="boxes_label ms-2 fw-bold">MAINTENANCE TASKS</h5>
@@ -100,11 +100,11 @@
                             <img src="{{ asset('chart.png') }}" alt="Vehicle Count" class="box_chart">
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- NOTIFICATIONS SENT CARD -->
-                <div class="col-md-3">
-                    <div class="border border-warning rounded-3 mt-3 summary_cards p-3" style="height: 160px; width: 100%;">
+                <a href="{{ route('notification_view') }}" class="col-md-3" style="text-decoration: none;">
+                    <div class="border border-warning rounded-3 mt-3 summary_cards p-3 notification_link" style="height: 160px; width: 100%;">
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notifications Sent" width="30" height="30">
                             <h5 class="boxes_label ms-2 fw-bold">NOTIFICATIONS SENT</h5>
@@ -114,7 +114,7 @@
                             <img src="{{ asset('chart.png') }}" alt="Notifications Sent" class="box_chart">
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <br><br>
 
