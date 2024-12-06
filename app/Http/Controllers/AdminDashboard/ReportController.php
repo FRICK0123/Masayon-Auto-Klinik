@@ -34,7 +34,7 @@ class ReportController extends Controller
         // Loop through each transaction and count them per day
         foreach ($transactions as $transaction) {
             $day = Carbon::parse($transaction->date_performed)->format('Y-m-d');
-            if (!isset($transactionsPerDay[$day])) {
+            if (!isset($transactionsPerDay[$day])) {    
                 $transactionsPerDay[$day] = 0;
             }
             $transactionsPerDay[$day]++;
