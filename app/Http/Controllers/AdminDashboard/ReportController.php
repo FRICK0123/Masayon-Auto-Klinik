@@ -20,51 +20,100 @@ class ReportController extends Controller
     public function reportsView()
     {
         $today = Carbon::parse(Carbon::today()->toDateString());
-        $transaction = MaintenanceHistory::where('date_performed', $today)->orderBy('date_performed','desc')->get();
-        $interval = 'daily';
-        return view('pages.admin_pages.admin_reports',
-        [
-            'transaction'=>$transaction,
-            'interval'=>$interval,
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+
+        // Get all transactions for the current month
+        $transactions = MaintenanceHistory::whereBetween('date_performed', [$startOfMonth, $endOfMonth])
+            ->orderBy('date_performed', 'desc')
+            ->get();
+
+        // Initialize an array to store the number of transactions per day
+        $transactionsPerDay = [];
+
+        // Loop through each transaction and count them per day
+        foreach ($transactions as $transaction) {
+            $day = Carbon::parse($transaction->date_performed)->format('Y-m-d');
+            if (!isset($transactionsPerDay[$day])) {
+                $transactionsPerDay[$day] = 0;
+            }
+            $transactionsPerDay[$day]++;
+        }
+
+        // Create an array with the days of the month and the corresponding transaction count
+        $daysOfMonth = [];
+        $transactionCounts = [];
+        for ($i = 1; $i <= $endOfMonth->day; $i++) {
+            $currentDay = Carbon::parse($startOfMonth->copy()->day($i))->format('Y-m-d');
+            $daysOfMonth[] = $currentDay;
+            $transactionCounts[] = $transactionsPerDay[$currentDay] ?? 0;
+        }
+
+        $interval = 'monthly';
+        return view('pages.admin_pages.admin_reports', [
+            'transactions' => $transactions,
+            'interval' => $interval,
+            'daysOfMonth' => $daysOfMonth,
+            'transactionCounts' => $transactionCounts,
         ]);
     }
 
-    //Filter for transaction interval
     public function reportsTransactionFilter(Request $request)
     {
-        $today = Carbon::parse(Carbon::today()->toDateString());
-        // Default to daily if no filter is applied
-        $interval = $request->input('interval', 'daily');
-        // Adjust based on interval
+        $interval = $request->input('interval', 'monthly');
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+
+        // Default to monthly if no filter is applied
         switch ($interval) {
             case 'weekly':
-                $transaction = MaintenanceHistory::whereBetween('date_performed', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('date_performed','desc')->get();
+                $transactions = MaintenanceHistory::whereBetween('date_performed', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                    ->orderBy('date_performed', 'desc')
+                    ->get();
                 break;
             case 'monthly':
-                $transaction = MaintenanceHistory::whereBetween('date_performed', [
-                    Carbon::now()->startOfMonth(),
-                    Carbon::now()->endOfMonth()
-                ])->orderBy('date_performed','desc')->get();
+                $transactions = MaintenanceHistory::whereBetween('date_performed', [$startOfMonth, $endOfMonth])
+                ->orderBy('date_performed', 'desc')
+                    ->get();
                 break;
             case 'yearly':
-                $transaction = MaintenanceHistory::whereBetween('date_performed', [
-                    Carbon::now()->startOfYear(),
-                    Carbon::now()->endOfYear()
-                ])->orderBy('date_performed','desc')->get();
+                $transactions = MaintenanceHistory::whereBetween('date_performed', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
+                    ->orderBy('date_performed', 'desc')
+                    ->get();
                 break;
             default:
-                $transaction = MaintenanceHistory::where('date_performed', $today)->orderBy('date_performed','desc')->get();
+                $transactions = MaintenanceHistory::where('date_performed', Carbon::today()->toDateString())
+                ->orderBy('date_performed', 'desc')
+                    ->get();
         }
 
+        // Initialize the transaction counts
+        $transactionsPerDay = [];
+        foreach ($transactions as $transaction) {
+            $day = Carbon::parse($transaction->date_performed)->format('Y-m-d');
+            if (!isset($transactionsPerDay[$day])) {
+                $transactionsPerDay[$day] = 0;
+            }
+            $transactionsPerDay[$day]++;
+        }
 
-        return view(
-            'pages.admin_pages.admin_reports',
-            [
-                'transaction' => $transaction,
-                'interval' => $interval,
-            ]
-        );
+        // Prepare days and counts for the chart
+        $daysOfMonth = [];
+        $transactionCounts = [];
+        for ($i = 1; $i <= $endOfMonth->day; $i++) {
+            $currentDay = Carbon::parse($startOfMonth->copy()->day($i))->format('Y-m-d');
+            $daysOfMonth[] = $currentDay;
+            $transactionCounts[] = $transactionsPerDay[$currentDay] ?? 0;
+        }
+
+        return view('pages.admin_pages.admin_reports', [
+            'transactions' => $transactions,
+            'interval' => $interval,
+            'daysOfMonth' => $daysOfMonth,
+            'transactionCounts' => $transactionCounts,
+        ]);
     }
+
 
     //Export Transactions PDF
     public function exportTransactionPdf(Request $request)

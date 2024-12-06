@@ -1,4 +1,3 @@
-@props(['transaction','interval'])
 <div class="container">
     <div class="d-flex justify-content-between align-items-center pb-3 bg-white p-3 rounded-3 shadow-sm mb-4">
         <h4 class="pt-2 fw-bold">REPORTS</h4>
