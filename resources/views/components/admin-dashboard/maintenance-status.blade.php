@@ -67,6 +67,13 @@
                                                 Add
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="#" class="dropdown-item"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#cancel"
+                                            data-maintenanceID="{{ $schedule->maintenanceID }}"
+                                            onclick="populateCancel(this)">Cancel</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </td>
@@ -165,6 +172,28 @@
     </div>
 </div>
 
+<!-- cancel Modal -->
+<div class="modal fade" id="cancel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Cancel this Appointment?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>You won't be able to recover this appointment!</p>
+        </div>
+        <div class="modal-footer">
+            <form action="{{ route('cancel_appointment') }}" method="GET">
+                <input type="hidden" name="maintenanceID" id="maintenanceID">
+                <button type="submit" class="btn btn-outline-dark">Confirm</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
 <!--Maintenance Task Added Toast Notification -->
 <div class="toast-container position-fixed top-0 end-0 p-3">
     <div id="appointmentAdded" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -226,7 +255,12 @@
             document.getElementById('view_oil_type').innerHTML = oil_type;
             document.getElementById('view_current_milage').innerHTML = current_milage;
             document.getElementById('view_next_milage_schedule').innerHTML = next_milage_schedule;
+        }
 
+        function populateCancel(element){
+            const maintenanceID = element.getAttribute('data-maintenanceID');
+
+            document.getElementById('maintenanceID').value = maintenanceID;
         }
 
     // Check if there's an appointment added message in session

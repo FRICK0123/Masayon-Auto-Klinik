@@ -406,4 +406,11 @@ class MaintenanceStatusController extends Controller
             return to_route('maintenance_overview');
         }
     }
+
+    public function cancelAppointment(Request $request){
+        $maintenanceID = $request->input('maintenanceID');
+
+        MaintenanceSchedule::where('maintenanceID',$maintenanceID)->first()->delete();
+        return to_route('maintenance_status_view');
+    }
 }

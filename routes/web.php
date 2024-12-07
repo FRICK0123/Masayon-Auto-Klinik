@@ -203,6 +203,7 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/maintenance_status', 'maintenanceStatusView')->name('maintenance_status_view');
         Route::post('/maintenance_status/update', 'MaintenanceStatusUpdate')->name('maintenance_status_update');
         Route::get('/maintenance_search', 'searchMaintenanceStatus')->name('search_maintenance_status');
+        Route::get('/cancel-maintenance', 'cancelAppointment')->name('cancel_appointment');
     });
 //end
 
