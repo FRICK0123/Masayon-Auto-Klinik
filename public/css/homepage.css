@@ -8,6 +8,8 @@
     #nav{
         border-bottom: 1px solid white;
         transition: .5s;
+        background-color: rgb(24, 24, 24, 0.9);
+        border-radius: 20px;
     }
 
     #nav.scrolled{
@@ -28,10 +30,6 @@
         text-decoration: none;
         color: white;
         transition: .5s
-    }
-
-    #nav_links.scrolled a {
-        color: blac;
     }
 
     .links a:hover{
@@ -84,7 +82,7 @@
 
 /*Home Section*/
     .home_section{
-        background-image: url('/Images/Carousel1.jpg');
+        background-image: url('/Images/masayon_banner2.jpeg');
         background-size: cover;
         background-repeat: no-repeat;
         height: 100vh;
