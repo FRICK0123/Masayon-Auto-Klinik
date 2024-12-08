@@ -124,7 +124,7 @@
                                     <tr>
                                         <td>{{ $vehicle->make }} {{ $vehicle->model }} {{ $vehicle->year_of_manufacture }}</td>
                                         <td>{{ $vehicle->customer->fullname }}</td>
-                                        <td>{{ $vehicle->milage }}</td>
+                                        <td>{{ $vehicle->milage }} km</td>
                                         <td>{{Carbon\Carbon::parse($vehicle->created_at)->format('F j, Y')}}</td>
                                         <td>
                                             <button class="btn btn-dark btn-sm rounded-pill"
@@ -202,7 +202,7 @@
             document.getElementById('make').innerHTML = make;
             document.getElementById('model').innerHTML = model;
             document.getElementById('year_of_manufacture').innerHTML = year_of_manufacture;
-            document.getElementById('milage').innerHTML = milage;
+            document.getElementById('milage').innerHTML = milage + " km";
             document.getElementById('engine_number').innerHTML = engine_number;
             document.getElementById('vin').innerHTML = vin;
             document.getElementById('chassis_number').innerHTML = chassis_number;

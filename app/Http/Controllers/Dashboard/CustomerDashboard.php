@@ -92,6 +92,14 @@ class CustomerDashboard extends Controller
         $customer = DB::table('customers')->where('username', Session::get('username'))->first();
         $profileUpdate = Customer::find($customer->{'customerID'});
 
+        // Check if there is an existing profile image and delete it
+        if ($profileUpdate->profile_img) {
+            $oldImagePath = public_path($uploadPath . $profileUpdate->profile_img);
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath); // Delete the old image
+            }
+        }
+
         $profileUpdate->profile_img = $fileName;
         $profileUpdate->save();
 
