@@ -29,7 +29,6 @@
                             <img src="{{asset('Images/car_images/'.$item['vehicle_image'])}}" alt="Car Photo" style="height: 200px; width: 100%; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
                                 <h4 class="text-dark">{{$item['make']}} {{$item['model']}} {{ $item['year_of_manufacture'] }}</h4>
-                                <p class="text-dark"><label class="fw-bold">Engine Type:</label> {{ $item['engine_type'] }}</p>
                                 <p class="text-dark"><label class="fw-bold">Plate Number:</label> {{$item['plate_number']}}</p>
 
                                 <div class="row">

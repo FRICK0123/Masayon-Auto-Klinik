@@ -63,6 +63,16 @@
                     </div>
 
                     <div class="col-md-6 mt-3 mt-lg-0">
+                        <h4 class="text-dark">List of Cars:</h4>
+                        @foreach ($vehicles as $vehicle)
+                            <a href="{{ route('view_car_details',$vehicle->vehicleID) }}" class="btn btn-dark mt-2">
+                                {{ $vehicle->make }} {{ $vehicle->model }} {{ $vehicle->year_of_manufacture }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="container-fluid mt-3">
                         <h4 class="text-dark">Previous Transactions</h4>
                         <div class="container">
                             <!-- Card-like table layout -->
@@ -101,7 +111,6 @@
                                 {{ $transactions->appends(request()->input())->links() }}
                             </div>
                         </div>
-                    </div>
                 </div>
             </x-customer-dashboard.main-content>
         </main>
