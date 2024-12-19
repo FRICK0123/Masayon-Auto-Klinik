@@ -90,6 +90,39 @@
         } else {
             console.error("Service workers are not supported.");
         }
+
+        let installPromptEvent = null; // Hold the event to trigger later
+
+        // Listen for beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', (event) => {
+            // Prevent the default install prompt from showing
+            event.preventDefault();
+            
+            // Save the event so it can be triggered later
+            installPromptEvent = event;
+
+            // Show the install button
+            document.getElementById('installButton').style.display = 'block';
+
+            // Add click event to the install button
+            document.getElementById('installButton').addEventListener('click', () => {
+                // Show the prompt to the user
+                installPromptEvent.prompt();
+
+                // Wait for the user to respond to the prompt
+                installPromptEvent.userChoice.then((choiceResult) => {
+                    console.log('User choice:', choiceResult.outcome);
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the PWA installation');
+                    } else {
+                        console.log('User dismissed the PWA installation');
+                    }
+
+                    // Hide the install button again after installation
+                    document.getElementById('installButton').style.display = 'none';
+                });
+            });
+        });
         </script>
     </body>
 </html>

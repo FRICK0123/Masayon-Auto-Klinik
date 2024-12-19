@@ -26,7 +26,7 @@
                         data-engine-type="{{ $car->engine_type }}"
                         data-image="{{ asset('Images/car_images/' .$car->car_image) }}"
                         data-image-file="{{ $car->car_image }}">
-                    {{ $car->car_make }} {{ $car->car_model }} ({{ $car->year_of_manufacture }})
+                    {{ $car->car_make }} {{ $car->car_model }} ({{ $car->year_of_manufacture }}) {{ $car->engine_type }}
                 </option>
             @endforeach
         </select><br>

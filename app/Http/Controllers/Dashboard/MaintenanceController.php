@@ -34,6 +34,16 @@ class MaintenanceController extends Controller
         $full_pms = $request->input('full',[]);
         $full_pms_services = implode(',',$full_pms);
 
+        // Check for existing maintenance type for this vehicle
+        $existingSchedule = MaintenanceSchedule::where('vehicleID', $vehicleID)
+        ->where('maintenance_type', $maintenance_type)
+        ->where('isDeactivated', false) // Consider only active schedules
+        ->first();
+
+        if ($existingSchedule) {
+            return back()->withErrors(['maintenance_type' => 'This maintenance type already exists for the selected vehicle.']);
+        }
+
         $appointmentDate = Carbon::parse($maintenance_date);
 
         $appointmentDateCount = MaintenanceSchedule::whereDate('appointment_date',$appointmentDate->toDateString())->count();

@@ -20,6 +20,11 @@
             <option value="other">Other Maintenance Type</option>
         </select><br>
 
+        <!-- Error message for maintenance_type -->
+        @error('maintenance_type')
+            <span class="text-danger">{{ $message }}</span><br>
+        @enderror
+
         <!--Basic PMS Service Type-->
             <div class="container" id="basic_pms_services">
                 <div class="form-check">

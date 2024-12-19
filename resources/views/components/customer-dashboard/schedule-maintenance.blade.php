@@ -19,6 +19,10 @@
             <option value="Full PMS">Heavy PMS</option>
             <option value="other">Other Maintenance Type</option>
         </select><br>
+    <!-- Error message for maintenance_type -->
+    @error('maintenance_type')
+        <span class="text-danger">{{ $message }}</span><br>
+    @enderror
 
         <!--Basic PMS Service Type-->
             <div class="container" id="basic_pms_services">
@@ -218,13 +222,13 @@
             <label for="oil_type" class="fw-bold">Oil Type:</label>
             <select name="oil_type" id="oil_type" class="form-select">
                 <option value="" disabled selected>Select Oil Type</option>
-                <option value="Mobil Delvac I 5W-40 Fully Synthetic Diesel Oil" data-mileage="8000">Mobil Delvac I 5W-40 Fully Synthetic Diesel Oil</option>
-                <option value="Mobil Delvac 15W-40 Semi Synthetic Diesel Oil" data-mileage="5000">Mobil Delvac 15W-40 Semi Synthetic Diesel Oil</option>
-                <option value="Mobil Super 5W-30 Fully Synthetic Gasoline Oil" data-mileage="8000">Mobil Delvac 15W-40 Semi Synthetic Diesel Oil</option>
-                <option value="Mobil Special 20w-50 Ordinary Gasoline Oil" data-mileage="5000">Mobil Special 20w-50 Ordinary Gasoline Oil</option>
+                <option value="Mobil Delvac I 5W-40 Fully Synthetic Diesel Oil" data-mileage="8000" data-interval="12">Mobil Delvac I 5W-40 Fully Synthetic Diesel Oil</option>
+                <option value="Mobil Delvac 15W-40 Semi Synthetic Diesel Oil" data-mileage="5000" data-interval="6">Mobil Delvac 15W-40 Semi Synthetic Diesel Oil</option>
+                <option value="Mobil Super 5W-30 Fully Synthetic Gasoline Oil" data-mileage="8000" data-interval="12">Mobil Super 5W-30 Fully Synthetic Gasoline Oil</option>
+                <option value="Mobil Special 20w-50 Ordinary Gasoline Oil" data-mileage="5000" data-interval="6">Mobil Special 20w-50 Ordinary Gasoline Oil</option>
             </select><br>
 
-            <label for="mileage_interval" class="fw-bold">Mileage Interval (mi)</label>
+            <label for="mileage_interval" class="fw-bold">Mileage Interval (km)</label>
             <input type="number" name="mileage_interval" id="mileage_interval" readonly class="form-control"><br>
         </div>
 
@@ -343,9 +347,11 @@
     oil_type_select.addEventListener('change', function() {
         let selectedOption = oil_type_select.options[oil_type_select.selectedIndex];
         let mileage = selectedOption.getAttribute('data-mileage');
+        let oil_interval = selectedOption.getAttribute('data-interval');
         
         if (mileage) {
             mileage_interval_input.value = mileage;
+            document.getElementById('scheduled_interval').value = oil_interval;
         } else {
             mileage_interval_input.value = ""; // Clear the field if no valid option is selected
         }

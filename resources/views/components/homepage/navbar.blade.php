@@ -1,6 +1,6 @@
 <nav class="container mt-3 d-flex justify-content-between align-items-baseline pb-2" id="nav">
     <div class="masayon_logo">
-        <img src="{{asset('Images/Masayon Auto Klinik Logo.png')}}" alt="Masayon Logo" width="110" height="110" class="img-fluid" id="logo">
+        <img src="{{asset('Images/dark_mode logo.png')}}" alt="Masayon Logo" width="90" height="90" class="img-fluid" id="logo">
     </div>
 
     <!--Navigation Links-->
@@ -30,13 +30,15 @@
     @endauth
     @guest('customer')
         <form action="{{route('login_view')}}" method="GET" class="d-none d-lg-block">
-            <button class="btn" id="login">LOGIN</button>
+            <button class="btn btn-danger" id="login">LOGIN</button>
         </form>
     @endguest
     <!--Login link/button to be directed to Login page End-->
 
     <!--Sidebar/Offcanvas-->
-        <button class="btn d-lg-none" data-bs-toggle="offcanvas" role="button" href="#homepage_sidebar" aria-controls="homepage_sidebar"><img src="{{asset('icons/hamburger_white.svg')}}" alt="Sidebar"></button>
+        <button class="btn d-lg-none" data-bs-toggle="offcanvas" role="button" href="#homepage_sidebar" aria-controls="homepage_sidebar">
+            <img src="{{asset('icons/hamburger_white.svg')}}" alt="Sidebar">
+        </button>
 
         <!--Sidebar Contents-->
             <div class="offcanvas offcanvas-end" tabindex="-1" id="homepage_sidebar">
@@ -57,6 +59,7 @@
                             <form action="{{route('login_view')}}" method="get" class="mt-3">
                                 <button class="btn btn-dark w-100">Login</button>
                             </form>
+                                <button class="btn btn-danger w-100 mt-3" id="installButton" style="display: none;">Install app</button>
                         @endguest
 
                         @auth('customer')
