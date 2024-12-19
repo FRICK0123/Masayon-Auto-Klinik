@@ -97,8 +97,14 @@
         background: linear-gradient(to bottom, transparent, white);
         pointer-events: none;
     }
+
     .home_section h1{
-        font-weight: bolder;
+        font-size: 50px;
+        font-weight: bold;
+        border-bottom: 1px solid red;
+    }
+
+    .home_section h4{
         font-family: cursive;
     }
 /*Home Section End*/
