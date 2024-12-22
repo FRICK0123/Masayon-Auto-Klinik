@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inbox;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -15,19 +16,25 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        $data = [
-            'fullname' => $request->fullname,
-            'email' => $request->email,
-            'message_content' => $request->message, // Use a unique key name
-        ];
+        // $data = [
+        //     'fullname' => $request->fullname,
+        //     'email' => $request->email,
+        //     'message_content' => $request->message, // Use a unique key name
+        // ];
 
-        Mail::send('emails.contact', $data, function ($message) use ($request) {
-            $message->to('paculbafrick1@gmail.com')
-                ->subject('New Contact Message')
-                ->from($request->email, $request->fullname);
-        });
+        // Mail::send('emails.contact', $data, function ($message) use ($request) {
+        //     $message->to('paculbafrick1@gmail.com')
+        //         ->subject('New Contact Message')
+        //         ->from($request->email, $request->fullname);
+        // });
 
-        session()->flash('contact',"Your Message has been sent successfully");
+        Inbox::create([
+            'fullname' => $request->input('fullname'),
+            'email' => $request->input('email'),
+            'message' => $request->input('message'),
+        ]);
+
+        session()->flash('contact',"Your Message has been sent successfully, We will email you to your provided email address");
 
         return to_route('homepage');
     }

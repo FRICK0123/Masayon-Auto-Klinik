@@ -75,7 +75,7 @@
                 </div>
                 <!--end-->
 
-                <!--Cars table-->
+                <!--Maintenance table-->
                 <div id="carTableContainer" class="table-responsive">
                     <table class="table table-striped">
                         <tr>
@@ -164,7 +164,7 @@
                                 </td>
 
                                 <td>
-                                <div class="dropdown">
+                                <div class="dropdown" style="position: static;">
                                     <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown">
                                             <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notify" width="20">
                                     </button>

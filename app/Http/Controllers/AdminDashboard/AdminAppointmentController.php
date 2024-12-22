@@ -84,7 +84,7 @@ class AdminAppointmentController extends Controller
         $customer = Customer::where('customerID', $customerID)->first();
         $customerNum = "+63" . $customer['phone_number'];
 
-        //Send SMS notification
+        // //Send SMS notification
         $client = new GuzzleHttpClient();
         $apiKey = "6txNEfdDAqAZSHw1PF18iWG0GkWHtGeBW_sAX9z8PEUS59HU3zuZAgd_h8wiLuv6";
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminDashboard\AdminController;
 use App\Http\Controllers\AdminDashboard\AdminNotificationController;
 use App\Http\Controllers\AdminDashboard\AdminProfileController;
 use App\Http\Controllers\AdminDashboard\CarsController;
+use App\Http\Controllers\AdminDashboard\InboxController;
 use App\Http\Controllers\AdminDashboard\MaintenanceHistoryController;
 use App\Http\Controllers\AdminDashboard\MaintenanceOverviewController;
 use App\Http\Controllers\AdminDashboard\MaintenanceStatusController;
@@ -245,6 +246,13 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
     Route::middleware(['auth:admin'])->controller(AdminProfileController::class)->group(function () {
         Route::get('/admin-profile','adminProfileView')->name('admin_profile');
         Route::post('/admin-change-password/{adminID}','changePassword');
+    });
+//end
+
+//Routes for Admin Inbox
+    Route::middleware(['auth:admin'])->controller(InboxController::class)->group(function (){
+        Route::get('/admin-inbox','inboxView')->name('inbox_view');
+        Route::post('/send-reply','sendInboxReply')->name('send_reply');
     });
 //end
 

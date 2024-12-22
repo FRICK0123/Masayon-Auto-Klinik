@@ -81,7 +81,7 @@
 
 /*Home Section*/
     .home_section{
-        background-image: url('/Images/masayon_banner2.png');
+        background-image: url('/Images/masayon_ai_banner.png');
         background-size: cover;
         background-repeat: no-repeat;
         height: 100vh;
@@ -102,10 +102,6 @@
         font-size: 50px;
         font-weight: bold;
         border-bottom: 1px solid red;
-    }
-
-    .home_section h4{
-        font-family: cursive;
     }
 /*Home Section End*/
 

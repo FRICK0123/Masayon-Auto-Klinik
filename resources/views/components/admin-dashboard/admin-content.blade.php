@@ -102,6 +102,11 @@
                     <img src="{{asset('icons/bell-ringing.svg')}}" alt="Notifications" class="me-2">
                     <p class="m-0">Notifications</p>
                 </form>
+
+                <form action="{{ route('inbox_view') }}" method="GET" class="d-flex align-items-center {{ request()->routeIs('inbox_view') ? 'active' : '' }}" id="admin_inbox" onclick="adminInbox()">
+                    <img src="{{asset('icons/envelope.svg')}}" alt="Inbox" class="me-2">
+                    <p class="m-0">Inbox</p>
+                </form>
             </div>
         <!--End-->
     </div>
@@ -157,6 +162,10 @@
 
         function adminNotifications(){
             document.getElementById('admin_notifications').submit();
+        }
+
+        function adminInbox(){
+            document.getElementById('admin_inbox').submit();
         }
     </script>
 <!--end-->

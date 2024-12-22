@@ -45,7 +45,7 @@ class LoginController extends Controller
                     //end
 
                     Customer::where('customerID',$customer->{'customerID'})->update(['last_seen'=>Carbon::now()]);
-                    return to_route('customer_profile');
+                    return to_route('customer_dashboard');
                 } else {
                     //Sessions
                     Session::put([

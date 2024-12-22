@@ -5,11 +5,10 @@
     "background_color": "#6777ef",
     "description": "A Vehicle Maintenance Management System of Masayon Auto Klinik",
     "display": "fullscreen",
-    "theme_color": "#6777ef",
+    "theme_color": "white",
     "icons": [
         {
             "src": "logo.png",
-            "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
         }

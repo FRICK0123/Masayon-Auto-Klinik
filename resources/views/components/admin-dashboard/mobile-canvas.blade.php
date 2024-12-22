@@ -64,6 +64,11 @@
       <li>
         <a href="{{ route('notification_view') }}" class="d-block py-2">Notifications</a>
       </li>
+
+      <!-- Inbox -->
+      <li>
+        <a href="{{ route('inbox_view') }}" class="d-block py-2">Inbox</a>
+      </li>
     </ul>
   </div>
 </div>
