@@ -132,6 +132,12 @@
         </main>
     <!--End-->
 
+    <!--Footer-->
+        <footer class="d-block d-md-none">
+            <x-customer-dashboard.mobile-footer/>
+        </footer>
+    <!--end-->
+
     <!--View Transaction-->
     <div class="modal fade" id="view_transaction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog">

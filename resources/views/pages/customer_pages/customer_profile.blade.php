@@ -116,6 +116,12 @@
         </main>
     <!--End-->
 
+    <!--Footer-->
+        <footer class="d-block d-md-none">
+            <x-customer-dashboard.mobile-footer/>
+        </footer>
+    <!--end-->
+
     <!-- Edit Profile Details Modal-->
     <div class="modal fade" id="editProfileDetails" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">

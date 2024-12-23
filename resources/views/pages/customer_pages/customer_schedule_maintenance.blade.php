@@ -154,6 +154,12 @@
         </main>
     <!--End-->
 
+    <!--Footer-->
+        <footer class="d-block d-md-none">
+            <x-customer-dashboard.mobile-footer/>
+        </footer>
+    <!--end-->
+
     <script>
         function populateModal(element){
             const owner = element.getAttribute('data-view-owner');

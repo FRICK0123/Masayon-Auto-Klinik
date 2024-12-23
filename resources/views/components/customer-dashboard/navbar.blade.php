@@ -1,19 +1,4 @@
-{{-- <nav class="d-flex justify-content-between align-items-center p-2 mt-2 ms-2 me-2 border-bottom border-light" id="nav">
-    <div class="masayon_logo">
-        <img src="{{asset('Images/Masayon Auto Klinik Logo.png')}}" alt="Masayon Logo" width="100" height="100" class="img-fluid" id="logo">
-    </div>
-
-    <!--Login link/button to be directed to Login page-->
-    @auth('customer')
-        <form action="{{route('homepage')}}" class="text-white d-flex justify-content-center align-items-center me-lg-5" id="homepage" onclick="homePage()">
-            <img src="{{asset('icons/house.svg')}}" alt="Dashboard Icon" class="me-2">
-            <h6 class="m-0 d-none d-lg-block">Homepage</h6>
-        </form>
-    @endauth
-    <!--Login link/button to be directed to Login page End-->
-</nav> --}}
-
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm d-none d-md-flex">
     <div class="container-fluid">
         <a href="{{route('homepage')}}" class="masayon_logo">
             <img src="{{asset('Images/Masayon Auto Klinik Logo.png')}}" alt="Masayon Logo" width="80" height="80" class="img-fluid" id="logo">
@@ -66,6 +51,21 @@
             </div>
     </div>
 </nav>
+
+<nav class="bg-white d-flex d-md-none justify-content-between align-items-center ps-3 pe-3" id="mobile_navbar">
+    <a href="{{route('homepage')}}" class="masayon_logo">
+        <img src="{{asset('Images/Masayon Auto Klinik Logo.png')}}" alt="Masayon Logo" width="80" height="80" class="img-fluid" id="logo">
+    </a>
+
+    <a href="{{ route('customer_notification_view') }}">
+        @if($unconfirmedCount > 0)
+            <div id="notif_mobile"></div>
+        @endif
+        <img src="{{ asset('icons/bell-ringing.svg') }}" alt="Notifications">
+    </a>
+</nav>
+
+
 
 <!--Script-->
 <script>
