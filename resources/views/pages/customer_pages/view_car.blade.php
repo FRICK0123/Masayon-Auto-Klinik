@@ -26,7 +26,7 @@
     <!--Header end-->
     
     <!--Main Content-->
-        <main>            
+        <main class="pb-5">            
             <x-customer-dashboard.main-content>
                 <div class="container p-3 border border-2 shadow rounded-3" style="width: 98%" id="minor_details">
                     <div class="row">

@@ -25,7 +25,7 @@
     <!--Header end-->
     
     <!--Main Content-->
-        <main>            
+        <main class="pb-5">            
             <x-customer-dashboard.main-content>
                 <x-customer-dashboard.dashboard-content :vehicles="$vehicles"/>
             </x-customer-dashboard.main-content>

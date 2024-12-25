@@ -101,7 +101,7 @@
                         <h4>Repair/Maintenance Transactions ({{ $interval }})</h4><br>
 
                         @php
-                            $transaction_count = $transactions->count();
+                            $transaction_count = $transactions->total();
                         @endphp
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -172,6 +172,10 @@
                             </table>
                         </div>
                         <!--End-->
+                        <!-- Pagination -->
+                        <div class="d-flex justify-content-center">
+                            {{ $transactions->appends(['start_date' => request('start_date'), 'end_date' => request('end_date')])->links() }}
+                        </div>
 
                         <div>
                             <canvas id="monthlyChart"></canvas>
@@ -274,38 +278,6 @@
         function exportExcel(){
             document.getElementById('export_excel').submit();
         }
-
-    var ctx = document.getElementById('monthlyChart').getContext('2d');
-    var monthlyChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: @json($daysOfMonth), // Days of the month
-            datasets: [{
-                label: 'Transactions per Day',
-                data: @json($transactionCounts), // Transaction counts per day
-                borderColor: 'rgb(75, 192, 192)',
-                fill: false,
-                tension: 0.1
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    type: 'category',
-                    title: {
-                        display: true,
-                        text: 'Days of ' + new Date().toLocaleString('default', { month: 'long' })
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Number of Transactions'
-                    }
-                }
-            }
-        }
-    });
     </script>
 </body>
 

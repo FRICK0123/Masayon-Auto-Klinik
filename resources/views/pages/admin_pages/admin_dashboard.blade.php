@@ -536,10 +536,10 @@
 
         // Call the animation for each count
         document.addEventListener("DOMContentLoaded", () => {
-            animateValue("customerCount", 0, {{ $customerCount }}, 600); // 2 seconds duration
-            animateValue("vehicleCount", 0, {{ $vehicleCount }}, 600); 
-            animateValue("scheduleCount", 0, {{ $scheduleCount }}, 600); 
-            animateValue("notificationCount", 0, {{ $notificationCount }}, 600);
+            animateValue("customerCount", 0, {{ $customerCount }}, 1000);
+            animateValue("vehicleCount", 0, {{ $vehicleCount }}, 1000); 
+            animateValue("scheduleCount", 0, {{ $scheduleCount }}, 1000); 
+            animateValue("notificationCount", 0, {{ $notificationCount }}, 1000);
         });
 
         //Daily and Weekly Customer Registration Reports button

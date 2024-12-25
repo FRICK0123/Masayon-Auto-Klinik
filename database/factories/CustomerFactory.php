@@ -18,6 +18,8 @@ class CustomerFactory extends Factory
      */
     public function definition(): array
     {
+        // Generate random date between January 1st, 2024 and December 31st, 2024
+        $date = $this->faker->dateTimeBetween('2024-01-01', '2024-12-31');
         return [
             'fullname' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
@@ -28,10 +30,11 @@ class CustomerFactory extends Factory
             'email_verified_at' => now(), // Set this to `now()` for verified users
             'verification_token' => Str::random(40), // Generate a random verification token
             'isVerified' => true,
+            'isDeactivated' => false,
             'usertype' => "customer",
-            'last_seen' => now(),
-            'created_at' => now(),
-            'updated_at' => now(),
+            'last_seen' => $date,
+            'created_at' => $date,
+            'updated_at' => $date,
         ];
     }
 }

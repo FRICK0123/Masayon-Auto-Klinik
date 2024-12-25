@@ -27,7 +27,7 @@
     <!--Header end-->
     
     <!--Main Content-->
-        <main>            
+        <main class="pb-5">            
             <x-customer-dashboard.main-content>
                 <x-customer-dashboard.schedule-appointment :schedules="$schedules"/>
             </x-customer-dashboard.main-content>

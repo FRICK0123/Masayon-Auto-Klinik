@@ -26,7 +26,7 @@
     <!--Header end-->
 
     <!--Main Content-->
-        <main>
+        <main class="pb-5">
             <x-customer-dashboard.main-content>
                 <div class="container-fluid ms-1 row">
                     <div class="container border border-1 shadow rounded-3 pb-3 col-md-6 border border-1 border-dark">   

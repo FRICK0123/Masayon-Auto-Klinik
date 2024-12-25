@@ -26,7 +26,7 @@
     <!--Header end-->
     
     <!--Main Content-->
-        <main>            
+        <main class="pb-5">            
             <x-customer-dashboard.main-content>
                 <div class="container">
                     <div class="d-flex justify-content-between align-items-center pb-2 bg-white p-2 rounded-3 shadow-sm mt-5 mt-lg-0">

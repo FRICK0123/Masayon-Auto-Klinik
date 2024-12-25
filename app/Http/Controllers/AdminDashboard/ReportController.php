@@ -23,38 +23,15 @@ class ReportController extends Controller
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
 
-        // Get all transactions for the current month
+        // Get paginated transactions for the current month
         $transactions = MaintenanceHistory::whereBetween('date_performed', [$startOfMonth, $endOfMonth])
-            ->orderBy('date_performed', 'desc')
-            ->get();
-
-        // Initialize an array to store the number of transactions per day
-        $transactionsPerDay = [];
-
-        // Loop through each transaction and count them per day
-        foreach ($transactions as $transaction) {
-            $day = Carbon::parse($transaction->date_performed)->format('Y-m-d');
-            if (!isset($transactionsPerDay[$day])) {    
-                $transactionsPerDay[$day] = 0;
-            }
-            $transactionsPerDay[$day]++;
-        }
-
-        // Create an array with the days of the month and the corresponding transaction count
-        $daysOfMonth = [];
-        $transactionCounts = [];
-        for ($i = 1; $i <= $endOfMonth->day; $i++) {
-            $currentDay = Carbon::parse($startOfMonth->copy()->day($i))->format('Y-m-d');
-            $daysOfMonth[] = $currentDay;
-            $transactionCounts[] = $transactionsPerDay[$currentDay] ?? 0;
-        }
+        ->orderBy('date_performed', 'desc')
+        ->paginate(10);
 
         $interval = 'monthly';
         return view('pages.admin_pages.admin_reports', [
             'transactions' => $transactions,
             'interval' => $interval,
-            'daysOfMonth' => $daysOfMonth,
-            'transactionCounts' => $transactionCounts,
         ]);
     }
 
@@ -68,49 +45,28 @@ class ReportController extends Controller
         switch ($interval) {
             case 'weekly':
                 $transactions = MaintenanceHistory::whereBetween('date_performed', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-                    ->orderBy('date_performed', 'desc')
-                    ->get();
+                ->orderBy('date_performed', 'desc')
+                ->paginate(10);
                 break;
             case 'monthly':
                 $transactions = MaintenanceHistory::whereBetween('date_performed', [$startOfMonth, $endOfMonth])
                 ->orderBy('date_performed', 'desc')
-                    ->get();
+                ->paginate(10);
                 break;
             case 'yearly':
                 $transactions = MaintenanceHistory::whereBetween('date_performed', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
-                    ->orderBy('date_performed', 'desc')
-                    ->get();
+                ->orderBy('date_performed', 'desc')
+                ->paginate(10);
                 break;
             default:
                 $transactions = MaintenanceHistory::where('date_performed', Carbon::today()->toDateString())
                 ->orderBy('date_performed', 'desc')
-                    ->get();
-        }
-
-        // Initialize the transaction counts
-        $transactionsPerDay = [];
-        foreach ($transactions as $transaction) {
-            $day = Carbon::parse($transaction->date_performed)->format('Y-m-d');
-            if (!isset($transactionsPerDay[$day])) {
-                $transactionsPerDay[$day] = 0;
-            }
-            $transactionsPerDay[$day]++;
-        }
-
-        // Prepare days and counts for the chart
-        $daysOfMonth = [];
-        $transactionCounts = [];
-        for ($i = 1; $i <= $endOfMonth->day; $i++) {
-            $currentDay = Carbon::parse($startOfMonth->copy()->day($i))->format('Y-m-d');
-            $daysOfMonth[] = $currentDay;
-            $transactionCounts[] = $transactionsPerDay[$currentDay] ?? 0;
+                ->paginate(10);
         }
 
         return view('pages.admin_pages.admin_reports', [
             'transactions' => $transactions,
             'interval' => $interval,
-            'daysOfMonth' => $daysOfMonth,
-            'transactionCounts' => $transactionCounts,
         ]);
     }
 
@@ -176,20 +132,29 @@ class ReportController extends Controller
         // Query transactions within the specified date range
         $transaction = MaintenanceHistory::whereBetween('date_performed', [$startDate, $endDate])
             ->orderBy('date_performed', 'desc')
-            ->get();
+            ->paginate(10)
+            ->appends(['start_date' => $request->input('start_date'), 'end_date' => $request->input('end_date')]);
 
         // Pass the transactions, start, and end dates to the view
         return view('pages.admin_pages.admin_reports', [
-            'transaction' => $transaction,
+            'transactions' => $transaction,
             'interval' => "From " . $startDate->format('F j, Y') . " to " . $endDate->format('F j, Y'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
         ]);
     }
 
     //Customers Reports
     //Customer Reports View
-    public function customerReportsView(){
+    public function customerReportsView()
+    {
         $today = Carbon::parse(Carbon::today()->toDateString());
-        $customers = Customer::where('usertype', 'customer')->whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
+        // Paginate the results (for example, 10 customers per page)
+        $customers = Customer::where('usertype', 'customer')
+        ->whereDate('created_at', $today)
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
+
         $interval = 'daily';
         return view(
             'pages.admin_pages.admin_customer_reports',
@@ -203,30 +168,42 @@ class ReportController extends Controller
     //Filter for transaction interval
     public function customerReportsFilter(Request $request)
     {
-        $today = Carbon::parse(Carbon::today()->toDateString());
-        // Default to daily if no filter is applied
         $interval = $request->input('interval', 'daily');
-        // Adjust based on interval
+
         switch ($interval) {
             case 'weekly':
-                $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('created_at', 'desc')->get();
+                $customers = Customer::where('usertype', 'customer')
+                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->orderBy('created_at',
+                    'desc'
+                )
+                ->paginate(10);
                 break;
             case 'monthly':
-                $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [
-                    Carbon::now()->startOfMonth(),
-                    Carbon::now()->endOfMonth()
-                ])->orderBy('created_at', 'desc')->get();
+                $customers = Customer::where('usertype', 'customer')
+                ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+                ->orderBy('created_at',
+                    'desc'
+                )
+                ->paginate(10);
                 break;
             case 'yearly':
-                $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [
-                    Carbon::now()->startOfYear(),
-                    Carbon::now()->endOfYear()
-                ])->orderBy('created_at', 'desc')->get();
+                $customers = Customer::where('usertype', 'customer')
+                ->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
+                ->orderBy('created_at',
+                    'desc'
+                )
+                ->paginate(10);
                 break;
             default:
-                $customers = Customer::where('usertype', 'customer')->whereDate('created_at', $today)->orderBy('created_at', 'desc')->get();
+                $today = Carbon::parse(Carbon::today()->toDateString());
+                $customers = Customer::where('usertype', 'customer')
+                ->whereDate('created_at', $today)
+                ->orderBy('created_at',
+                    'desc'
+                )
+                ->paginate(10);
         }
-
 
         return view(
             'pages.admin_pages.admin_customer_reports',
@@ -293,10 +270,14 @@ class ReportController extends Controller
     {
         $startDate = Carbon::parse($request->input('start_date'));
         $endDate = Carbon::parse($request->input('end_date'));
-        // Query the transactions based on the selected date
-        $customers = Customer::where('usertype', 'customer')->whereBetween('created_at', [$startDate,$endDate])->orderBy('created_at','desc')->get();
 
-        // Pass the transactions and the selected date to the view
+        // Query the customers based on the selected date range and paginate the results (for example, 10 customers per page)
+        $customers = Customer::where('usertype', 'customer')
+        ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // Pass the customers and the selected date to the view
         return view('pages.admin_pages.admin_customer_reports', [
             'customers' => $customers,
             'interval' => "From " . $startDate->format('F j, Y') . " to " . $endDate->format('F j, Y'),
