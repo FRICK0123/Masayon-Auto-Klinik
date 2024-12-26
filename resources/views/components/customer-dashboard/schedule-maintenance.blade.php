@@ -254,10 +254,6 @@
             <label for="scheduled_interval" class="fw-bold">Schedule Interval:</label>
             <select name="scheduled_interval" id="scheduled_interval" class="form-select">
                 <option value="" disabled selected>Select Year Interval</option>
-                <option value="12">Every 1 year</option>
-                <option value="24">Every 2 years</option>
-                <option value="36">Every 3 years</option>
-                <option value="48">Every 4 years</option>
                 <option value="60">Every 5 years</option>
             </select>
             <br>
@@ -334,6 +330,7 @@
         if(maintenance_type.value === "Basic PMS"){
             basic_pms_services_container.style.display = "block";
             full_pms_services_container.style.display = "none";
+            document.getElementById('scheduled_interval').value = 6;
         } else if(maintenance_type.value === "Full PMS"){
             basic_pms_services_container.style.display = "none";
             full_pms_services_container.style.display = "flex";

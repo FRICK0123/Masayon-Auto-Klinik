@@ -105,6 +105,9 @@
                 <input type="number" class="form-control" name="cost" id="cost">
             </div><br>
 
+            <label for="date_performed" class="fw-bold">Date Performed:</label>
+            <input type="date" class="form-control" name="date_performed" id="date_performed"><br>
+
             <label for="maintenance_description" class="form-label fw-bold">Enter Maintenance Description</label>
             <textarea class="form-control" id="maintenance_description" rows="3" name="maintenance_description"></textarea><br><br>
 

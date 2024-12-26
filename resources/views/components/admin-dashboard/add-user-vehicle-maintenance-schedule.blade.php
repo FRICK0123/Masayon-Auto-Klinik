@@ -336,6 +336,7 @@
         if(maintenance_type.value === "Basic PMS"){
             basic_pms_services_container.style.display = "block";
             full_pms_services_container.style.display = "none";
+            document.getElementById('scheduled_interval').value = 6;
         } else if(maintenance_type.value === "Full PMS"){
             basic_pms_services_container.style.display = "none";
             full_pms_services_container.style.display = "flex";

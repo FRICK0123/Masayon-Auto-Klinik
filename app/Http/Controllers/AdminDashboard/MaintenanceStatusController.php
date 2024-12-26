@@ -138,7 +138,7 @@ class MaintenanceStatusController extends Controller
         $cost = $request->input('cost');
         $maintenance_description = $request->input('maintenance_description');
         $maintenance_status = "completed";
-        $date_performed = Carbon::now();
+        $date_performed = $request->input('date_performed');
         $oil_type = $request->input('oil_type');
 
         $maintenance_schedule = MaintenanceSchedule::where('maintenanceID',$maintenanceID)->first();
