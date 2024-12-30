@@ -222,6 +222,10 @@ Route::get('/verify-email/{token}', [EmailVerificationController::class, 'verify
         Route::get('/export-customer-pdf', 'exportCustomerPdf')->name('export.customer_pdf');
         Route::get('/export-transactions-excel', 'exportTransactionExcel')->name('export_transaction_excel');
         Route::get('/export-customer-excel', 'exportCustomerExcel')->name('export_customer_excel');
+        Route::get('/previous_transactions', 'previousYearReportsView')->name('previous_transactions');
+        Route::get('/previous_transactions_pdf', 'exportPreviousTransactionPdf')->name('previous_transactions_pdf');
+        Route::get('/previous_transaction_excel', 'exportPreviousTransactionExcel')->name('previous_transactions_excel');
+        Route::get('/previous_transactions/by-date-range', 'previousReportsTransactionByDateRange')->name('previous_transactions_by_date_range');
     });
 //end
 

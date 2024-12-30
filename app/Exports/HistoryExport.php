@@ -13,7 +13,8 @@ class HistoryExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return MaintenanceHistory::select('historyID', 'owner', 'vehicle', 'previous_milage', 'current_milage', 'maintenance_type', 'oil_type', 'pms_services', 'cost', 'maintenance_description', 'maintenance_status', 'date_performed')->get();
+        $transactions = MaintenanceHistory::select('historyID', 'owner', 'vehicle', 'previous_milage', 'current_milage', 'maintenance_type', 'oil_type', 'pms_services', 'cost', 'maintenance_description', 'maintenance_status', 'date_performed')->whereYear('date_performed', date('Y'))->get();;
+        return $transactions;
     }
 
     public function headings(): array

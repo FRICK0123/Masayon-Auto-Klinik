@@ -5,10 +5,12 @@ namespace App\Http\Controllers\AdminDashboard;
 use App\Charts\TransactionChart;
 use App\Exports\CustomerExport;
 use App\Exports\HistoryExport;
+use App\Exports\PreviousHistoryReport;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\MaintenanceHistory;
 use App\Models\Vehicle;
+use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,6 +31,9 @@ class ReportController extends Controller
         ->paginate(10);
 
         $interval = 'monthly';
+
+
+
         return view('pages.admin_pages.admin_reports', [
             'transactions' => $transactions,
             'interval' => $interval,
@@ -70,6 +75,41 @@ class ReportController extends Controller
         ]);
     }
 
+    //Previous Years Transaction
+    public function previousYearReportsView(Request $request){
+        $year = $request->input('year');
+        $startOfYear = Carbon::createFromDate($year, 1, 1)->startOfDay();
+        $endOfYear = Carbon::createFromDate($year, 12, 31)->endOfDay();
+        $transactions = MaintenanceHistory::whereBetween('date_performed', [$startOfYear,$endOfYear])
+            ->orderBy('date_performed', 'asc')
+            ->paginate(10);
+        // Get data for the yearly chart (for current year)
+        $yearlyData = MaintenanceHistory::whereYear('date_performed', date('Y'))
+            ->selectRaw('MONTH(date_performed) as month, count(*) as transactions')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        // Convert collections to arrays
+        $months = $yearlyData->pluck('month')->map(function ($month) {
+            return \Carbon\Carbon::createFromFormat('m', $month)->format('F');
+        })->toArray();
+
+        $yearlyTransactions = $yearlyData->pluck('transactions')->toArray();
+
+        // Create the yearly chart
+        $yearlyChart = LarapexChart::lineChart()
+            ->addData('Transactions', $yearlyTransactions)
+            ->setXAxis($months)
+            ->setGrid(true)
+            ->setStroke(2)
+            ->setMarkers('blue', 5, 10)
+            ->setTitle('Yearly Transaction History');
+
+        return view('pages.admin_pages.admin_previous_reports',['year' => $year, 'transactions' => $transactions,
+            'yearlyChart' => $yearlyChart,
+        ]);
+    }
 
     //Export Transactions PDF
     public function exportTransactionPdf(Request $request)
@@ -119,6 +159,29 @@ class ReportController extends Controller
         return $pdf->stream('transaction_report.pdf');
     }
 
+    public function exportPreviousTransactionPdf(Request $request){
+        $year = $request->input('year');
+        $startOfYear = Carbon::createFromDate($year, 1, 1)->startOfDay();
+        $endOfYear = Carbon::createFromDate($year, 12, 31)->endOfDay();
+        $transactions = MaintenanceHistory::whereBetween('date_performed', [$startOfYear, $endOfYear])
+            ->orderBy('date_performed', 'asc')
+            ->get();
+
+        $pdf = PDF::loadView('pages.admin_pages.pdf_reports.pdf_previous_transactions',[
+            'year' => $year,
+            'transaction' => $transactions
+        ]);
+
+        // Stream the PDF to the browser
+        return $pdf->stream('transaction_report.pdf');
+    }
+
+    //Export Previous Transactions in Excel
+    public function exportPreviousTransactionExcel(Request $request){
+        $year = $request->input('year');
+        return Excel::download(new PreviousHistoryReport($year), "transactions_{$year}.xlsx");
+    }
+
     //Export Transactions Excel
     public function exportTransactionExcel(){
         return Excel::download(new HistoryExport, 'customer_transactions.xlsx');
@@ -141,6 +204,51 @@ class ReportController extends Controller
             'interval' => "From " . $startDate->format('F j, Y') . " to " . $endDate->format('F j, Y'),
             'start_date' => $request->input('start_date'),
             'end_date' => $request->input('end_date'),
+        ]);
+    }
+
+    public function previousReportsTransactionByDateRange(Request $request)
+    {
+        $startDate = Carbon::parse($request->input('start_date'));
+        $endDate = Carbon::parse($request->input('end_date'));
+        $year = $request->input('year');
+
+        // Get data for the yearly chart (for current year)
+        $yearlyData = MaintenanceHistory::whereYear('date_performed', date('Y'))
+            ->selectRaw('MONTH(date_performed) as month, count(*) as transactions')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        // Convert collections to arrays
+        $months = $yearlyData->pluck('month')->map(function ($month) {
+            return \Carbon\Carbon::createFromFormat('m', $month)->format('F');
+        })->toArray();
+
+        $yearlyTransactions = $yearlyData->pluck('transactions')->toArray();
+
+        // Create the yearly chart
+        $yearlyChart = LarapexChart::lineChart()
+            ->addData('Transactions', $yearlyTransactions)
+            ->setXAxis($months)
+            ->setGrid(true)
+            ->setStroke(2)
+            ->setMarkers('blue', 5, 10)
+            ->setTitle('Yearly Transaction History');
+
+        // Query transactions within the specified date range
+        $transaction = MaintenanceHistory::whereBetween('date_performed', [$startDate, $endDate])
+        ->orderBy('date_performed', 'desc')
+        ->paginate(10)
+            ->appends(['start_date' => $request->input('start_date'), 'end_date' => $request->input('end_date')]);
+
+        // Pass the transactions, start, and end dates to the view
+        return view('pages.admin_pages.admin_previous_reports', [
+            'transactions' => $transaction,
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+            'year' => "From " . $startDate->format('F j, Y') . " to " . $endDate->format('F j, Y'),
+            'yearlyChart' => $yearlyChart,
         ]);
     }
 
@@ -352,4 +460,5 @@ class ReportController extends Controller
         // Stream the generated PDF
         return $pdf->stream('customer_vehicles_report.pdf');
     }
+
 }
