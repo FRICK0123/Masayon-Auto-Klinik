@@ -84,16 +84,12 @@ class AdminController extends Controller
             ->orderBy('month')
             ->get();
 
-        // Convert collections to arrays
-        $months = $yearlyData->pluck('month')->map(function ($month) {
-            return \Carbon\Carbon::createFromFormat('m', $month)->format('F');
-        })->toArray();
         $yearlyTransactions = $yearlyData->pluck('transactions')->toArray();
 
         // Create the yearly chart
         $yearlyChart = LarapexChart::lineChart()
             ->addData('Transactions', $yearlyTransactions)
-            ->setXAxis($months)
+            ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
             ->setGrid(true)
             ->setStroke(2)
             ->setMarkers('blue', 5, 10)

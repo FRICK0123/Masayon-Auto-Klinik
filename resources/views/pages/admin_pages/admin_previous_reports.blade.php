@@ -82,6 +82,8 @@
 
                                         <!-- Include selected filters as hidden inputs -->
                                         <input type="hidden" name="year" value="{{ $year }}">
+                                        <input type="hidden" name="start_date" value="{{ request()->input('start_date') }}">
+                                        <input type="hidden" name="end_date" value="{{ request()->input('end_date') }}">  
                                     </form>
                                 </li>
                                 <li style="cursor: pointer;" onclick="exportExcel()">
@@ -116,7 +118,7 @@
 
             <div class="container">
                 <!-- Yearly Transactions Chart -->
-                <h4>Yearly Transaction History</h4>
+                <h4>This Year Transaction History</h4>
                 {!! $yearlyChart->container() !!}
             </div>
             {!! $yearlyChart->script() !!}

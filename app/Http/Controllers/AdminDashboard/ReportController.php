@@ -100,11 +100,11 @@ class ReportController extends Controller
         // Create the yearly chart
         $yearlyChart = LarapexChart::lineChart()
             ->addData('Transactions', $yearlyTransactions)
-            ->setXAxis($months)
+            ->setXAxis(['January','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
             ->setGrid(true)
             ->setStroke(2)
             ->setMarkers('blue', 5, 10)
-            ->setTitle('Yearly Transaction History');
+            ->setTitle($year.' Yearly Transaction History');
 
         return view('pages.admin_pages.admin_previous_reports',['year' => $year, 'transactions' => $transactions,
             'yearlyChart' => $yearlyChart,
@@ -161,16 +161,31 @@ class ReportController extends Controller
 
     public function exportPreviousTransactionPdf(Request $request){
         $year = $request->input('year');
-        $startOfYear = Carbon::createFromDate($year, 1, 1)->startOfDay();
-        $endOfYear = Carbon::createFromDate($year, 12, 31)->endOfDay();
-        $transactions = MaintenanceHistory::whereBetween('date_performed', [$startOfYear, $endOfYear])
-            ->orderBy('date_performed', 'asc')
-            ->get();
 
-        $pdf = PDF::loadView('pages.admin_pages.pdf_reports.pdf_previous_transactions',[
-            'year' => $year,
-            'transaction' => $transactions
-        ]);
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        if($startDate && $endDate){
+            $startDate = Carbon::parse($startDate);
+            $endDate = Carbon::parse($endDate);
+            $transactions = MaintenanceHistory::whereBetween('date_performed', [$startDate, $endDate])
+                ->orderBy('date_performed', 'desc')
+                ->get();
+
+            $pdf = PDF::loadView('pages.admin_pages.pdf_reports.pdf_previous_transactions', [
+                'year' => $year,
+                'transaction' => $transactions
+            ]);
+        } else {
+            $transactions = MaintenanceHistory::whereBetween('date_performed', [Carbon::createFromDate($year, 1, 1)->startOfDay(), $endOfYear = Carbon::createFromDate($year, 12, 31)->endOfDay()])
+                ->orderBy('date_performed', 'asc')
+                ->get();
+
+            $pdf = PDF::loadView('pages.admin_pages.pdf_reports.pdf_previous_transactions', [
+                'year' => $year,
+                'transaction' => $transactions
+            ]);
+        }
 
         // Stream the PDF to the browser
         return $pdf->stream('transaction_report.pdf');
@@ -220,17 +235,12 @@ class ReportController extends Controller
             ->orderBy('month')
             ->get();
 
-        // Convert collections to arrays
-        $months = $yearlyData->pluck('month')->map(function ($month) {
-            return \Carbon\Carbon::createFromFormat('m', $month)->format('F');
-        })->toArray();
-
         $yearlyTransactions = $yearlyData->pluck('transactions')->toArray();
 
         // Create the yearly chart
         $yearlyChart = LarapexChart::lineChart()
             ->addData('Transactions', $yearlyTransactions)
-            ->setXAxis($months)
+            ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
             ->setGrid(true)
             ->setStroke(2)
             ->setMarkers('blue', 5, 10)
