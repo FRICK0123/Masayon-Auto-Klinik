@@ -84,7 +84,7 @@ class ReportController extends Controller
             ->orderBy('date_performed', 'asc')
             ->paginate(10);
         // Get data for the yearly chart (for current year)
-        $yearlyData = MaintenanceHistory::whereYear('date_performed', date('Y'))
+        $yearlyData = MaintenanceHistory::whereYear('date_performed', $year)
             ->selectRaw('MONTH(date_performed) as month, count(*) as transactions')
             ->groupBy('month')
             ->orderBy('month')
@@ -229,7 +229,7 @@ class ReportController extends Controller
         $year = $request->input('year');
 
         // Get data for the yearly chart (for current year)
-        $yearlyData = MaintenanceHistory::whereYear('date_performed', date('Y'))
+        $yearlyData = MaintenanceHistory::whereYear('date_performed', $year)
             ->selectRaw('MONTH(date_performed) as month, count(*) as transactions')
             ->groupBy('month')
             ->orderBy('month')

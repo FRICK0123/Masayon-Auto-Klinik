@@ -29,17 +29,17 @@
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Do you want to log out?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-                <form action="{{ route('logout') }}" method="post">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Log out</button>
-                </form>
-            </div>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Do you want to log out?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Log out</button>
+                    </form>
+                </div>
             </div>
         </div>
         </div>
@@ -111,6 +111,8 @@
 
                     <label for="end_date" class="me-2">End Date:</label>
                     <input type="date" class="me-2" name="end_date" required>
+
+                    <input type="hidden" name="year" value="{{ $year }}">
 
                     <button class="btn btn-dark">Filter</button>
                 </form>

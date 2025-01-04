@@ -13,6 +13,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <style>
+        .carousel_image {
+            width: 100%; /* Ensures the image scales to fit its container */
+            height: 200px; /* Set a fixed height */
+            object-fit: cover; /* Ensures the image maintains its aspect ratio and fills the container */
+        }
+
+        
+    </style>
 </head>
 <body class="body">
     <!--Preloader-->
@@ -64,15 +74,36 @@
 
                     <div class="col-md-6 mt-3 mt-lg-0">
                         <h4 class="text-dark">List of Cars:</h4>
-                        @foreach ($vehicles as $vehicle)
-                            <a href="{{ route('view_car_details',$vehicle->vehicleID) }}" class="btn btn-dark mt-2">
-                                {{ $vehicle->make }} {{ $vehicle->model }} {{ $vehicle->year_of_manufacture }}
-                            </a>
-                        @endforeach
+                        <div id="carouselExample" class="carousel slide">
+                            <div class="carousel-inner">
+                                @foreach ($vehicles as $vehicle)
+
+                                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                        <div class="card mb-3">
+                                            <img src="{{ asset('Images/car_images/'.$vehicle->vehicle_image) }}" class="card-img-top carousel_image">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $vehicle->make }} {{ $vehicle->model }} {{ $vehicle->year_of_manufacture }}</h5>
+                                                <a href="{{ route('view_car_details',$vehicle->vehicleID) }}" class="btn btn-dark mt-2">
+                                                    {{ $vehicle->make }} {{ $vehicle->model }} {{ $vehicle->year_of_manufacture }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" style="background-color: black; height: 50px; width: 50px; align-self:center; border-radius: 50%; margin-left:10px;">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next" style="background-color: black; height: 50px; width: 50px; align-self:center; border-radius: 50%; margin-right:10px;">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="container-fluid mt-3">
+                <div class="container mt-3">
                         <h4 class="text-dark">Previous Transactions</h4>
                         <div class="container">
                             <!-- Card-like table layout -->

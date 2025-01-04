@@ -298,7 +298,7 @@
         const yearSelect = document.getElementById('yearSelect');
 
         // Generate options for years excluding the current year
-        for (let year = 2025 - 1; year >= 2024; year--) {
+        for (let year = currentYear - 1; year >= 2024; year--) {
             const option = document.createElement('option');
             option.value = year;
             option.textContent = year;
