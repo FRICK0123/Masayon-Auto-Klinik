@@ -73,7 +73,14 @@
                                 <td>{{ $inbox['fullname'] }}</td>
                                 <td>{{ \Carbon\Carbon::parse($inbox['created_at'])->format('F j, Y') }}</td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm rounded-pill">
+                                    <button class="btn btn-primary btn-sm rounded-pill"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#view_inbox"
+                                    data-view-fullname="{{ $inbox['fullname'] }}"
+                                    data-view-email="{{ $inbox['email'] }}"
+                                    data-view-message="{{ $inbox['message'] }}"
+                                    data-view-sent="{{ \Carbon\Carbon::parse($inbox['created_at'])->format('F j, Y') }}"
+                                    onclick="viewInbox(this)">
                                         View
                                     </button>
                                 </td>
@@ -137,6 +144,35 @@
         </div>
     </div>
 
+    <!-- View Inbox Modal -->
+    <div class="modal fade" id="view_inbox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Inbox Details</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <label for="view_fullname">Fullname:</label>
+            <h6 id="view_fullname"></h6>
+
+            <label for="view_email">email:</label>
+            <h6 id="view_email"></h6>
+
+            <label for="view_message">Message:</label>
+            <h6 id="view_message"></h6>
+
+            <label for="view_sent_at">Date Sent:</label>
+            <h6 id="view_sent_at"></h6>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Understood</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
     <!-- Reply Sent Toast -->
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <div id="replySentToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -162,7 +198,18 @@
             document.getElementById('email_input').value = email;
             document.getElementById('fullname_input').value = fullname;
             document.getElementById('inboxID').value = inboxID;
+        }
 
+        function viewInbox(element){
+            const fullname = element.getAttribute('data-view-fullname');
+            const email = element.getAttribute('data-view-email');
+            const message = element.getAttribute('data-view-message');
+            const sent_at = element.getAttribute('data-view-sent');
+
+            document.getElementById('view_fullname').innerHTML=fullname;
+            document.getElementById('view_email').innerHTML=email;
+            document.getElementById('view_message').innerHTML=message;
+            document.getElementById('view_sent_at').innerHTML=sent_at;
         }
 
         // Check if there's a vehicle deleted message in session

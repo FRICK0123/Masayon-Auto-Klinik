@@ -141,7 +141,7 @@ class MaintenanceController extends Controller
                     'customerID' => $customerID,
                     'maintenance_type' => $maintenance_type,
                     'PMS_services' => null,
-                    'scheduled_date' => Carbon::parse($maintenance_date)->addMonths($scheduled_interval),
+                    'scheduled_date' => $last_maintenance_date,
                     'last_maintenance_date' => $last_maintenance_date,
                     'scheduled_interval' => $scheduled_interval,
                     'oil_type' => null,
